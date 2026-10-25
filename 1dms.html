@@ -249,6 +249,6 @@ setInterval(async()=>{await refreshState();if(activeFriend)await api("/dms/seen"
 async function init(){try{pinnedFriends=JSON.parse(localStorage.getItem("zyphorPinnedDMs")||"[]")}catch{pinnedFriends=[]}backend=await getBackend();token=localStorage.getItem("Token");await trackPage("1dms.html");if(!token){location.href="login.html";return}const r=await api("/me"),me=await safeJson(r);if(!me){location.href="login.html";return}myName=me.username;await refreshState();const f=decodeURIComponent(location.hash.substring(1)).trim();if(f){const found=state.friends.find(x=>x.toLowerCase()===f.toLowerCase());if(found)openChat(found,true)}}
 init()
 </script>
-<script src="dms-features.js?v=camerafix20261025"></script>
+<script src="dms-features.js?v=flipcamera20261025"></script>
 </body>
 </html>
