@@ -1706,7 +1706,7 @@ a{
 
 .betaBadge{display:inline-flex;align-items:center;gap:4px;flex:0 0 auto;padding:3px 6px;border:1px solid rgba(167,139,250,.27);border-radius:6px;background:rgba(167,139,250,.09);color:#d1c1ff;font-size:8px;font-weight:800;line-height:1.1;letter-spacing:.1px;white-space:nowrap}
 .staffBadge{display:inline-flex;align-items:center;justify-content:center;gap:4px;flex:0 0 auto;min-width:18px;height:18px;padding:0 5px;border:1px solid rgba(82,217,255,.28);border-radius:6px;background:rgba(82,217,255,.09);color:#72e4ff;font-size:10px;font-weight:900;line-height:1;white-space:nowrap;vertical-align:middle}
-.avatarInitial{position:relative;z-index:0;display:flex;align-items:center;justify-content:center;width:100%;height:100%;border-radius:inherit}
+.roleBadge{appearance:none;-webkit-appearance:none;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;width:21px;height:21px;padding:0;border:1px solid transparent;border-radius:6px;font-family:inherit;font-size:11px;font-weight:900;line-height:1;vertical-align:middle;cursor:help;transition:transform .16s ease,filter .16s ease}.roleBadge:hover,.roleBadge:focus-visible{filter:brightness(1.18);transform:translateY(-1px);outline:2px solid rgba(255,255,255,.18);outline-offset:1px}.roleAdministrator{border-color:rgba(245,196,81,.34);background:rgba(245,196,81,.12);color:#f5c451}.roleSupport{border-color:rgba(82,217,255,.3);background:rgba(82,217,255,.1);color:#52d9ff}.roleModerator{border-color:rgba(112,223,160,.3);background:rgba(112,223,160,.1);color:#70dfa0}.roleBetaTester{border-color:rgba(182,154,255,.3);background:rgba(182,154,255,.1);color:#c4adff}.roleStaff{border-color:rgba(82,217,255,.28);background:rgba(82,217,255,.09);color:#72e4ff}.roleOther{width:auto;padding:2px 6px;font-size:9px}.msgAuthor .roleBadge{width:16px;height:16px;margin-left:4px;font-size:9px;cursor:help}.avatarInitial{position:relative;z-index:0;display:flex;align-items:center;justify-content:center;width:100%;height:100%;border-radius:inherit}
 .avatarInner{position:relative}
 .avatarInner img{position:absolute;inset:0;border-radius:inherit}
 .msgAuthorAvatar{width:29px;height:29px;flex:0 0 29px;margin-bottom:2px;border-radius:50%;overflow:hidden;border:1px solid rgba(178,190,255,.12);background:#171b28}
@@ -2095,13 +2095,28 @@ function fillAvatarInner(inner,name){
     }
 }
 
+const ZYPHOR_ROLE_BADGES={
+    "Administrator":{icon:"👑",className:"roleAdministrator",title:"Zyphor Administrator",description:"This user has the Administrator staff role."},
+    "Support":{icon:"🎧",className:"roleSupport",title:"Zyphor Support",description:"This user has the Support staff role."},
+    "Moderator":{icon:"🛡️",className:"roleModerator",title:"Zyphor Moderator",description:"This user has the Moderator staff role."},
+    "Beta Tester":{icon:"🧪",className:"roleBetaTester",title:"Zyphor Beta Tester",description:"This user has the Beta Tester role."},
+    "Staff":{icon:"✦",className:"roleStaff",title:"Zyphor Staff",description:"This is a legacy staff badge. Deploy the updated backend to show the exact staff role."}
+}
 function makeBadgeElement(badge,active=false){
-    const element=document.createElement("span")
-    const isStaff=badge?.name==="Staff"
-    element.className=(isStaff?"staffBadge":"betaBadge")+(active?" activeFriendBadge":"")
-    element.title=isStaff?"Zyphor staff member":String(badge?.name||"Badge")
-    element.setAttribute("aria-label",element.title)
-    element.textContent=isStaff?"✦":String(badge?.name||"Badge")
+    const name=String(badge?.name||"Badge")
+    const meta=ZYPHOR_ROLE_BADGES[name]||{icon:name,className:"roleOther",title:name,description:"Zyphor badge: "+name}
+    const element=document.createElement("button")
+    element.type="button"
+    element.className="roleBadge "+meta.className+(active?" activeFriendBadge":"")
+    element.title=meta.title
+    element.setAttribute("aria-label",meta.title)
+    element.dataset.role=name
+    element.textContent=meta.icon
+    element.onclick=e=>{
+        e.preventDefault()
+        e.stopPropagation()
+        showToast(meta.title,meta.description,meta.icon)
+    }
     return element
 }
 
@@ -2708,7 +2723,10 @@ function renderActiveChat(chat,forceBottom=false){
 
             const author=document.createElement("span")
             author.className="msgAuthor"
-            author.textContent=message.author||"Unknown"
+            const authorName=message.author||"Unknown"
+            author.textContent=authorName
+            const authorBadges=Array.isArray(state.friendBadges?.[authorName])?state.friendBadges[authorName]:[]
+            for(const badge of authorBadges) author.appendChild(makeBadgeElement(badge))
 
             const time=document.createElement("span")
             time.className="msgTime"
