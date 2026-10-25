@@ -93,6 +93,6 @@ async function declineRequest(requestId){await api("/friends/decline",{method:"P
 async function init(){try{try{const saved=JSON.parse(localStorage.getItem("zyphorPinnedDMs")||"[]");pinnedFriends=Array.isArray(saved)?saved:[]}catch{pinnedFriends=[]}backend=await getBackend();token=localStorage.getItem("Token");if(!token){location.href="login.html";return}await trackPage("1dms.html");const r=await api("/me"),me=await safeJson(r);if(!r.ok||!me||me.error||!me.username){localStorage.removeItem("Token");location.href="login.html";return}myName=me.username;localStorage.setItem("username",myName);await refreshState();const raw=location.hash.slice(1);let wanted="";try{wanted=decodeURIComponent(raw).trim()}catch{wanted=raw.trim()}if(wanted){const found=state.friends.find(x=>String(x).toLowerCase()===wanted.toLowerCase());if(found)await openChat(found,true)}setInterval(async()=>{await refreshState();if(activeFriend){await openChat(activeFriend,false);await api("/dms/seen",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chatId:activeFriend})}).catch(()=>{})}},5000)}catch{showNotice("Could not connect to Zyphor. Reload the page to retry.")}}
 init()
 </script>
-<script src="dms-features.js?v=rolebadges20261025"></script>
+<script src="dms-features.js?v=groupcallfix20261025"></script>
 </body>
 </html>
