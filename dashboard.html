@@ -7,121 +7,282 @@
 <title>Zyphor</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{color-scheme:dark;--purple:#895cff;--cyan:#42d9ff;--muted:#8b8b9b}
 html,body{margin:0;width:100%;height:100%;background:#000;color:#fff;font-family:Arial,Helvetica,sans-serif}
 body{min-height:100dvh;overflow:hidden}
 .loading{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000;overflow:hidden;isolation:isolate}
 .loading:before{content:"";position:absolute;inset:-35%;background:radial-gradient(ellipse at center,rgba(105,55,255,.18),rgba(0,150,255,.07) 36%,transparent 65%);animation:ambient 5s ease-in-out infinite alternate;pointer-events:none}
-.stage{position:relative;width:min(90vw,720px,160vh);aspect-ratio:3/2;max-height:80vh;display:flex;align-items:center;justify-content:center}
-.logo{display:block;width:100%;height:100%;object-fit:contain;opacity:0;transform:scale(.94);filter:blur(8px) brightness(1.5);animation:logoIn 1s cubic-bezier(.16,1,.3,1) forwards,logoFloat 4s 1s ease-in-out infinite;user-select:none;-webkit-user-drag:none}
+.stage{position:relative;width:min(90vw,720px,160vh);aspect-ratio:3/2;max-height:75vh;display:flex;align-items:center;justify-content:center}
 .stage:before{content:"";position:absolute;inset:12%;border-radius:50%;background:radial-gradient(ellipse,rgba(115,76,255,.18),transparent 70%);filter:blur(28px);animation:glow 3s ease-in-out infinite alternate;pointer-events:none}
-.loader{position:absolute;left:50%;top:calc(50% + min(30vw,220px));width:min(220px,56vw);transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:14px}
+.logo{display:block;width:100%;height:100%;object-fit:contain;opacity:0;transform:scale(.94);filter:blur(8px) brightness(1.5);animation:logoIn 1s cubic-bezier(.16,1,.3,1) forwards,logoFloat 4s 1s ease-in-out infinite;user-select:none;-webkit-user-drag:none}
+.loader{position:absolute;left:50%;top:calc(50% + min(28vw,205px));width:min(250px,66vw);transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:14px;z-index:2}
 .track{height:3px;width:100%;border-radius:10px;background:rgba(255,255,255,.12);overflow:hidden;box-shadow:0 0 20px rgba(140,92,255,.12)}
-.bar{height:100%;width:0;border-radius:10px;background:linear-gradient(90deg,#7950ff,#40cfff,#fff);box-shadow:0 0 14px rgba(100,170,255,.85);transition:width .25s ease}
-.status{display:flex;justify-content:space-between;align-items:center;width:100%;gap:12px;font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.58)}
+.bar{height:100%;width:0;border-radius:10px;background:linear-gradient(90deg,var(--purple),var(--cyan),#fff);box-shadow:0 0 14px rgba(100,170,255,.85);transition:width .25s ease}
+.status{display:flex;justify-content:space-between;align-items:center;width:100%;gap:12px;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.58)}
 #percent{color:#fff;letter-spacing:1px;font-variant-numeric:tabular-nums}
+.continue{display:none;width:100%;min-height:44px;border:1px solid rgba(160,125,255,.55);border-radius:10px;background:linear-gradient(110deg,rgba(137,92,255,.95),rgba(61,170,255,.9));color:#fff;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;box-shadow:0 0 24px rgba(117,76,255,.2);transition:transform .18s ease,filter .18s ease,box-shadow .18s ease}
+.continue.show{display:block;animation:buttonIn .4s cubic-bezier(.16,1,.3,1) both}
+.continue:hover{filter:brightness(1.15);box-shadow:0 0 32px rgba(117,76,255,.35);transform:translateY(-2px)}
+.continue:active{transform:scale(.98)}
+.console-toggle{position:fixed;right:18px;bottom:18px;z-index:20;display:flex;align-items:center;gap:10px;padding:11px 14px;border:1px solid rgba(151,126,255,.25);border-radius:12px;background:rgba(13,13,19,.88);backdrop-filter:blur(16px);color:#ddd;font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer;box-shadow:0 8px 30px #0008}
+.arrow{display:inline-block;font-size:15px;color:#b8a1ff;transition:transform .25s ease}
+.console-toggle[aria-expanded="true"] .arrow{transform:rotate(180deg)}
+.console{position:fixed;left:16px;right:16px;bottom:70px;z-index:19;max-height:min(48vh,390px);display:flex;flex-direction:column;border:1px solid rgba(151,126,255,.25);border-radius:14px;background:rgba(8,8,13,.94);backdrop-filter:blur(20px);box-shadow:0 12px 45px #000b;overflow:hidden;opacity:0;transform:translateY(12px);pointer-events:none;visibility:hidden;transition:opacity .22s ease,transform .22s ease,visibility .22s}
+.console.open{opacity:1;transform:translateY(0);pointer-events:auto;visibility:visible}
+.console-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:13px 15px;border-bottom:1px solid #ffffff12;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.console-head span:last-child{color:var(--muted);font-size:10px;letter-spacing:.5px}
+.console-output{overflow:auto;padding:8px 12px 12px;font-family:Consolas,"Courier New",monospace;font-size:11px;line-height:1.55;overscroll-behavior:contain}
+.log-row{display:grid;grid-template-columns:62px 1fr auto;gap:9px;padding:7px 3px;border-bottom:1px solid #ffffff09;overflow-wrap:anywhere}
+.log-time{color:#77788b;font-variant-numeric:tabular-nums}
+.log-message{color:#d0d0dc;white-space:pre-wrap;word-break:break-word}
+.log-result{color:var(--cyan);text-align:right;white-space:nowrap}
+.log-result.fail{color:#ff777f}
+.log-result.warn{color:#ffd27a}
+.log-result.pending{color:#b7a1ff}
+.console-foot{padding:9px 14px;border-top:1px solid #ffffff12;color:#77788b;font-size:10px;display:flex;justify-content:space-between;gap:8px}
 @keyframes logoIn{0%{opacity:0;transform:scale(.88);filter:blur(16px) brightness(2)}55%{opacity:1;filter:blur(0) brightness(1.3)}100%{opacity:1;transform:scale(1);filter:blur(0) brightness(1)}}
 @keyframes logoFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-4px) scale(1.006)}}
 @keyframes ambient{0%{transform:scale(.9) rotate(-4deg);opacity:.55}100%{transform:scale(1.12) rotate(4deg);opacity:1}}
 @keyframes glow{0%{transform:scale(.85);opacity:.45}100%{transform:scale(1.15);opacity:1}}
-@media(max-width:600px){.stage{width:92vw;max-height:65vh}.loader{top:calc(50% + min(34vw,180px));width:min(190px,56vw)}.status{font-size:9px;letter-spacing:2px}}
-@media(max-height:500px){.stage{width:min(65vw,95vh);max-height:74vh}.loader{top:auto;bottom:7vh}}
+@keyframes buttonIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:600px){.stage{width:92vw;max-height:60vh}.loader{top:calc(50% + min(31vw,165px));width:min(230px,72vw)}.status{font-size:9px;letter-spacing:1.7px}.console-toggle{right:12px;bottom:12px;padding:10px 12px}.console{left:10px;right:10px;bottom:62px;max-height:52vh}.log-row{grid-template-columns:52px 1fr auto;gap:6px;font-size:10px}}
+@media(max-height:500px){.stage{width:min(60vw,85vh);max-height:64vh}.loader{top:auto;bottom:8vh;left:auto;right:5vw;transform:none;width:min(230px,38vw)}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
 <body>
-<main class="loading" aria-label="Loading Zyphor">
+<main class="loading" aria-label="Zyphor startup checks">
     <div class="stage">
         <img class="logo" id="logo" src="Logo1.png" alt="Zyphor">
     </div>
-    <section class="loader" aria-live="polite">
+    <section class="loader">
         <div class="track"><div class="bar" id="bar"></div></div>
         <div class="status"><span id="status">Starting Zyphor</span><span id="percent">0%</span></div>
+        <button class="continue" id="continueButton" type="button">Continue&nbsp; →</button>
     </section>
 </main>
+<button class="console-toggle" id="consoleToggle" type="button" aria-expanded="false" aria-controls="outputConsole">
+    <span class="arrow">⌃</span><span>OUTPUT CONSOLE</span>
+</button>
+<section class="console" id="outputConsole" aria-label="Output console">
+    <div class="console-head"><span>Startup diagnostics</span><span id="consoleSummary">Running checks...</span></div>
+    <div class="console-output" id="consoleOutput" role="log" aria-live="polite"></div>
+    <div class="console-foot"><span>ZYphor · Client diagnostics</span><span id="checkCount">0 checks</span></div>
+</section>
 <script>
 (function(){
     const bar=document.getElementById("bar");
     const status=document.getElementById("status");
     const percent=document.getElementById("percent");
     const logo=document.getElementById("logo");
-    const storage={
-        token:localStorage.getItem("Token"),
-        username:localStorage.getItem("username"),
-        phone:localStorage.getItem("Phone")==="1"
-    };
-    const destination="https://zyphor.cc/"+(storage.phone?"1dashboard.html":"0dashboard.html");
-    let progress=0;
-    let redirected=false;
+    const continueButton=document.getElementById("continueButton");
+    const consoleToggle=document.getElementById("consoleToggle");
+    const outputConsole=document.getElementById("outputConsole");
+    const consoleOutput=document.getElementById("consoleOutput");
+    const consoleSummary=document.getElementById("consoleSummary");
+    const checkCount=document.getElementById("checkCount");
+    const started=performance.now();
+    const records=[];
+    let completed=false;
+    let apiBase="";
+    let dashboardUrl="";
+    let logoLoaded=false;
 
-    function update(value,message){
-        progress=Math.max(progress,Math.min(100,value));
-        bar.style.width=progress+"%";
-        percent.textContent=Math.round(progress)+"%";
+    function log(message,result,elapsed){
+        const row=document.createElement("div");
+        row.className="log-row";
+        const time=document.createElement("span");
+        time.className="log-time";
+        time.textContent="+"+((performance.now()-started)/1000).toFixed(2)+"s";
+        const text=document.createElement("span");
+        text.className="log-message";
+        text.textContent=message;
+        const state=document.createElement("span");
+        state.className="log-result"+(result==="FAIL"?" fail":result==="WARN"?" warn":result==="..."?" pending":"");
+        state.textContent=elapsed===undefined?result:result+" · "+elapsed.toFixed(2)+" ms";
+        row.append(time,text,state);
+        consoleOutput.appendChild(row);
+        consoleOutput.scrollTop=consoleOutput.scrollHeight;
+        records.push({message,result});
+        checkCount.textContent=records.length+" checks";
+        const failures=records.filter(item=>item.result==="FAIL").length;
+        consoleSummary.textContent=failures?failures+" issue"+(failures===1?"":"s"):completed?"Checks complete":"Running checks...";
+    }
+
+    async function check(label,fn){
+        const begin=performance.now();
+        log(label,"...");
+        try{
+            const result=await fn();
+            const elapsed=performance.now()-begin;
+            log(label,result&&result.ok?"PASS":result&&result.warn?"WARN":"FAIL",elapsed);
+            return result||{ok:false};
+        }catch(error){
+            const elapsed=performance.now()-begin;
+            log(label+" — "+(error&&error.message?error.message:"Unknown error"),"FAIL",elapsed);
+            return {ok:false,error};
+        }
+    }
+
+    function setProgress(value,message){
+        const number=Math.max(0,Math.min(100,Math.round(value)));
+        bar.style.width=number+"%";
+        percent.textContent=number+"%";
         status.textContent=message;
     }
 
-    function preloadImage(src){
+    function readStorage(key){
+        try{return localStorage.getItem(key)}catch(error){return null}
+    }
+
+    async function preloadImage(url){
         return new Promise(resolve=>{
             const image=new Image();
-            image.onload=()=>resolve(true);
-            image.onerror=()=>resolve(false);
-            image.src=src;
-            if(image.complete)resolve(image.naturalWidth>0);
+            let settled=false;
+            const finish=ok=>{
+                if(settled)return;
+                settled=true;
+                resolve({ok});
+            };
+            image.onload=()=>finish(true);
+            image.onerror=()=>finish(false);
+            image.src=url;
+            if(image.complete)finish(image.naturalWidth>0);
+            setTimeout(()=>finish(false),5000);
         });
     }
 
-    function preloadPage(url){
-        return new Promise(resolve=>{
-            const link=document.createElement("link");
-            link.rel="prefetch";
-            link.href=url;
-            link.as="document";
-            link.onload=()=>resolve(true);
-            link.onerror=()=>resolve(false);
-            document.head.appendChild(link);
-            setTimeout(()=>resolve(false),1800);
-        });
+    async function loadServerBase(){
+        const candidates=[new URL("server.txt",window.location.href).href];
+        for(const url of candidates){
+            try{
+                const response=await fetch(url,{cache:"no-store",credentials:"same-origin"});
+                if(!response.ok)continue;
+                const text=(await response.text()).trim();
+                if(!text)continue;
+                let base=text;
+                try{
+                    const parsed=new URL(text,window.location.href);
+                    if(parsed.protocol==="https:"||parsed.protocol==="http:")base=parsed.href;
+                    else continue;
+                }catch(error){continue}
+                return {ok:true,base:base.replace(/\/+$/,"")};
+            }catch(error){}
+        }
+        return {ok:false};
     }
+
+    async function probeApi(base){
+        const urls=[];
+        try{
+            const root=new URL(base,window.location.href);
+            urls.push(root.href);
+            if(!root.pathname.endsWith("/health"))urls.push(new URL("health",root.href.endsWith("/")?root.href:root.href+"/").href);
+        }catch(error){
+            return {ok:false,detail:"Invalid API URL"};
+        }
+        for(const url of urls){
+            try{
+                const response=await fetch(url,{method:"GET",mode:"cors",cache:"no-store",signal:AbortSignal.timeout(4500)});
+                if(response.ok)return {ok:true,detail:"HTTP "+response.status};
+                if(response.status<500)return {ok:true,warn:true,detail:"Reachable · HTTP "+response.status};
+            }catch(error){}
+        }
+        return {ok:false,detail:"No CORS-accessible response from API root or /health"};
+    }
+
+    function setContinue(){
+        completed=true;
+        continueButton.classList.add("show");
+        continueButton.focus({preventScroll:true});
+        consoleSummary.textContent="Checks complete";
+    }
+
+    consoleToggle.addEventListener("click",function(){
+        const open=!outputConsole.classList.contains("open");
+        outputConsole.classList.toggle("open",open);
+        consoleToggle.setAttribute("aria-expanded",String(open));
+    });
+
+    continueButton.addEventListener("click",function(){
+        if(!completed)return;
+        continueButton.disabled=true;
+        continueButton.textContent="Opening dashboard...";
+        window.location.href=dashboardUrl;
+    });
 
     async function run(){
-        update(12,"Loading logo");
-        await preloadImage("Logo1.png");
-        update(32,"Checking session");
+        setProgress(5,"Loading logo");
+        const logoResult=await check("Preload Logo1.png",()=>preloadImage(new URL("Logo1.png",window.location.href).href));
+        logoLoaded=!!logoResult.ok;
+        if(!logoLoaded)log("Logo image could not be loaded. Check the Logo1.png path.","WARN");
 
-        if(!storage.token){
-            update(100,"Session required");
-            setTimeout(()=>window.location.replace("https://zyphor.cc/login.html"),450);
-            return;
+        setProgress(20,"Checking session");
+        const tokenResult=await check('localStorage["Token"] exists',async()=>{
+            const token=readStorage("Token");
+            return token&&token.trim()?{ok:true}:{ok:false};
+        });
+
+        setProgress(35,"Checking username");
+        const usernameResult=await check('localStorage["username"] exists',async()=>{
+            const username=readStorage("username");
+            return username&&username.trim()?{ok:true}:{ok:false};
+        });
+
+        setProgress(48,"Detecting device layout");
+        const phoneResult=await check('Read localStorage["Phone"]',async()=>{
+            const value=readStorage("Phone");
+            return {ok:true,detail:value==="1"?"Phone layout":"Desktop layout"};
+        });
+        const phone=readStorage("Phone")==="1";
+        dashboardUrl=new URL(phone?"1dashboard.html":"0dashboard.html",window.location.href).href;
+        log("Dashboard selected: "+(phone?"1dashboard.html":"0dashboard.html"),"PASS");
+
+        setProgress(60,"Reading API configuration");
+        const serverResult=await check("Read server.txt",loadServerBase);
+        if(serverResult.ok){
+            apiBase=serverResult.base;
+            log("API base URL loaded from server.txt","PASS");
+            setProgress(72,"Checking API connection");
+            const apiResult=await check("API reachability",()=>probeApi(apiBase));
+            if(apiResult.detail)log("API result: "+apiResult.detail,apiResult.ok?"PASS":"WARN");
+        }else{
+            log("API check skipped because server.txt could not be read.","WARN");
         }
 
-        update(48,"Checking username");
-        if(!storage.username){
-            update(100,"Login required");
-            setTimeout(()=>window.location.replace("https://zyphor.cc/login.html"),450);
-            return;
-        }
+        setProgress(88,"Preloading dashboard");
+        const preloadResult=await check("Preload dashboard document",async()=>{
+            const link=document.createElement("link");
+            link.rel="prefetch";
+            link.href=dashboardUrl;
+            link.as="document";
+            document.head.appendChild(link);
+            await new Promise(resolve=>setTimeout(resolve,700));
+            return {ok:true};
+        });
 
-        update(66,"Preparing dashboard");
-        const imagePromise=preloadImage("Logo1.png");
-        const pagePromise=preloadPage(destination);
-        await imagePromise;
-        update(82,"Preloading dashboard");
-        await pagePromise;
-        update(100,"Ready");
-        await new Promise(resolve=>setTimeout(resolve,250));
+        setProgress(96,"Finalizing checks");
+        await check("Startup validation",async()=>{
+            return tokenResult.ok&&usernameResult.ok?{ok:true}:{ok:false};
+        });
 
-        if(!redirected){
-            redirected=true;
-            window.location.replace(destination);
+        setProgress(100,"Ready to continue");
+        if(!tokenResult.ok||!usernameResult.ok){
+            log("Session or username is missing. Continue will open the login page.","WARN");
+            dashboardUrl=new URL("login.html",window.location.href).href;
         }
+        setContinue();
     }
 
     logo.addEventListener("error",function(){
         logo.style.visibility="hidden";
     });
 
-    run().catch(function(){
-        window.location.replace(destination);
+    run().catch(function(error){
+        log("Unexpected startup error: "+(error&&error.message?error.message:"Unknown error"),"FAIL");
+        setProgress(100,"Ready to continue");
+        if(!dashboardUrl)dashboardUrl=new URL("login.html",window.location.href).href;
+        setContinue();
     });
 })();
 </script>
