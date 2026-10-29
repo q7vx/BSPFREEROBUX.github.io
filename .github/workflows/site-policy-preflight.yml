@@ -1,0 +1,14 @@
+name: Site policy preflight
+on:
+  pull_request:
+  push:
+    branches: [main]
+jobs:
+  site-policy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check static publishing safeguards
+        run: node scripts/check-site-policy.mjs
