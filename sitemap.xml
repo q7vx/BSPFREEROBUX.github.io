@@ -1,24 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    <url>
-        <loc>https://zyphor.cc/</loc>
-    </url>
-    <url>
-        <loc>https://zyphor.cc/profile.html</loc>
-    </url>
-    <url>
-        <loc>https://zyphor.cc/dms.html</loc>
-    </url>
-    <url>
-        <loc>https://zyphor.cc/Support.html</loc>
-    </url>
-    <url>
-        <loc>https://zyphor.cc/download.html</loc>
-    </url>
-    <url>
-        <loc>https://zyphor.cc/Cloud.html</loc>
-    </url>
-    <url>
-        <loc>https://zyphor.cc/Wallet.html</loc>
-    </url>
+<url><loc>https://zyphor.cc/</loc></url>
+<url><loc>https://zyphor.cc/about.html</loc></url>
+<url><loc>https://zyphor.cc/download.html</loc></url>
+<url><loc>https://zyphor.cc/FreeRobuxNews.html</loc></url>
+<url><loc>https://zyphor.cc/PP.html</loc></url>
+<url><loc>https://zyphor.cc/TOS.html</loc></url>
 </urlset>
