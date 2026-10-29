@@ -4,6 +4,9 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<meta name="description" content="Zyphor terms of service and community responsibilities for accounts, messages, virtual balances and third-party products.">
+<link rel="canonical" href="https://zyphor.cc/TOS.html">
 <title>Terms of Service</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -273,6 +276,7 @@ border-radius:10px;
 
 <div class="meta" id="metaBox"></div>
 
+<div class="section" aria-label="Terms summary"><h2>Community and account responsibilities</h2><div class="clause">You must use Zyphor responsibly: protect your account credentials, respect other members, and never share malicious files, stolen accounts, unauthorized access tools, or misleading claims about virtual currency and promotions. Read the <a href="/community.html">community standards</a>, <a href="/privacy-ads.html">advertising and privacy guide</a>, and the complete Terms below before using account-based services.</div></div>
 <div id="sections"></div>
 
 <div class="grid" id="extras"></div>
@@ -410,7 +414,7 @@ footer.textContent =
 
 }
 
-loadTOS()
+loadTOS().catch(()=>{document.getElementById("sections").textContent="The full terms document could not be loaded. Refresh the page or contact Support.";})
 </script>
 
 </body>

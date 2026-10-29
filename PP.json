@@ -1,10 +1,29 @@
 {
-  "lastUpdated": "2026-07-31",
+  "lastUpdated": "2026-10-29",
   "hero": {
     "title": "Privacy Policy",
     "description": "This Privacy Policy explains how Zyphor collects, stores, processes, shares, protects, and otherwise handles information relating to users of our websites, applications, APIs, cloud services, and future products."
   },
   "sections": [
+    {
+      "title": "Contact and choices relating to personal data",
+      "content": [
+        "For inquiries about personal information handled by Zyphor, account data, or an advertising privacy concern, contact Zyphor through its official support portal at https://zyphor.cc/Support.html.",
+        "If an advertising consent message is active, use its settings or revocation controls to change the preferences it manages. Google Ads Settings controls Google's personalization preferences separately.",
+        "Applicable privacy legislation may give you rights to obtain information, correct or delete certain data, withdraw consent, object to certain processing, or request portability. The applicability of any right depends on the legal basis and circumstances; contact support to submit a request."
+      ]
+    },
+    {
+      "title": "Google advertising, cookies and personalized ads",
+      "content": [
+        "Zyphor may use Google AdSense to serve advertising on eligible public content pages after its advertising and consent setup is approved. Google ad-serving tags can use cookies or similar technologies; the presence of a publisher verification meta tag or ads.txt file does not itself mean advertisements are active.",
+        "Third-party vendors, including Google, may use cookies to serve ads based on a user's previous visits to Zyphor or other websites. Google's advertising cookies enable Google and its partners to serve ads based on a user's visit to this website and/or other sites on the internet.",
+        "Visitors can opt out of personalized advertising or adjust ad preferences through Google Ads Settings at https://adssettings.google.com/ and My Ad Center at https://myadcenter.google.com/. Additional information about opting out of certain third-party vendors is available at https://www.aboutads.info/. An opt-out does not necessarily prevent all advertising or all strictly necessary technologies.",
+        "If additional third-party ad technology vendors and networks are enabled in the AdSense account, their identities and choices should be made available to visitors through the active consent interface and relevant vendor disclosures. Zyphor must keep these disclosures in sync with its actual settings.",
+        "In the European Economic Area, United Kingdom, and Switzerland, an appropriate Google-certified IAB TCF consent management platform is required for covered Google advertising activity. This public policy is not a replacement for consent, and consent may be withdrawn through the mechanism provided by the active consent platform.",
+        "Zyphor intends to keep AdSense off private messages, private files, sign-in and password recovery, error pages, payment forms, user reports and other screens that primarily perform account actions. See the public explanation at https://zyphor.cc/privacy-ads.html for background."
+      ]
+    },
     {
       "title": "Scope",
       "content": [
@@ -207,800 +226,800 @@
       "content": [
         "We may collect approximate location derived from IP addresses and, where you explicitly grant permission and a feature requires it, more precise device location information.",
         "Location information may be used for security, fraud prevention, localization, legal compliance, improving services, and providing location-dependent features."
-  ]
-},
-{
-  "title": "Cookies",
-  "content": [
-    "We may use first-party cookies, third-party cookies, persistent cookies, session cookies, secure cookies, HTTP-only cookies, browser storage, Local Storage, Session Storage, IndexedDB, Cache Storage, service workers, and similar technologies.",
-    "These technologies may be used for authentication, personalization, remembering preferences, security, analytics, diagnostics, synchronization, fraud prevention, feature functionality, and improving the user experience."
-  ]
-},
-{
-  "title": "Browser Storage",
-  "content": [
-    "We may store information using Local Storage, Session Storage, IndexedDB, Cache Storage, browser caches, cookies, service workers, offline storage, and similar browser technologies.",
-    "Stored information may include preferences, authentication information, cached resources, application settings, synchronization data, feature flags, accessibility settings, temporary application data."
-  ]
-},
-{
-  "title": "Account Security",
-  "content": [
-    "We may collect password changes, password reset requests, login attempts, successful logins, failed logins, verification attempts, active sessions, remembered devices, authentication events, security notifications, and related security metadata.",
-    "Security information may be used to protect accounts, investigate abuse, detect compromised accounts, and improve account security."
-  ]
-},
-{
-  "title": "Identifiers",
-  "content": [
-    "We may generate or collect unique identifiers including account identifiers, user identifiers, installation identifiers, application identifiers, device identifiers, notification identifiers, cloud identifiers, API identifiers, request identifiers, log identifiers, anonymous identifiers, analytics identifiers, synchronization identifiers, and other identifiers required for operating Zyphor."
-  ]
-},
-{
-  "title": "Preferences",
-  "content": [
-    "We may collect user preferences including themes, appearance settings, notification preferences, privacy settings, language preferences, accessibility settings, regional settings, display preferences, application configuration, experimental feature enrollment, and personalization preferences."
-  ]
-},
-{
-  "title": "Accessibility",
-  "content": [
-    "We may collect accessibility preferences where available, including text scaling, reduced motion preferences, color preferences, accessibility feature usage, interface customization settings, keyboard navigation preferences, and other accessibility-related configuration."
-  ]
-},
-{
-  "title": "Feature Usage",
-  "content": [
-    "We may collect information regarding which Zyphor features are used, how frequently they are used, interaction frequency, feature availability, feature compatibility, usage duration, engagement metrics, and feature performance metrics."
-  ]
-},
-{
-  "title": "Application Configuration",
-  "content": [
-    "Applications may collect configuration information including enabled features, experimental features, installed modules, application settings, update channels, compatibility flags, cache settings, synchronization settings, diagnostic configuration, developer options, and runtime configuration."
-  ]
-},
-{
-  "title": "Cloud Synchronization",
-  "content": [
-    "Where synchronization services are available, we may collect synchronization events, synchronization history, synchronization failures, synchronization timestamps, synchronization conflicts, device associations, cloud identifiers, synchronized resources, queue information, and related synchronization metadata."
-  ]
-},
-{
-  "title": "Application Logs",
-  "content": [
-    "Applications may generate logs relating to startup, shutdown, updates, authentication, synchronization, downloads, uploads, notifications, application events, diagnostics, security events, feature initialization, plugin loading, configuration changes, and other operational information."
-  ]
-},
-{
-  "title": "User Content",
-  "content": [
-    "We may collect usernames, display names, biographies, profile pictures, banners, profile customization, uploaded content, public posts, private content, comments, replies, reactions, descriptions, tags, status messages, and other information you voluntarily submit.",
-    "User content may be processed for storage, synchronization, moderation, indexing, search, abuse prevention, backups, and service functionality."
-  ]
-},
-{
-  "title": "Media Information",
-  "content": [
-    "We may collect uploaded images, screenshots, profile pictures, banners, icons, videos, audio files, documents, compressed archives, backups, attachments, thumbnails, previews, metadata, dimensions, formats, file hashes, file sizes, MIME types, upload timestamps, and related metadata."
-  ]
-},
-{
-  "title": "Communication Metadata",
-  "content": [
-    "We may collect message identifiers, conversation identifiers, sender identifiers, recipient identifiers, timestamps, delivery status, read status, edit history, deletion history, attachment identifiers, reactions, mentions, replies, typing events where available, and other communication metadata."
-  ]
-},
-{
-  "title": "Relationship Information",
-  "content": [
-    "We may collect friend requests, accepted friendships, blocked users, ignored requests, pending requests, mutual friends, relationship history, friendship timestamps, interaction frequency, invitations, and related relationship information."
-  ]
-},
-{
-  "title": "Notification Preferences",
-  "content": [
-    "We may collect notification preferences including enabled notification categories, push notification settings, email notification settings, desktop notification settings, sound preferences, notification schedules, do-not-disturb settings, notification history, and interaction events."
-  ]
-},
-{
-  "title": "Support Records",
-  "content": [
-    "We may collect support tickets, ticket identifiers, ticket messages, uploaded evidence, screenshots, correspondence, ticket status, assigned staff, internal notes, moderation notes, resolution history, satisfaction feedback, and related support information."
-  ]
-},
-{
-  "title": "Audit Logs",
-  "content": [
-    "We may generate and retain audit logs relating to account changes, permission changes, authentication events, profile changes, moderation actions, administrative actions, security events, API usage, cloud operations, synchronization events, and other operational activities."
-  ]
-},
-{
-  "title": "Abuse Prevention",
-  "content": [
-    "We may collect information necessary to detect spam, scams, phishing, malicious software, harassment, impersonation, automated abuse, denial-of-service attacks, account compromise, ban evasion, suspicious activity, fraudulent behavior, and other violations of our Terms of Service."
-  ]
-},
-{
-  "title": "Behavioral Information",
-  "content": [
-    "We may collect interaction patterns including navigation behavior, click frequency, feature usage, session duration, activity timestamps, interaction timing, search activity, upload activity, download activity, and other behavioral information to improve functionality and security."
-  ]
-},
-{
-  "title": "Device Associations",
-  "content": [
-    "We may associate accounts with devices, installations, browsers, sessions, notification registrations, cloud synchronization identifiers, authentication devices, remembered devices, trusted devices, and related technical identifiers for operational and security purposes."
-  ]
-},
-{
-  "title": "Risk Analysis",
-  "content": [
-    "We may generate automated or manual risk assessments using authentication history, device information, connection information, account activity, abuse reports, moderation history, security events, behavioral indicators, and other available information to help protect Zyphor and its users."
-  ]
-},
-{
-  "title": "Diagnostic Analytics",
-  "content": [
-    "Diagnostic analytics may include crash frequency, startup duration, loading times, synchronization success rates, API latency, feature reliability, resource usage, network performance, application stability, compatibility statistics, and other operational measurements."
-  ]
-},
-{
-  "title": "Cloud Metadata",
-  "content": [
-    "For cloud services, we may collect folder structures, file identifiers, storage usage, upload history, download history, synchronization history, sharing history, storage quotas, restore events, backup history, access history, and related cloud metadata."
-  ]
-},
-{
-  "title": "Application Integrity",
-  "content": [
-    "We may collect information relating to application integrity including version information, update status, integrity verification results, compatibility information, installed modules, runtime configuration, security checks, application signatures where available, and technical diagnostics."
-  ]
-},
-{
-  "title": "Future Information Categories",
-  "content": [
-    "As Zyphor introduces new features, services, APIs, applications, desktop software, mobile software, cloud services, artificial intelligence systems, integrations, or technologies, additional categories of information reasonably necessary for those services may be collected, processed, stored, synchronized, analyzed, secured, and retained in accordance with this Privacy Policy and applicable law."
-  ]
-},
-{
-  "title": "Payment Information",
-  "content": [
-    "Where purchases, subscriptions, donations, or premium features are offered, we may collect payment-related metadata including transaction identifiers, purchase history, subscription status, billing country, currency, payment timestamps, invoice identifiers, refund history, payment processor responses, and fraud prevention information.",
-    "Payment card information may be processed by third-party payment providers rather than Zyphor where applicable."
-  ]
-},
-{
-  "title": "Subscription Information",
-  "content": [
-    "We may collect subscription status, subscription tier, renewal dates, cancellation history, promotional offers redeemed, trial history, feature entitlements, billing events, expiration dates, and associated metadata."
-  ]
-},
-{
-  "title": "Purchase History",
-  "content": [
-    "We may collect purchase history including purchased products, digital content, downloadable content, licenses, premium features, cloud storage plans, transaction timestamps, quantities, pricing information, promotional discounts, and purchase identifiers."
-  ]
-},
-{
-  "title": "Transaction Records",
-  "content": [
-    "We may maintain records relating to completed, pending, cancelled, refunded, disputed, declined, and failed transactions together with associated timestamps, identifiers, payment processor responses, and operational metadata."
-  ]
-},
-{
-  "title": "Developer API Access",
-  "content": [
-    "If developer APIs are provided, we may collect API keys, client identifiers, SDK versions, endpoint usage, request history, response codes, authentication events, rate limiting information, bandwidth usage, quotas, and diagnostic information."
-  ]
-},
-{
-  "title": "Rate Limiting",
-  "content": [
-    "We may collect request frequency, connection frequency, API request history, authentication attempts, upload frequency, download frequency, message frequency, and other activity required to enforce rate limits and protect the stability of Zyphor."
-  ]
-},
-{
-  "title": "Search Indexing",
-  "content": [
-    "Information may be indexed to improve search functionality, discoverability, synchronization, moderation, cloud organization, content retrieval, and operational performance where applicable."
-  ]
-},
-{
-  "title": "Backup Systems",
-  "content": [
-    "Information may be copied into encrypted backups, redundant storage, disaster recovery systems, replication services, archival systems, and restoration systems to improve reliability, business continuity, and recovery from failures."
-  ]
-},
-{
-  "title": "Data Retention",
-  "content": [
-    "Information may be retained for operational, legal, security, moderation, auditing, fraud prevention, disaster recovery, analytics, research, business continuity, compliance, contractual, tax, accounting, or other legitimate business purposes.",
-    "Retention periods may vary depending on the category of information, applicable law, operational requirements, user requests, security investigations, or technical limitations."
-  ]
-},
-{
-  "title": "Artificial Intelligence",
-  "content": [
-    "Where artificial intelligence or automated systems are used, information may be processed for moderation, spam detection, abuse prevention, search improvement, recommendations, diagnostics, support assistance, accessibility, translation, categorization, and service improvements in accordance with applicable law."
-  ]
-},
-{
-  "title": "Automated Decision Systems",
-  "content": [
-    "Automated systems may assist in detecting abuse, spam, fraud, compromised accounts, suspicious activity, harmful content, policy violations, unusual authentication behavior, and technical anomalies requiring investigation."
-  ]
-},
-{
-  "title": "Legal Compliance",
-  "content": [
-    "Information may be collected, processed, retained, preserved, disclosed, or otherwise handled where reasonably necessary to comply with applicable laws, regulations, court orders, legal processes, government requests, law enforcement requests, or regulatory obligations."
-  ]
-},
-{
-  "title": "Law Enforcement Requests",
-  "content": [
-    "Where legally required or otherwise permitted under applicable law, Zyphor may preserve, disclose, or provide relevant information to authorized law enforcement agencies, courts, regulators, or governmental authorities."
-  ]
-},
-{
-  "title": "Business Transfers",
-  "content": [
-    "If Zyphor undergoes a merger, acquisition, financing, asset sale, restructuring, insolvency proceeding, or similar business transaction, user information may be transferred as part of that transaction in accordance with applicable law."
-  ]
-},
-{
-  "title": "Policy Updates",
-  "content": [
-    "This Privacy Policy may be modified, expanded, reorganized, or updated to reflect new technologies, features, services, legal requirements, operational changes, security practices, or business developments.",
-    "Continued use of Zyphor following the effective date of an updated Privacy Policy constitutes acceptance of the revised Privacy Policy to the extent permitted by applicable law."
-  ]
-},
-{
-  "title": "International Data Transfers",
-  "content": [
-    "Information may be processed, stored, backed up, transferred, or accessed in countries other than your own where Zyphor, its service providers, infrastructure providers, cloud providers, or business partners operate.",
-    "Appropriate safeguards may be implemented where required by applicable law."
-  ]
-},
-{
-  "title": "Infrastructure Providers",
-  "content": [
-    "Information may be processed by cloud hosting providers, content delivery networks, storage providers, notification providers, email providers, DNS providers, monitoring providers, analytics providers, payment providers, authentication providers, and other infrastructure necessary to operate Zyphor."
-  ]
-},
-{
-  "title": "Caching",
-  "content": [
-    "Information may be temporarily stored within browser caches, application caches, CDN caches, proxy caches, operating system caches, cloud caches, synchronization caches, memory caches, and similar systems to improve performance and reliability."
-  ]
-},
-{
-  "title": "Temporary Files",
-  "content": [
-    "Applications may generate temporary files, cached images, temporary uploads, download caches, thumbnails, previews, synchronization files, installation files, update packages, and diagnostic files during normal operation."
-  ]
-},
-{
-  "title": "Content Delivery Networks",
-  "content": [
-    "Static assets, downloads, images, files, application resources, updates, and other content may be distributed through content delivery networks to improve availability, reliability, and download performance."
-  ]
-},
-{
-  "title": "Email Communications",
-  "content": [
-    "We may collect email delivery status, verification status, delivery failures, bounce information, unsubscribe requests, support correspondence, security notifications, password reset requests, verification emails, and communication preferences."
-  ]
-},
-{
-  "title": "Verification Information",
-  "content": [
-    "We may collect verification codes, verification requests, verification timestamps, successful verification events, failed verification attempts, recovery requests, and other information necessary to verify ownership of an account."
-  ]
-},
-{
-  "title": "Account Recovery",
-  "content": [
-    "When recovering an account, we may collect recovery requests, recovery identifiers, previous authentication information, verification history, recovery timestamps, support correspondence, and related account recovery information."
-  ]
-},
-{
-  "title": "Connected Services",
-  "content": [
-    "Where supported, you may connect third-party accounts or services to Zyphor. Information received depends on your permissions, the connected service, and the features you choose to use."
-  ]
-},
-{
-  "title": "External Integrations",
-  "content": [
-    "Zyphor may integrate with third-party authentication providers, payment providers, analytics providers, notification providers, cloud providers, communication services, developer platforms, or other external services required for platform functionality."
-  ]
-},
-{
-  "title": "Data Accuracy",
-  "content": [
-    "Users are responsible for ensuring that information submitted to Zyphor is accurate, complete, and up to date. Inaccurate information may affect account functionality, authentication, support, or other services."
-  ]
-},
-{
-  "title": "Inactive Accounts",
-  "content": [
-    "Accounts that remain inactive for extended periods may continue to retain information required for operational, legal, security, fraud prevention, moderation, archival, backup, or other legitimate business purposes unless deleted in accordance with applicable law."
-  ]
-},
-{
-  "title": "Research and Development",
-  "content": [
-    "Information may be analyzed in aggregated or de-identified form to improve existing services, develop new products, measure reliability, improve security, identify trends, evaluate new features, and conduct internal research."
-  ]
-},
-{
-  "title": "Aggregated Information",
-  "content": [
-    "Information may be aggregated, anonymized, or de-identified where reasonably possible for analytics, reporting, business intelligence, operational statistics, product development, academic research, and service improvements."
-  ]
-},
-{
-  "title": "Service Availability",
-  "content": [
-    "Operational information may be collected to monitor uptime, outages, infrastructure health, service performance, resource utilization, maintenance events, incident response, disaster recovery, and overall platform availability."
-  ]
-},
-{
-  "title": "Children's Privacy",
-  "content": [
-    "Where required by applicable law, Zyphor does not knowingly collect personal information from children below the minimum age required to use the service without appropriate authorization.",
-    "If we become aware that information has been collected in violation of applicable law, we may investigate, restrict the account, or remove the information where appropriate."
-  ]
-},
-{
-  "title": "Parental Requests",
-  "content": [
-    "Parents or legal guardians who believe that a child has provided personal information in violation of applicable law may contact Zyphor to request review, correction, restriction, or deletion of applicable information where legally required."
-  ]
-},
-{
-  "title": "Right of Access",
-  "content": [
-    "Where provided by applicable law, users may request access to certain personal information relating to their account and the processing of that information, subject to verification, security requirements, and applicable legal limitations."
-  ]
-},
-{
-  "title": "Right to Correction",
-  "content": [
-    "Users may request correction of inaccurate or incomplete personal information where required by applicable law and subject to verification of the request."
-  ]
-},
-{
-  "title": "Right to Deletion",
-  "content": [
-    "Where applicable law provides such rights, users may request deletion of certain personal information. Some information may continue to be retained where required for security, fraud prevention, legal compliance, dispute resolution, backups, auditing, or other legitimate business purposes."
-  ]
-},
-{
-  "title": "Right to Restrict Processing",
-  "content": [
-    "Where applicable law provides such rights, users may request restriction of certain processing activities. Restrictions may not apply where processing is necessary for security, legal obligations, contractual performance, fraud prevention, or other lawful purposes."
-  ]
-},
-{
-  "title": "Right to Data Portability",
-  "content": [
-    "Where applicable law provides such rights, users may request a copy of certain personal information in a structured, commonly used, and machine-readable format, subject to verification and applicable legal limitations."
-  ]
-},
-{
-  "title": "Right to Object",
-  "content": [
-    "Where applicable law provides such rights, users may object to certain categories of processing. Some processing may continue where required for legitimate interests, contractual obligations, legal compliance, fraud prevention, or security."
-  ]
-},
-{
-  "title": "Identity Verification",
-  "content": [
-    "Before fulfilling privacy-related requests, Zyphor may require reasonable verification of identity to help protect user accounts, prevent unauthorized disclosures, and comply with applicable legal obligations."
-  ]
-},
-{
-  "title": "Request Limitations",
-  "content": [
-    "Privacy requests may be refused, delayed, limited, or partially fulfilled where permitted by applicable law, including where requests are repetitive, excessive, fraudulent, technically infeasible, would adversely affect the rights of others, or would interfere with security, investigations, or legal obligations."
-  ]
-},
-{
-  "title": "California Privacy Rights",
-  "content": [
-    "Residents of jurisdictions providing additional privacy rights, including California where applicable, may exercise those rights in accordance with applicable law, subject to verification and statutory exceptions."
-  ]
-},
-{
-  "title": "European Privacy Rights",
-  "content": [
-    "Individuals located within jurisdictions applying the General Data Protection Regulation (GDPR), UK GDPR, or similar legislation may exercise applicable privacy rights subject to verification, legal requirements, and applicable exemptions."
-  ]
-},
-{
-  "title": "Legal Bases for Processing",
-  "content": [
-    "Where required by applicable law, information may be processed based on user consent, contractual necessity, legitimate interests, compliance with legal obligations, protection of vital interests, public interest, or other lawful bases recognized by applicable legislation."
-  ]
-},
-{
-  "title": "Withdrawal of Consent",
-  "content": [
-    "Where processing is based upon consent, users may withdraw consent at any time where permitted by applicable law. Withdrawal of consent does not affect the lawfulness of processing performed before withdrawal and may affect the availability of certain Zyphor features."
-  ]
-},
-{
-  "title": "Privacy Contact",
-  "content": [
-    "Privacy-related questions, requests, or concerns may be submitted through Zyphor's designated support channels or other contact methods provided by Zyphor. Additional verification may be required before requests are processed."
-  ]
-},
-{
-  "title": "Account Deletion",
-  "content": [
-    "Users may request deletion of their Zyphor account where supported. Deleting an account may permanently remove access to Zyphor services and associated features.",
-    "Certain information may continue to be retained where necessary for legal compliance, fraud prevention, abuse investigations, backups, dispute resolution, auditing, security, contractual obligations, or other legitimate business purposes."
-  ]
-},
-{
-  "title": "Residual Information",
-  "content": [
-    "Deletion of an account or content may not immediately remove information from backups, disaster recovery systems, replicated storage, archived logs, audit records, security records, or temporary caches.",
-    "Residual information may remain until backup rotation, system maintenance, or secure deletion procedures have been completed."
-  ]
-},
-{
-  "title": "Security Technologies",
-  "content": [
-    "Zyphor may use automated and manual security technologies including authentication systems, encryption, hashing, device verification, browser verification, risk analysis, anomaly detection, abuse detection, spam detection, malware detection, intrusion detection, firewall systems, rate limiting, request validation, integrity verification, and similar technologies."
-  ]
-},
-{
-  "title": "VPN and Proxy Detection",
-  "content": [
-    "Where necessary for fraud prevention, abuse prevention, or security, Zyphor may detect or analyze the use of VPNs, proxies, hosting providers, anonymization services, datacenter connections, relay services, or similar technologies."
-  ]
-},
-{
-  "title": "Bot Detection",
-  "content": [
-    "We may analyze account activity, browser behavior, request frequency, interaction patterns, automation indicators, API usage, mouse events where applicable, timing information, and similar technical signals to identify automated activity, bots, abuse, or unauthorized access."
-  ]
-},
-{
-  "title": "Malicious Activity",
-  "content": [
-    "Information may be processed to investigate malware distribution, phishing, spam campaigns, account hijacking, credential stuffing, denial-of-service attacks, scraping, reverse engineering, unauthorized automation, exploitation attempts, and other malicious activity affecting Zyphor."
-  ]
-},
-{
-  "title": "Integrity Verification",
-  "content": [
-    "Desktop applications, mobile applications, APIs, and future Zyphor software may perform integrity verification, compatibility verification, update verification, configuration validation, and security verification to improve platform reliability and security."
-  ]
-},
-{
-  "title": "Logging Infrastructure",
-  "content": [
-    "Operational systems may generate application logs, authentication logs, audit logs, synchronization logs, API logs, network logs, error logs, security logs, moderation logs, cloud logs, infrastructure logs, and diagnostic logs required for operating and protecting Zyphor."
-  ]
-},
-{
-  "title": "Fraud Investigations",
-  "content": [
-    "Information may be retained, analyzed, correlated, or disclosed where reasonably necessary to investigate fraud, financial abuse, impersonation, account compromise, unauthorized access, policy violations, or other harmful activities."
-  ]
-},
-{
-  "title": "Data Correlation",
-  "content": [
-    "Information collected from different Zyphor services, devices, applications, sessions, browsers, authentication events, support interactions, cloud services, APIs, and other legitimate sources may be correlated where reasonably necessary for security, fraud prevention, analytics, diagnostics, synchronization, or providing requested services."
-  ]
-},
-{
-  "title": "Internal Operations",
-  "content": [
-    "Information may be used internally for engineering, software development, debugging, quality assurance, product testing, infrastructure management, system administration, incident response, customer support, moderation, analytics, auditing, compliance, and business operations."
-  ]
-},
-{
-  "title": "Business Analytics",
-  "content": [
-    "Aggregated or de-identified information may be used to measure product performance, user engagement, feature adoption, service reliability, infrastructure utilization, operational trends, financial planning, capacity planning, and other business analytics."
-  ]
-},
-{
-  "title": "Future Technologies",
-  "content": [
-    "As technology evolves, Zyphor may implement new software, hardware, infrastructure, security technologies, cloud systems, artificial intelligence systems, authentication methods, storage technologies, networking technologies, synchronization methods, or operational systems that require the collection and processing of additional information reasonably necessary to provide those services."
-  ]
-},
-{
-  "title": "Corporate Changes",
-  "content": [
-    "If Zyphor undergoes restructuring, financing, merger, acquisition, investment, asset transfer, bankruptcy, reorganization, or similar corporate events, information may be transferred, processed, or disclosed as reasonably necessary to complete such transactions in accordance with applicable law."
-  ]
-},
-{
-  "title": "Entire Privacy Policy",
-  "content": [
-    "This Privacy Policy applies collectively to all current and future Zyphor websites, desktop applications, mobile applications, APIs, cloud services, developer tools, downloads, installers, integrations, artificial intelligence systems, authentication services, notification systems, support services, storage systems, communication systems, and any other products or services operated under the Zyphor brand unless a separate privacy policy explicitly replaces or supplements this Privacy Policy."
-  ]
-},
-{
-  "title": "Service Providers",
-  "content": [
-    "Zyphor may use third-party service providers to assist with infrastructure, hosting, storage, content delivery, authentication, analytics, notifications, monitoring, backups, security, payment processing, email delivery, customer support, artificial intelligence services, and other operational functions.",
-    "Such providers may process information only as reasonably necessary to perform services on behalf of Zyphor or as otherwise permitted by applicable law."
-  ]
-},
-{
-  "title": "Hosting Infrastructure",
-  "content": [
-    "Information may be stored, replicated, cached, processed, or transmitted through cloud infrastructure, dedicated servers, virtual servers, containerized environments, databases, object storage, backup systems, disaster recovery systems, and other hosting technologies."
-  ]
-},
-{
-  "title": "Content Moderation",
-  "content": [
-    "Information may be reviewed manually or automatically to identify spam, malicious content, prohibited material, abusive conduct, harassment, impersonation, fraud, policy violations, illegal activity, security threats, or other harmful behavior."
-  ]
-},
-{
-  "title": "Machine Learning",
-  "content": [
-    "Where implemented, machine learning systems may analyze technical information, behavioral patterns, moderation history, spam indicators, fraud indicators, authentication events, and other operational information to improve platform security, moderation, reliability, and service quality."
-  ]
-},
-{
-  "title": "Recommendation Systems",
-  "content": [
-    "Recommendation systems may use account information, preferences, interaction history, feature usage, friendships, engagement metrics, and other relevant information to personalize content, improve discoverability, and recommend features or services."
-  ]
-},
-{
-  "title": "Service Improvement",
-  "content": [
-    "Information may be collected and analyzed to improve software quality, user experience, accessibility, infrastructure, security, moderation systems, synchronization reliability, cloud performance, APIs, desktop applications, mobile applications, and future Zyphor services."
-  ]
-},
-{
-  "title": "Compatibility Testing",
-  "content": [
-    "Technical information may be collected to identify compatibility issues involving browsers, operating systems, hardware configurations, screen resolutions, application versions, network environments, accessibility technologies, and future software platforms."
-  ]
-},
-{
-  "title": "Diagnostic Testing",
-  "content": [
-    "Diagnostic information may be generated during software testing, debugging, quality assurance, beta testing, experimental feature testing, release validation, performance benchmarking, stability analysis, and incident investigations."
-  ]
-},
-{
-  "title": "Experimental Features",
-  "content": [
-    "Users participating in beta programs, preview releases, experimental features, early access programs, or testing environments may generate additional diagnostic information, feedback, usage analytics, compatibility reports, stability reports, and testing metrics."
-  ]
-},
-{
-  "title": "Telemetry",
-  "content": [
-    "Applications may transmit technical telemetry relating to application health, feature availability, crash frequency, synchronization performance, update status, compatibility information, startup performance, shutdown events, configuration information, and diagnostic events."
-  ]
-},
-{
-  "title": "Resource Utilization",
-  "content": [
-    "Operational systems may monitor processor usage, memory utilization, storage availability, bandwidth usage, synchronization workload, request volume, infrastructure capacity, queue lengths, cache efficiency, and related operational metrics where available."
-  ]
-},
-{
-  "title": "Operational Monitoring",
-  "content": [
-    "Information may be collected to monitor server health, infrastructure performance, service uptime, network availability, storage utilization, application responsiveness, cloud reliability, API performance, incident response, and operational stability."
-  ]
-},
-{
-  "title": "Developer Tools",
-  "content": [
-    "Developer tools, SDKs, APIs, integrations, testing utilities, debugging systems, documentation platforms, and future development resources may generate operational logs, authentication records, request history, diagnostic information, and usage statistics."
-  ]
-},
-{
-  "title": "Infrastructure Security",
-  "content": [
-    "Infrastructure security measures may include authentication systems, encryption, secure communications, access controls, monitoring systems, audit logging, integrity verification, intrusion detection, vulnerability management, firewall protection, and other industry-standard security practices."
-  ]
-},
-{
-  "title": "Platform Expansion",
-  "content": [
-    "As Zyphor expands into new products, operating systems, devices, hardware platforms, software ecosystems, cloud environments, developer platforms, artificial intelligence systems, or future technologies, additional categories of information reasonably necessary to provide those services may be collected, processed, stored, synchronized, analyzed, secured, retained, and disclosed in accordance with this Privacy Policy and applicable law."
-  ]
-},
-{
-  "title": "System Metadata",
-  "content": [
-    "We may collect metadata relating to accounts, files, messages, uploads, downloads, notifications, synchronization events, API requests, cloud storage, support tickets, moderation actions, authentication events, and other Zyphor services.",
-    "Metadata may include identifiers, timestamps, sizes, formats, versions, ownership information, relationships, references, status values, and other operational information."
-  ]
-},
-{
-  "title": "Database Records",
-  "content": [
-    "Information stored within Zyphor databases may include internal identifiers, references, indexes, timestamps, version history, change history, relationship mappings, audit records, synchronization records, moderation records, and operational metadata necessary for maintaining the platform."
-  ]
-},
-{
-  "title": "Version History",
-  "content": [
-    "Where supported, Zyphor may retain previous versions of files, profile information, settings, cloud content, application configurations, or other resources for synchronization, restoration, auditing, security, or operational purposes."
-  ]
-},
-{
-  "title": "Synchronization Records",
-  "content": [
-    "Synchronization systems may collect synchronization timestamps, device identifiers, resource identifiers, synchronization status, synchronization conflicts, synchronization failures, synchronization retries, synchronization queues, and related operational metadata."
-  ]
-},
-{
-  "title": "Storage Statistics",
-  "content": [
-    "We may collect storage usage, available storage, allocated storage, quota utilization, upload statistics, download statistics, synchronization volume, cache utilization, backup usage, and related storage metrics."
-  ]
-},
-{
-  "title": "Download Statistics",
-  "content": [
-    "We may collect download counts, download timestamps, application versions, operating systems, download sources, update channels, download failures, installation attempts, verification status, and related download information."
-  ]
-},
-{
-  "title": "Upload Statistics",
-  "content": [
-    "We may collect upload timestamps, upload sizes, upload frequency, upload failures, upload success rates, upload destinations, content categories, synchronization status, and associated metadata."
-  ]
-},
-{
-  "title": "Feature Configuration",
-  "content": [
-    "Feature configuration information may include enabled features, disabled features, experimental features, beta participation, accessibility configuration, notification configuration, synchronization settings, cloud settings, developer settings, and application preferences."
-  ]
-},
-{
-  "title": "Server Communications",
-  "content": [
-    "Applications and websites may communicate with Zyphor servers for authentication, synchronization, notifications, updates, downloads, uploads, diagnostics, security verification, configuration retrieval, feature availability, and operational purposes."
-  ]
-},
-{
-  "title": "Connection Quality",
-  "content": [
-    "We may collect latency, response times, packet loss estimates, connection stability, bandwidth estimates, retry counts, timeout information, DNS performance, CDN routing information, and similar network performance metrics."
-  ]
-},
-{
-  "title": "Administrative Actions",
-  "content": [
-    "Administrative systems may generate records relating to account actions, moderation actions, permission changes, support actions, security investigations, account recovery, infrastructure administration, operational changes, and other administrative activities."
-  ]
-},
-{
-  "title": "Incident Response",
-  "content": [
-    "Information may be collected, preserved, analyzed, and disclosed where reasonably necessary to investigate security incidents, abuse reports, fraud, software defects, outages, data integrity issues, infrastructure failures, or other operational incidents."
-  ]
-},
-{
-  "title": "Business Intelligence",
-  "content": [
-    "Aggregated, statistical, anonymous, or de-identified information may be used for reporting, forecasting, infrastructure planning, financial planning, capacity management, operational analysis, product planning, market analysis, and internal decision making."
-  ]
-},
-{
-  "title": "Third-Party Disclosures",
-  "content": [
-    "Information may be disclosed to professional advisers, auditors, insurers, payment providers, hosting providers, infrastructure providers, analytics providers, notification providers, legal representatives, government authorities where legally required, or other organizations reasonably necessary for operating Zyphor or complying with applicable law."
-  ]
-},
-{
-  "title": "Comprehensive Processing",
-  "content": [
-    "Information described within this Privacy Policy may be collected, generated, received, inferred, organized, structured, stored, adapted, modified, retrieved, consulted, analyzed, combined, indexed, synchronized, transmitted, disclosed, transferred, shared, archived, encrypted, pseudonymized, anonymized, de-identified, backed up, restored, retained, restricted, deleted, or otherwise processed where reasonably necessary to provide, improve, secure, maintain, support, develop, comply with legal obligations, or otherwise operate Zyphor in accordance with this Privacy Policy and applicable law."
-  ]
-},
-{
-  "title": "Communication Services",
-  "content": [
-    "Zyphor may provide messaging, voice, video, support, collaboration, community, notification, and communication services. Information processed through these services may include messages, attachments, metadata, delivery information, timestamps, interaction history, and related operational records."
-  ]
-},
-{
-  "title": "Profile Information",
-  "content": [
-    "Profile information may include usernames, display names, profile photographs, banners, biographies, pronouns, status messages, custom profile fields, badges, account creation dates, profile customization, public profile visibility, and other information you choose to provide."
-  ]
-},
-{
-  "title": "Community Participation",
-  "content": [
-    "Information relating to participation in communities, groups, servers, channels, forums, events, discussions, reactions, memberships, invitations, moderation actions, and community settings may be collected and processed to provide community functionality."
-  ]
-},
-{
-  "title": "Presence Information",
-  "content": [
-    "Where supported, Zyphor may process online status, activity status, last active information, typing indicators, read receipts, availability status, device activity, application usage status, and related presence information."
-  ]
-},
-{
-  "title": "Notification Delivery",
-  "content": [
-    "Notification systems may process notification identifiers, delivery timestamps, delivery status, acknowledgment status, interaction events, device registration information, notification preferences, retry attempts, and related operational metadata."
-  ]
-},
-{
-  "title": "Search Functionality",
-  "content": [
-    "Search systems may process search queries, search filters, search timestamps, autocomplete requests, indexed information, search history where applicable, search analytics, and related metadata to improve search functionality and service performance."
-  ]
-},
-{
-  "title": "Media Processing",
-  "content": [
-    "Uploaded media may be processed to generate previews, thumbnails, compressed versions, optimized formats, metadata, virus scans, integrity verification, content categorization, and other processing necessary for storage, synchronization, delivery, moderation, and display."
-  ]
-},
-{
-  "title": "Content Classification",
-  "content": [
-    "Content may be automatically or manually classified for moderation, accessibility, organization, search indexing, storage optimization, spam detection, abuse prevention, recommendation systems, analytics, and other operational purposes."
-  ]
-},
-{
-  "title": "Spam Prevention",
-  "content": [
-    "Information may be processed to identify spam, phishing, malicious links, automated behavior, mass messaging, abusive uploads, harmful content, suspicious account activity, and other behavior that could negatively affect the Zyphor platform or its users."
-  ]
-},
-{
-  "title": "Abuse Reporting",
-  "content": [
-    "Users may submit reports regarding inappropriate behavior, harmful content, impersonation, fraud, harassment, copyright concerns, policy violations, security concerns, or other issues. Submitted reports and related evidence may be retained for investigation and enforcement purposes."
-  ]
-},
-{
-  "title": "Enforcement Actions",
-  "content": [
-    "Where necessary, Zyphor may issue warnings, remove content, restrict features, suspend accounts, terminate accounts, preserve evidence, notify affected users, cooperate with legal authorities where required, and take other actions reasonably necessary to enforce platform policies."
-  ]
-},
-{
-  "title": "Accessibility",
-  "content": [
-    "Information relating to accessibility settings, interface preferences, font scaling, language preferences, display configuration, assistive technology compatibility, accessibility features, and related settings may be processed to improve accessibility and user experience."
-  ]
-},
-{
-  "title": "Localization",
-  "content": [
-    "Language preferences, regional settings, time zones, localization preferences, date formats, number formats, currency preferences, and other localization information may be processed to personalize the Zyphor experience."
-  ]
-},
-{
-  "title": "Business Operations",
-  "content": [
-    "Information may be processed for accounting, auditing, legal compliance, customer support, infrastructure management, financial planning, operational planning, vendor management, licensing, security, quality assurance, training, documentation, and general business administration."
-  ]
-},
-{
-  "title": "Reservation of Rights",
-  "content": [
-    "Zyphor reserves the right to collect, generate, receive, infer, process, store, secure, analyze, synchronize, transfer, disclose, retain, archive, delete, anonymize, or otherwise process additional categories of information that become reasonably necessary to operate existing or future Zyphor products, services, technologies, infrastructure, security systems, or business operations, to the extent permitted by applicable law and as described in updated versions of this Privacy Policy."
-  ]
-}
+      ]
+    },
+    {
+      "title": "Cookies",
+      "content": [
+        "We may use first-party cookies, third-party cookies, persistent cookies, session cookies, secure cookies, HTTP-only cookies, browser storage, Local Storage, Session Storage, IndexedDB, Cache Storage, service workers, and similar technologies.",
+        "These technologies may be used for authentication, personalization, remembering preferences, security, analytics, diagnostics, synchronization, fraud prevention, feature functionality, and improving the user experience."
+      ]
+    },
+    {
+      "title": "Browser Storage",
+      "content": [
+        "We may store information using Local Storage, Session Storage, IndexedDB, Cache Storage, browser caches, cookies, service workers, offline storage, and similar browser technologies.",
+        "Stored information may include preferences, authentication information, cached resources, application settings, synchronization data, feature flags, accessibility settings, temporary application data."
+      ]
+    },
+    {
+      "title": "Account Security",
+      "content": [
+        "We may collect password changes, password reset requests, login attempts, successful logins, failed logins, verification attempts, active sessions, remembered devices, authentication events, security notifications, and related security metadata.",
+        "Security information may be used to protect accounts, investigate abuse, detect compromised accounts, and improve account security."
+      ]
+    },
+    {
+      "title": "Identifiers",
+      "content": [
+        "We may generate or collect unique identifiers including account identifiers, user identifiers, installation identifiers, application identifiers, device identifiers, notification identifiers, cloud identifiers, API identifiers, request identifiers, log identifiers, anonymous identifiers, analytics identifiers, synchronization identifiers, and other identifiers required for operating Zyphor."
+      ]
+    },
+    {
+      "title": "Preferences",
+      "content": [
+        "We may collect user preferences including themes, appearance settings, notification preferences, privacy settings, language preferences, accessibility settings, regional settings, display preferences, application configuration, experimental feature enrollment, and personalization preferences."
+      ]
+    },
+    {
+      "title": "Accessibility",
+      "content": [
+        "We may collect accessibility preferences where available, including text scaling, reduced motion preferences, color preferences, accessibility feature usage, interface customization settings, keyboard navigation preferences, and other accessibility-related configuration."
+      ]
+    },
+    {
+      "title": "Feature Usage",
+      "content": [
+        "We may collect information regarding which Zyphor features are used, how frequently they are used, interaction frequency, feature availability, feature compatibility, usage duration, engagement metrics, and feature performance metrics."
+      ]
+    },
+    {
+      "title": "Application Configuration",
+      "content": [
+        "Applications may collect configuration information including enabled features, experimental features, installed modules, application settings, update channels, compatibility flags, cache settings, synchronization settings, diagnostic configuration, developer options, and runtime configuration."
+      ]
+    },
+    {
+      "title": "Cloud Synchronization",
+      "content": [
+        "Where synchronization services are available, we may collect synchronization events, synchronization history, synchronization failures, synchronization timestamps, synchronization conflicts, device associations, cloud identifiers, synchronized resources, queue information, and related synchronization metadata."
+      ]
+    },
+    {
+      "title": "Application Logs",
+      "content": [
+        "Applications may generate logs relating to startup, shutdown, updates, authentication, synchronization, downloads, uploads, notifications, application events, diagnostics, security events, feature initialization, plugin loading, configuration changes, and other operational information."
+      ]
+    },
+    {
+      "title": "User Content",
+      "content": [
+        "We may collect usernames, display names, biographies, profile pictures, banners, profile customization, uploaded content, public posts, private content, comments, replies, reactions, descriptions, tags, status messages, and other information you voluntarily submit.",
+        "User content may be processed for storage, synchronization, moderation, indexing, search, abuse prevention, backups, and service functionality."
+      ]
+    },
+    {
+      "title": "Media Information",
+      "content": [
+        "We may collect uploaded images, screenshots, profile pictures, banners, icons, videos, audio files, documents, compressed archives, backups, attachments, thumbnails, previews, metadata, dimensions, formats, file hashes, file sizes, MIME types, upload timestamps, and related metadata."
+      ]
+    },
+    {
+      "title": "Communication Metadata",
+      "content": [
+        "We may collect message identifiers, conversation identifiers, sender identifiers, recipient identifiers, timestamps, delivery status, read status, edit history, deletion history, attachment identifiers, reactions, mentions, replies, typing events where available, and other communication metadata."
+      ]
+    },
+    {
+      "title": "Relationship Information",
+      "content": [
+        "We may collect friend requests, accepted friendships, blocked users, ignored requests, pending requests, mutual friends, relationship history, friendship timestamps, interaction frequency, invitations, and related relationship information."
+      ]
+    },
+    {
+      "title": "Notification Preferences",
+      "content": [
+        "We may collect notification preferences including enabled notification categories, push notification settings, email notification settings, desktop notification settings, sound preferences, notification schedules, do-not-disturb settings, notification history, and interaction events."
+      ]
+    },
+    {
+      "title": "Support Records",
+      "content": [
+        "We may collect support tickets, ticket identifiers, ticket messages, uploaded evidence, screenshots, correspondence, ticket status, assigned staff, internal notes, moderation notes, resolution history, satisfaction feedback, and related support information."
+      ]
+    },
+    {
+      "title": "Audit Logs",
+      "content": [
+        "We may generate and retain audit logs relating to account changes, permission changes, authentication events, profile changes, moderation actions, administrative actions, security events, API usage, cloud operations, synchronization events, and other operational activities."
+      ]
+    },
+    {
+      "title": "Abuse Prevention",
+      "content": [
+        "We may collect information necessary to detect spam, scams, phishing, malicious software, harassment, impersonation, automated abuse, denial-of-service attacks, account compromise, ban evasion, suspicious activity, fraudulent behavior, and other violations of our Terms of Service."
+      ]
+    },
+    {
+      "title": "Behavioral Information",
+      "content": [
+        "We may collect interaction patterns including navigation behavior, click frequency, feature usage, session duration, activity timestamps, interaction timing, search activity, upload activity, download activity, and other behavioral information to improve functionality and security."
+      ]
+    },
+    {
+      "title": "Device Associations",
+      "content": [
+        "We may associate accounts with devices, installations, browsers, sessions, notification registrations, cloud synchronization identifiers, authentication devices, remembered devices, trusted devices, and related technical identifiers for operational and security purposes."
+      ]
+    },
+    {
+      "title": "Risk Analysis",
+      "content": [
+        "We may generate automated or manual risk assessments using authentication history, device information, connection information, account activity, abuse reports, moderation history, security events, behavioral indicators, and other available information to help protect Zyphor and its users."
+      ]
+    },
+    {
+      "title": "Diagnostic Analytics",
+      "content": [
+        "Diagnostic analytics may include crash frequency, startup duration, loading times, synchronization success rates, API latency, feature reliability, resource usage, network performance, application stability, compatibility statistics, and other operational measurements."
+      ]
+    },
+    {
+      "title": "Cloud Metadata",
+      "content": [
+        "For cloud services, we may collect folder structures, file identifiers, storage usage, upload history, download history, synchronization history, sharing history, storage quotas, restore events, backup history, access history, and related cloud metadata."
+      ]
+    },
+    {
+      "title": "Application Integrity",
+      "content": [
+        "We may collect information relating to application integrity including version information, update status, integrity verification results, compatibility information, installed modules, runtime configuration, security checks, application signatures where available, and technical diagnostics."
+      ]
+    },
+    {
+      "title": "Future Information Categories",
+      "content": [
+        "As Zyphor introduces new features, services, APIs, applications, desktop software, mobile software, cloud services, artificial intelligence systems, integrations, or technologies, additional categories of information reasonably necessary for those services may be collected, processed, stored, synchronized, analyzed, secured, and retained in accordance with this Privacy Policy and applicable law."
+      ]
+    },
+    {
+      "title": "Payment Information",
+      "content": [
+        "Where purchases, subscriptions, donations, or premium features are offered, we may collect payment-related metadata including transaction identifiers, purchase history, subscription status, billing country, currency, payment timestamps, invoice identifiers, refund history, payment processor responses, and fraud prevention information.",
+        "Payment card information may be processed by third-party payment providers rather than Zyphor where applicable."
+      ]
+    },
+    {
+      "title": "Subscription Information",
+      "content": [
+        "We may collect subscription status, subscription tier, renewal dates, cancellation history, promotional offers redeemed, trial history, feature entitlements, billing events, expiration dates, and associated metadata."
+      ]
+    },
+    {
+      "title": "Purchase History",
+      "content": [
+        "We may collect purchase history including purchased products, digital content, downloadable content, licenses, premium features, cloud storage plans, transaction timestamps, quantities, pricing information, promotional discounts, and purchase identifiers."
+      ]
+    },
+    {
+      "title": "Transaction Records",
+      "content": [
+        "We may maintain records relating to completed, pending, cancelled, refunded, disputed, declined, and failed transactions together with associated timestamps, identifiers, payment processor responses, and operational metadata."
+      ]
+    },
+    {
+      "title": "Developer API Access",
+      "content": [
+        "If developer APIs are provided, we may collect API keys, client identifiers, SDK versions, endpoint usage, request history, response codes, authentication events, rate limiting information, bandwidth usage, quotas, and diagnostic information."
+      ]
+    },
+    {
+      "title": "Rate Limiting",
+      "content": [
+        "We may collect request frequency, connection frequency, API request history, authentication attempts, upload frequency, download frequency, message frequency, and other activity required to enforce rate limits and protect the stability of Zyphor."
+      ]
+    },
+    {
+      "title": "Search Indexing",
+      "content": [
+        "Information may be indexed to improve search functionality, discoverability, synchronization, moderation, cloud organization, content retrieval, and operational performance where applicable."
+      ]
+    },
+    {
+      "title": "Backup Systems",
+      "content": [
+        "Information may be copied into encrypted backups, redundant storage, disaster recovery systems, replication services, archival systems, and restoration systems to improve reliability, business continuity, and recovery from failures."
+      ]
+    },
+    {
+      "title": "Data Retention",
+      "content": [
+        "Information may be retained for operational, legal, security, moderation, auditing, fraud prevention, disaster recovery, analytics, research, business continuity, compliance, contractual, tax, accounting, or other legitimate business purposes.",
+        "Retention periods may vary depending on the category of information, applicable law, operational requirements, user requests, security investigations, or technical limitations."
+      ]
+    },
+    {
+      "title": "Artificial Intelligence",
+      "content": [
+        "Where artificial intelligence or automated systems are used, information may be processed for moderation, spam detection, abuse prevention, search improvement, recommendations, diagnostics, support assistance, accessibility, translation, categorization, and service improvements in accordance with applicable law."
+      ]
+    },
+    {
+      "title": "Automated Decision Systems",
+      "content": [
+        "Automated systems may assist in detecting abuse, spam, fraud, compromised accounts, suspicious activity, harmful content, policy violations, unusual authentication behavior, and technical anomalies requiring investigation."
+      ]
+    },
+    {
+      "title": "Legal Compliance",
+      "content": [
+        "Information may be collected, processed, retained, preserved, disclosed, or otherwise handled where reasonably necessary to comply with applicable laws, regulations, court orders, legal processes, government requests, law enforcement requests, or regulatory obligations."
+      ]
+    },
+    {
+      "title": "Law Enforcement Requests",
+      "content": [
+        "Where legally required or otherwise permitted under applicable law, Zyphor may preserve, disclose, or provide relevant information to authorized law enforcement agencies, courts, regulators, or governmental authorities."
+      ]
+    },
+    {
+      "title": "Business Transfers",
+      "content": [
+        "If Zyphor undergoes a merger, acquisition, financing, asset sale, restructuring, insolvency proceeding, or similar business transaction, user information may be transferred as part of that transaction in accordance with applicable law."
+      ]
+    },
+    {
+      "title": "Policy Updates",
+      "content": [
+        "This Privacy Policy may be modified, expanded, reorganized, or updated to reflect new technologies, features, services, legal requirements, operational changes, security practices, or business developments.",
+        "Continued use of Zyphor following the effective date of an updated Privacy Policy constitutes acceptance of the revised Privacy Policy to the extent permitted by applicable law."
+      ]
+    },
+    {
+      "title": "International Data Transfers",
+      "content": [
+        "Information may be processed, stored, backed up, transferred, or accessed in countries other than your own where Zyphor, its service providers, infrastructure providers, cloud providers, or business partners operate.",
+        "Appropriate safeguards may be implemented where required by applicable law."
+      ]
+    },
+    {
+      "title": "Infrastructure Providers",
+      "content": [
+        "Information may be processed by cloud hosting providers, content delivery networks, storage providers, notification providers, email providers, DNS providers, monitoring providers, analytics providers, payment providers, authentication providers, and other infrastructure necessary to operate Zyphor."
+      ]
+    },
+    {
+      "title": "Caching",
+      "content": [
+        "Information may be temporarily stored within browser caches, application caches, CDN caches, proxy caches, operating system caches, cloud caches, synchronization caches, memory caches, and similar systems to improve performance and reliability."
+      ]
+    },
+    {
+      "title": "Temporary Files",
+      "content": [
+        "Applications may generate temporary files, cached images, temporary uploads, download caches, thumbnails, previews, synchronization files, installation files, update packages, and diagnostic files during normal operation."
+      ]
+    },
+    {
+      "title": "Content Delivery Networks",
+      "content": [
+        "Static assets, downloads, images, files, application resources, updates, and other content may be distributed through content delivery networks to improve availability, reliability, and download performance."
+      ]
+    },
+    {
+      "title": "Email Communications",
+      "content": [
+        "We may collect email delivery status, verification status, delivery failures, bounce information, unsubscribe requests, support correspondence, security notifications, password reset requests, verification emails, and communication preferences."
+      ]
+    },
+    {
+      "title": "Verification Information",
+      "content": [
+        "We may collect verification codes, verification requests, verification timestamps, successful verification events, failed verification attempts, recovery requests, and other information necessary to verify ownership of an account."
+      ]
+    },
+    {
+      "title": "Account Recovery",
+      "content": [
+        "When recovering an account, we may collect recovery requests, recovery identifiers, previous authentication information, verification history, recovery timestamps, support correspondence, and related account recovery information."
+      ]
+    },
+    {
+      "title": "Connected Services",
+      "content": [
+        "Where supported, you may connect third-party accounts or services to Zyphor. Information received depends on your permissions, the connected service, and the features you choose to use."
+      ]
+    },
+    {
+      "title": "External Integrations",
+      "content": [
+        "Zyphor may integrate with third-party authentication providers, payment providers, analytics providers, notification providers, cloud providers, communication services, developer platforms, or other external services required for platform functionality."
+      ]
+    },
+    {
+      "title": "Data Accuracy",
+      "content": [
+        "Users are responsible for ensuring that information submitted to Zyphor is accurate, complete, and up to date. Inaccurate information may affect account functionality, authentication, support, or other services."
+      ]
+    },
+    {
+      "title": "Inactive Accounts",
+      "content": [
+        "Accounts that remain inactive for extended periods may continue to retain information required for operational, legal, security, fraud prevention, moderation, archival, backup, or other legitimate business purposes unless deleted in accordance with applicable law."
+      ]
+    },
+    {
+      "title": "Research and Development",
+      "content": [
+        "Information may be analyzed in aggregated or de-identified form to improve existing services, develop new products, measure reliability, improve security, identify trends, evaluate new features, and conduct internal research."
+      ]
+    },
+    {
+      "title": "Aggregated Information",
+      "content": [
+        "Information may be aggregated, anonymized, or de-identified where reasonably possible for analytics, reporting, business intelligence, operational statistics, product development, academic research, and service improvements."
+      ]
+    },
+    {
+      "title": "Service Availability",
+      "content": [
+        "Operational information may be collected to monitor uptime, outages, infrastructure health, service performance, resource utilization, maintenance events, incident response, disaster recovery, and overall platform availability."
+      ]
+    },
+    {
+      "title": "Children's Privacy",
+      "content": [
+        "Where required by applicable law, Zyphor does not knowingly collect personal information from children below the minimum age required to use the service without appropriate authorization.",
+        "If we become aware that information has been collected in violation of applicable law, we may investigate, restrict the account, or remove the information where appropriate."
+      ]
+    },
+    {
+      "title": "Parental Requests",
+      "content": [
+        "Parents or legal guardians who believe that a child has provided personal information in violation of applicable law may contact Zyphor to request review, correction, restriction, or deletion of applicable information where legally required."
+      ]
+    },
+    {
+      "title": "Right of Access",
+      "content": [
+        "Where provided by applicable law, users may request access to certain personal information relating to their account and the processing of that information, subject to verification, security requirements, and applicable legal limitations."
+      ]
+    },
+    {
+      "title": "Right to Correction",
+      "content": [
+        "Users may request correction of inaccurate or incomplete personal information where required by applicable law and subject to verification of the request."
+      ]
+    },
+    {
+      "title": "Right to Deletion",
+      "content": [
+        "Where applicable law provides such rights, users may request deletion of certain personal information. Some information may continue to be retained where required for security, fraud prevention, legal compliance, dispute resolution, backups, auditing, or other legitimate business purposes."
+      ]
+    },
+    {
+      "title": "Right to Restrict Processing",
+      "content": [
+        "Where applicable law provides such rights, users may request restriction of certain processing activities. Restrictions may not apply where processing is necessary for security, legal obligations, contractual performance, fraud prevention, or other lawful purposes."
+      ]
+    },
+    {
+      "title": "Right to Data Portability",
+      "content": [
+        "Where applicable law provides such rights, users may request a copy of certain personal information in a structured, commonly used, and machine-readable format, subject to verification and applicable legal limitations."
+      ]
+    },
+    {
+      "title": "Right to Object",
+      "content": [
+        "Where applicable law provides such rights, users may object to certain categories of processing. Some processing may continue where required for legitimate interests, contractual obligations, legal compliance, fraud prevention, or security."
+      ]
+    },
+    {
+      "title": "Identity Verification",
+      "content": [
+        "Before fulfilling privacy-related requests, Zyphor may require reasonable verification of identity to help protect user accounts, prevent unauthorized disclosures, and comply with applicable legal obligations."
+      ]
+    },
+    {
+      "title": "Request Limitations",
+      "content": [
+        "Privacy requests may be refused, delayed, limited, or partially fulfilled where permitted by applicable law, including where requests are repetitive, excessive, fraudulent, technically infeasible, would adversely affect the rights of others, or would interfere with security, investigations, or legal obligations."
+      ]
+    },
+    {
+      "title": "California Privacy Rights",
+      "content": [
+        "Residents of jurisdictions providing additional privacy rights, including California where applicable, may exercise those rights in accordance with applicable law, subject to verification and statutory exceptions."
+      ]
+    },
+    {
+      "title": "European Privacy Rights",
+      "content": [
+        "Individuals located within jurisdictions applying the General Data Protection Regulation (GDPR), UK GDPR, or similar legislation may exercise applicable privacy rights subject to verification, legal requirements, and applicable exemptions."
+      ]
+    },
+    {
+      "title": "Legal Bases for Processing",
+      "content": [
+        "Where required by applicable law, information may be processed based on user consent, contractual necessity, legitimate interests, compliance with legal obligations, protection of vital interests, public interest, or other lawful bases recognized by applicable legislation."
+      ]
+    },
+    {
+      "title": "Withdrawal of Consent",
+      "content": [
+        "Where processing is based upon consent, users may withdraw consent at any time where permitted by applicable law. Withdrawal of consent does not affect the lawfulness of processing performed before withdrawal and may affect the availability of certain Zyphor features."
+      ]
+    },
+    {
+      "title": "Privacy Contact",
+      "content": [
+        "Privacy-related questions, requests, or concerns may be submitted through Zyphor's designated support channels or other contact methods provided by Zyphor. Additional verification may be required before requests are processed."
+      ]
+    },
+    {
+      "title": "Account Deletion",
+      "content": [
+        "Users may request deletion of their Zyphor account where supported. Deleting an account may permanently remove access to Zyphor services and associated features.",
+        "Certain information may continue to be retained where necessary for legal compliance, fraud prevention, abuse investigations, backups, dispute resolution, auditing, security, contractual obligations, or other legitimate business purposes."
+      ]
+    },
+    {
+      "title": "Residual Information",
+      "content": [
+        "Deletion of an account or content may not immediately remove information from backups, disaster recovery systems, replicated storage, archived logs, audit records, security records, or temporary caches.",
+        "Residual information may remain until backup rotation, system maintenance, or secure deletion procedures have been completed."
+      ]
+    },
+    {
+      "title": "Security Technologies",
+      "content": [
+        "Zyphor may use automated and manual security technologies including authentication systems, encryption, hashing, device verification, browser verification, risk analysis, anomaly detection, abuse detection, spam detection, malware detection, intrusion detection, firewall systems, rate limiting, request validation, integrity verification, and similar technologies."
+      ]
+    },
+    {
+      "title": "VPN and Proxy Detection",
+      "content": [
+        "Where necessary for fraud prevention, abuse prevention, or security, Zyphor may detect or analyze the use of VPNs, proxies, hosting providers, anonymization services, datacenter connections, relay services, or similar technologies."
+      ]
+    },
+    {
+      "title": "Bot Detection",
+      "content": [
+        "We may analyze account activity, browser behavior, request frequency, interaction patterns, automation indicators, API usage, mouse events where applicable, timing information, and similar technical signals to identify automated activity, bots, abuse, or unauthorized access."
+      ]
+    },
+    {
+      "title": "Malicious Activity",
+      "content": [
+        "Information may be processed to investigate malware distribution, phishing, spam campaigns, account hijacking, credential stuffing, denial-of-service attacks, scraping, reverse engineering, unauthorized automation, exploitation attempts, and other malicious activity affecting Zyphor."
+      ]
+    },
+    {
+      "title": "Integrity Verification",
+      "content": [
+        "Desktop applications, mobile applications, APIs, and future Zyphor software may perform integrity verification, compatibility verification, update verification, configuration validation, and security verification to improve platform reliability and security."
+      ]
+    },
+    {
+      "title": "Logging Infrastructure",
+      "content": [
+        "Operational systems may generate application logs, authentication logs, audit logs, synchronization logs, API logs, network logs, error logs, security logs, moderation logs, cloud logs, infrastructure logs, and diagnostic logs required for operating and protecting Zyphor."
+      ]
+    },
+    {
+      "title": "Fraud Investigations",
+      "content": [
+        "Information may be retained, analyzed, correlated, or disclosed where reasonably necessary to investigate fraud, financial abuse, impersonation, account compromise, unauthorized access, policy violations, or other harmful activities."
+      ]
+    },
+    {
+      "title": "Data Correlation",
+      "content": [
+        "Information collected from different Zyphor services, devices, applications, sessions, browsers, authentication events, support interactions, cloud services, APIs, and other legitimate sources may be correlated where reasonably necessary for security, fraud prevention, analytics, diagnostics, synchronization, or providing requested services."
+      ]
+    },
+    {
+      "title": "Internal Operations",
+      "content": [
+        "Information may be used internally for engineering, software development, debugging, quality assurance, product testing, infrastructure management, system administration, incident response, customer support, moderation, analytics, auditing, compliance, and business operations."
+      ]
+    },
+    {
+      "title": "Business Analytics",
+      "content": [
+        "Aggregated or de-identified information may be used to measure product performance, user engagement, feature adoption, service reliability, infrastructure utilization, operational trends, financial planning, capacity planning, and other business analytics."
+      ]
+    },
+    {
+      "title": "Future Technologies",
+      "content": [
+        "As technology evolves, Zyphor may implement new software, hardware, infrastructure, security technologies, cloud systems, artificial intelligence systems, authentication methods, storage technologies, networking technologies, synchronization methods, or operational systems that require the collection and processing of additional information reasonably necessary to provide those services."
+      ]
+    },
+    {
+      "title": "Corporate Changes",
+      "content": [
+        "If Zyphor undergoes restructuring, financing, merger, acquisition, investment, asset transfer, bankruptcy, reorganization, or similar corporate events, information may be transferred, processed, or disclosed as reasonably necessary to complete such transactions in accordance with applicable law."
+      ]
+    },
+    {
+      "title": "Entire Privacy Policy",
+      "content": [
+        "This Privacy Policy applies collectively to all current and future Zyphor websites, desktop applications, mobile applications, APIs, cloud services, developer tools, downloads, installers, integrations, artificial intelligence systems, authentication services, notification systems, support services, storage systems, communication systems, and any other products or services operated under the Zyphor brand unless a separate privacy policy explicitly replaces or supplements this Privacy Policy."
+      ]
+    },
+    {
+      "title": "Service Providers",
+      "content": [
+        "Zyphor may use third-party service providers to assist with infrastructure, hosting, storage, content delivery, authentication, analytics, notifications, monitoring, backups, security, payment processing, email delivery, customer support, artificial intelligence services, and other operational functions.",
+        "Such providers may process information only as reasonably necessary to perform services on behalf of Zyphor or as otherwise permitted by applicable law."
+      ]
+    },
+    {
+      "title": "Hosting Infrastructure",
+      "content": [
+        "Information may be stored, replicated, cached, processed, or transmitted through cloud infrastructure, dedicated servers, virtual servers, containerized environments, databases, object storage, backup systems, disaster recovery systems, and other hosting technologies."
+      ]
+    },
+    {
+      "title": "Content Moderation",
+      "content": [
+        "Information may be reviewed manually or automatically to identify spam, malicious content, prohibited material, abusive conduct, harassment, impersonation, fraud, policy violations, illegal activity, security threats, or other harmful behavior."
+      ]
+    },
+    {
+      "title": "Machine Learning",
+      "content": [
+        "Where implemented, machine learning systems may analyze technical information, behavioral patterns, moderation history, spam indicators, fraud indicators, authentication events, and other operational information to improve platform security, moderation, reliability, and service quality."
+      ]
+    },
+    {
+      "title": "Recommendation Systems",
+      "content": [
+        "Recommendation systems may use account information, preferences, interaction history, feature usage, friendships, engagement metrics, and other relevant information to personalize content, improve discoverability, and recommend features or services."
+      ]
+    },
+    {
+      "title": "Service Improvement",
+      "content": [
+        "Information may be collected and analyzed to improve software quality, user experience, accessibility, infrastructure, security, moderation systems, synchronization reliability, cloud performance, APIs, desktop applications, mobile applications, and future Zyphor services."
+      ]
+    },
+    {
+      "title": "Compatibility Testing",
+      "content": [
+        "Technical information may be collected to identify compatibility issues involving browsers, operating systems, hardware configurations, screen resolutions, application versions, network environments, accessibility technologies, and future software platforms."
+      ]
+    },
+    {
+      "title": "Diagnostic Testing",
+      "content": [
+        "Diagnostic information may be generated during software testing, debugging, quality assurance, beta testing, experimental feature testing, release validation, performance benchmarking, stability analysis, and incident investigations."
+      ]
+    },
+    {
+      "title": "Experimental Features",
+      "content": [
+        "Users participating in beta programs, preview releases, experimental features, early access programs, or testing environments may generate additional diagnostic information, feedback, usage analytics, compatibility reports, stability reports, and testing metrics."
+      ]
+    },
+    {
+      "title": "Telemetry",
+      "content": [
+        "Applications may transmit technical telemetry relating to application health, feature availability, crash frequency, synchronization performance, update status, compatibility information, startup performance, shutdown events, configuration information, and diagnostic events."
+      ]
+    },
+    {
+      "title": "Resource Utilization",
+      "content": [
+        "Operational systems may monitor processor usage, memory utilization, storage availability, bandwidth usage, synchronization workload, request volume, infrastructure capacity, queue lengths, cache efficiency, and related operational metrics where available."
+      ]
+    },
+    {
+      "title": "Operational Monitoring",
+      "content": [
+        "Information may be collected to monitor server health, infrastructure performance, service uptime, network availability, storage utilization, application responsiveness, cloud reliability, API performance, incident response, and operational stability."
+      ]
+    },
+    {
+      "title": "Developer Tools",
+      "content": [
+        "Developer tools, SDKs, APIs, integrations, testing utilities, debugging systems, documentation platforms, and future development resources may generate operational logs, authentication records, request history, diagnostic information, and usage statistics."
+      ]
+    },
+    {
+      "title": "Infrastructure Security",
+      "content": [
+        "Infrastructure security measures may include authentication systems, encryption, secure communications, access controls, monitoring systems, audit logging, integrity verification, intrusion detection, vulnerability management, firewall protection, and other industry-standard security practices."
+      ]
+    },
+    {
+      "title": "Platform Expansion",
+      "content": [
+        "As Zyphor expands into new products, operating systems, devices, hardware platforms, software ecosystems, cloud environments, developer platforms, artificial intelligence systems, or future technologies, additional categories of information reasonably necessary to provide those services may be collected, processed, stored, synchronized, analyzed, secured, retained, and disclosed in accordance with this Privacy Policy and applicable law."
+      ]
+    },
+    {
+      "title": "System Metadata",
+      "content": [
+        "We may collect metadata relating to accounts, files, messages, uploads, downloads, notifications, synchronization events, API requests, cloud storage, support tickets, moderation actions, authentication events, and other Zyphor services.",
+        "Metadata may include identifiers, timestamps, sizes, formats, versions, ownership information, relationships, references, status values, and other operational information."
+      ]
+    },
+    {
+      "title": "Database Records",
+      "content": [
+        "Information stored within Zyphor databases may include internal identifiers, references, indexes, timestamps, version history, change history, relationship mappings, audit records, synchronization records, moderation records, and operational metadata necessary for maintaining the platform."
+      ]
+    },
+    {
+      "title": "Version History",
+      "content": [
+        "Where supported, Zyphor may retain previous versions of files, profile information, settings, cloud content, application configurations, or other resources for synchronization, restoration, auditing, security, or operational purposes."
+      ]
+    },
+    {
+      "title": "Synchronization Records",
+      "content": [
+        "Synchronization systems may collect synchronization timestamps, device identifiers, resource identifiers, synchronization status, synchronization conflicts, synchronization failures, synchronization retries, synchronization queues, and related operational metadata."
+      ]
+    },
+    {
+      "title": "Storage Statistics",
+      "content": [
+        "We may collect storage usage, available storage, allocated storage, quota utilization, upload statistics, download statistics, synchronization volume, cache utilization, backup usage, and related storage metrics."
+      ]
+    },
+    {
+      "title": "Download Statistics",
+      "content": [
+        "We may collect download counts, download timestamps, application versions, operating systems, download sources, update channels, download failures, installation attempts, verification status, and related download information."
+      ]
+    },
+    {
+      "title": "Upload Statistics",
+      "content": [
+        "We may collect upload timestamps, upload sizes, upload frequency, upload failures, upload success rates, upload destinations, content categories, synchronization status, and associated metadata."
+      ]
+    },
+    {
+      "title": "Feature Configuration",
+      "content": [
+        "Feature configuration information may include enabled features, disabled features, experimental features, beta participation, accessibility configuration, notification configuration, synchronization settings, cloud settings, developer settings, and application preferences."
+      ]
+    },
+    {
+      "title": "Server Communications",
+      "content": [
+        "Applications and websites may communicate with Zyphor servers for authentication, synchronization, notifications, updates, downloads, uploads, diagnostics, security verification, configuration retrieval, feature availability, and operational purposes."
+      ]
+    },
+    {
+      "title": "Connection Quality",
+      "content": [
+        "We may collect latency, response times, packet loss estimates, connection stability, bandwidth estimates, retry counts, timeout information, DNS performance, CDN routing information, and similar network performance metrics."
+      ]
+    },
+    {
+      "title": "Administrative Actions",
+      "content": [
+        "Administrative systems may generate records relating to account actions, moderation actions, permission changes, support actions, security investigations, account recovery, infrastructure administration, operational changes, and other administrative activities."
+      ]
+    },
+    {
+      "title": "Incident Response",
+      "content": [
+        "Information may be collected, preserved, analyzed, and disclosed where reasonably necessary to investigate security incidents, abuse reports, fraud, software defects, outages, data integrity issues, infrastructure failures, or other operational incidents."
+      ]
+    },
+    {
+      "title": "Business Intelligence",
+      "content": [
+        "Aggregated, statistical, anonymous, or de-identified information may be used for reporting, forecasting, infrastructure planning, financial planning, capacity management, operational analysis, product planning, market analysis, and internal decision making."
+      ]
+    },
+    {
+      "title": "Third-Party Disclosures",
+      "content": [
+        "Information may be disclosed to professional advisers, auditors, insurers, payment providers, hosting providers, infrastructure providers, analytics providers, notification providers, legal representatives, government authorities where legally required, or other organizations reasonably necessary for operating Zyphor or complying with applicable law."
+      ]
+    },
+    {
+      "title": "Comprehensive Processing",
+      "content": [
+        "Information described within this Privacy Policy may be collected, generated, received, inferred, organized, structured, stored, adapted, modified, retrieved, consulted, analyzed, combined, indexed, synchronized, transmitted, disclosed, transferred, shared, archived, encrypted, pseudonymized, anonymized, de-identified, backed up, restored, retained, restricted, deleted, or otherwise processed where reasonably necessary to provide, improve, secure, maintain, support, develop, comply with legal obligations, or otherwise operate Zyphor in accordance with this Privacy Policy and applicable law."
+      ]
+    },
+    {
+      "title": "Communication Services",
+      "content": [
+        "Zyphor may provide messaging, voice, video, support, collaboration, community, notification, and communication services. Information processed through these services may include messages, attachments, metadata, delivery information, timestamps, interaction history, and related operational records."
+      ]
+    },
+    {
+      "title": "Profile Information",
+      "content": [
+        "Profile information may include usernames, display names, profile photographs, banners, biographies, pronouns, status messages, custom profile fields, badges, account creation dates, profile customization, public profile visibility, and other information you choose to provide."
+      ]
+    },
+    {
+      "title": "Community Participation",
+      "content": [
+        "Information relating to participation in communities, groups, servers, channels, forums, events, discussions, reactions, memberships, invitations, moderation actions, and community settings may be collected and processed to provide community functionality."
+      ]
+    },
+    {
+      "title": "Presence Information",
+      "content": [
+        "Where supported, Zyphor may process online status, activity status, last active information, typing indicators, read receipts, availability status, device activity, application usage status, and related presence information."
+      ]
+    },
+    {
+      "title": "Notification Delivery",
+      "content": [
+        "Notification systems may process notification identifiers, delivery timestamps, delivery status, acknowledgment status, interaction events, device registration information, notification preferences, retry attempts, and related operational metadata."
+      ]
+    },
+    {
+      "title": "Search Functionality",
+      "content": [
+        "Search systems may process search queries, search filters, search timestamps, autocomplete requests, indexed information, search history where applicable, search analytics, and related metadata to improve search functionality and service performance."
+      ]
+    },
+    {
+      "title": "Media Processing",
+      "content": [
+        "Uploaded media may be processed to generate previews, thumbnails, compressed versions, optimized formats, metadata, virus scans, integrity verification, content categorization, and other processing necessary for storage, synchronization, delivery, moderation, and display."
+      ]
+    },
+    {
+      "title": "Content Classification",
+      "content": [
+        "Content may be automatically or manually classified for moderation, accessibility, organization, search indexing, storage optimization, spam detection, abuse prevention, recommendation systems, analytics, and other operational purposes."
+      ]
+    },
+    {
+      "title": "Spam Prevention",
+      "content": [
+        "Information may be processed to identify spam, phishing, malicious links, automated behavior, mass messaging, abusive uploads, harmful content, suspicious account activity, and other behavior that could negatively affect the Zyphor platform or its users."
+      ]
+    },
+    {
+      "title": "Abuse Reporting",
+      "content": [
+        "Users may submit reports regarding inappropriate behavior, harmful content, impersonation, fraud, harassment, copyright concerns, policy violations, security concerns, or other issues. Submitted reports and related evidence may be retained for investigation and enforcement purposes."
+      ]
+    },
+    {
+      "title": "Enforcement Actions",
+      "content": [
+        "Where necessary, Zyphor may issue warnings, remove content, restrict features, suspend accounts, terminate accounts, preserve evidence, notify affected users, cooperate with legal authorities where required, and take other actions reasonably necessary to enforce platform policies."
+      ]
+    },
+    {
+      "title": "Accessibility",
+      "content": [
+        "Information relating to accessibility settings, interface preferences, font scaling, language preferences, display configuration, assistive technology compatibility, accessibility features, and related settings may be processed to improve accessibility and user experience."
+      ]
+    },
+    {
+      "title": "Localization",
+      "content": [
+        "Language preferences, regional settings, time zones, localization preferences, date formats, number formats, currency preferences, and other localization information may be processed to personalize the Zyphor experience."
+      ]
+    },
+    {
+      "title": "Business Operations",
+      "content": [
+        "Information may be processed for accounting, auditing, legal compliance, customer support, infrastructure management, financial planning, operational planning, vendor management, licensing, security, quality assurance, training, documentation, and general business administration."
+      ]
+    },
+    {
+      "title": "Reservation of Rights",
+      "content": [
+        "Zyphor reserves the right to collect, generate, receive, infer, process, store, secure, analyze, synchronize, transfer, disclose, retain, archive, delete, anonymize, or otherwise process additional categories of information that become reasonably necessary to operate existing or future Zyphor products, services, technologies, infrastructure, security systems, or business operations, to the extent permitted by applicable law and as described in updated versions of this Privacy Policy."
+      ]
+    }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-02",
+  "lastUpdated": "2026-10-29",
   "meta": {
     "scope": "These Terms apply to all services, systems, features, APIs, pages, authentication flows, support channels, integrations, and any related functionality, including but not limited to current and future implementations, whether accessed directly or indirectly.",
     "userResponsibility": "You are solely and fully responsible for your account, credentials, linked services, devices, sessions, and all actions performed directly or indirectly under your account, whether authorized or unauthorized.",
@@ -10,6 +10,15 @@
     "description": "By accessing, creating an account, or using any part of the service, you agree to be legally bound by these Terms of Service. These Terms govern all interactions, features, systems, and support channels associated with the service, including any future updates or additions."
   },
   "sections": [
+    {
+      "title": "Responsible use, public content and advertising",
+      "content": [
+        "Do not post, sell, facilitate or advertise stolen accounts, malicious software, credential theft, unauthorized hacking or tools intended to tamper with services without authorization. Features and downloads are subject to applicable third-party platform rules and licensing agreements.",
+        "Do not falsely claim that a partner endorses Zyphor or that a virtual reward, free currency, third-party subscription or randomized collectible is guaranteed. Any terms for an offer must accurately describe availability, cost, duration, transferability and material restrictions.",
+        "Users must not arrange prohibited exchanges, pressure other members to click advertising, fabricate ad interactions, exchange rewards for ad clicks, or use automation to generate impressions.",
+        "For a concise description of public conduct expectations, reporting, and account safety, see https://zyphor.cc/community.html. Nothing in these Terms waives rights that cannot legally be waived."
+      ]
+    },
     {
       "title": "Acceptance of Terms",
       "content": [
@@ -230,1073 +239,1073 @@
       ]
     },
     {
-  "title": "Audio, Visual, and Interface Effects",
-  "content": [
-    "The service may include animations, sounds, visual effects, hover effects, mouse tracking effects, transitions, and other interface behavior.",
-    "You acknowledge that such effects may vary between devices, browsers, and operating systems.",
-    "We are not responsible for discomfort, distraction, hardware limitations, audio issues, visual sensitivity, or user preference conflicts caused by interface effects.",
-    "Visual or audio elements may be modified, removed, or expanded at any time without notice."
-  ]
-},
-{
-  "title": "Interactive Features and Client Behavior",
-  "content": [
-    "Interactive systems including but not limited to messaging systems, changelog navigation, authentication shortcuts, audio playback, popups, previews, or UI interactions may behave differently depending on browser compatibility or device limitations.",
-    "We are not responsible for failed interactions caused by unsupported environments, browser modifications, extensions, or user-side configurations.",
-    "Client-side features are provided as-is without guarantees of uninterrupted or error-free operation."
-  ]
-},
-{
-  "title": "External Links and Third-Party Navigation",
-  "content": [
-    "The service may contain links to external websites, services, platforms, or content.",
-    "We are not responsible for third-party content, availability, actions, policies, or damages arising from visiting external websites.",
-    "Confirmation prompts before opening external links are provided for convenience only and do not constitute security guarantees.",
-    "You access all external links entirely at your own risk."
-  ]
-},
-{
-  "title": "Messaging and Uploaded Content",
-  "content": [
-    "Messages, attachments, links, uploaded media, usernames, and support content may be stored, processed, reviewed, logged, or displayed for operational, moderation, or security purposes.",
-    "We are not responsible for user-generated content, uploaded files, embedded links, or communications sent through the platform.",
-    "You are solely responsible for all content submitted or shared through tickets, chats, support systems, or other communication features."
-  ]
-},
-{
-  "title": "No Warranty",
-  "content": [
-    "The service is provided on an 'as is' and 'as available' basis without warranties of any kind.",
-    "We disclaim all warranties including but not limited to reliability, fitness for a particular purpose, uninterrupted access, security, compatibility, or availability.",
-    "Use of the service is entirely at your own risk."
-  ]
-},
-{
-  "title": "Limitation of Claims",
-  "content": [
-    "You agree not to hold the service, staff, owners, developers, contributors, or affiliates liable for any claim, dispute, damages, emotional distress, data loss, access issues, financial loss, inconvenience, or dissatisfaction arising from use of the service.",
-    "You waive any right to pursue legal or financial claims related to downtime, moderation decisions, account restrictions, feature changes, or user-generated content.",
-    "Maximum liability, where legally unavoidable, shall not exceed the amount paid by the user to the service within the previous thirty days."
-  ]
-},
-{
-  "title": "Service Changes and Experimental Features",
-  "content": [
-    "Features, systems, layouts, APIs, audio systems, authentication flows, visual effects, rewards, or functionality may be added, removed, redesigned, disabled, tested, or modified at any time without notice.",
-    "Experimental, beta, unfinished, or preview systems may contain bugs, instability, missing functionality, or unexpected behavior.",
-    "You acknowledge that features may not always function as expected and may change without warning."
-  ]
-},
-{
-  "title": "Browser, Device, and Compatibility Disclaimer",
-  "content": [
-    "The service may behave differently depending on browser version, extensions, operating system, hardware, network quality, display settings, device limitations, or user configuration.",
-    "We are not responsible for graphical issues, sound issues, lag, crashes, unsupported functionality, browser incompatibility, rendering differences, or input-related issues.",
-    "You are responsible for ensuring your environment supports the features you choose to use."
-  ]
-},
-{
-  "title": "User Conduct and Platform Atmosphere",
-  "content": [
-    "Users acknowledge that interactions with other users or staff may vary and may include disagreements, moderation actions, denied requests, or rejected appeals.",
-    "We are not responsible for emotional reactions, dissatisfaction, misunderstandings, offense taken, or disagreements arising from platform interactions or enforcement decisions.",
-    "Staff retain full authority to moderate conversations, support systems, tickets, accounts, and interactions as deemed necessary."
-  ]
-},
-{
-  "title": "Rewards and Virtual Items Disclaimer",
-  "content": [
-    "Any rewards, balances, currencies, quests, statistics, virtual items, or promotional systems displayed on the service are subject to change, correction, limitation, delay, removal, or cancellation at any time.",
-    "Displayed balances, counts, or statistics may be inaccurate temporarily due to caching, synchronization delays, or backend updates.",
-    "No virtual value, reward, or feature constitutes real-world property, ownership, or financial entitlement."
-  ]
-},
-{
-  "title": "Sound, Animation, and Accessibility Notice",
-  "content": [
-    "The service may include sounds, animations, transitions, flashing effects, mouse effects, interactive feedback, hover effects, or motion-based interface elements.",
-    "Users sensitive to motion, flashing visuals, sound effects, or interactive elements use the service at their own discretion.",
-    "We are not responsible for discomfort, accessibility concerns, device behavior, or performance issues related to visual or audio features."
-  ]
-},
-{
-  "title": "Administrative Authority",
-  "content": [
-    "Staff may modify accounts, messages, tickets, rewards, usernames, linked accounts, authentication settings, or access permissions at their sole discretion.",
-    "Administrative decisions may be made automatically or manually and do not require explanation.",
-    "Refusal to comply with staff instructions or enforcement actions may result in restrictions or permanent loss of access."
-  ]
-},
-{
-  "title": "Indemnification",
-  "content": [
-    "You agree to defend, indemnify, and hold harmless the service, owners, developers, staff, moderators, affiliates, and contributors from and against any claims, liabilities, damages, losses, expenses, disputes, or legal costs arising from your use of the service or violation of these Terms."
-  ]
-},
-{
-  "title": "Automation and Rate Limiting",
-  "content": [
-    "Automated systems including queues, cooldowns, rate limits, verification systems, security checks, or anti-abuse protections may restrict or delay access at any time.",
-    "We are not responsible for delays, denied requests, failed actions, expired sessions, or automated enforcement outcomes caused by such systems.",
-    "Attempting to bypass automated protections may result in immediate restrictions or permanent bans."
-  ]
-},
-{
-  "title": "Session and Token Handling",
-  "content": [
-    "Authentication sessions, tokens, cookies, login states, or verification states may expire, reset, become invalid, or be revoked at any time for security or operational reasons.",
-    "We are not responsible for loss of access caused by expired sessions, revoked tokens, browser clearing, or device changes."
-  ]
-},
-{
-  "title": "Notification and Email Disclaimer",
-  "content": [
-    "Notifications, emails, verification codes, password resets, alerts, or support responses may be delayed, filtered, blocked, lost, or never delivered.",
-    "We are not responsible for third-party mail providers, spam filtering, inbox restrictions, provider outages, or notification failures."
-  ]
-},
-{
-  "title": "Media and File Uploads",
-  "content": [
-    "Uploaded files, attachments, images, videos, or other media may be compressed, modified, scanned, processed, logged, removed, or rejected automatically or manually.",
-    "We are not responsible for corrupted uploads, failed processing, unsupported file types, lost media, or inaccessible attachments."
-  ]
-},
-{
-  "title": "No Professional Advice",
-  "content": [
-    "Nothing provided through the service constitutes legal, financial, technical, medical, or professional advice.",
-    "Any guidance, moderation responses, or support communication is provided for informational purposes only."
-  ]
-},
-{
-  "title": "Force Majeure",
-  "content": [
-    "We are not responsible for failures, interruptions, or damages caused by events beyond reasonable control, including but not limited to outages, attacks, natural disasters, provider failures, infrastructure issues, governmental actions, or third-party disruptions."
-  ]
-},
-{
-  "title": "Third-Party Services",
-  "content": [
-    "The service may rely on third-party providers, APIs, hosting platforms, authentication systems, email systems, analytics providers, or integrations.",
-    "We are not responsible for downtime, errors, data loss, policy changes, bans, restrictions, or failures caused by third-party services."
-  ]
-},
-{
-  "title": "Content Removal and Preservation",
-  "content": [
-    "We reserve the right to remove, preserve, modify, archive, or delete any content, message, account data, uploads, tickets, or logs at any time without notice.",
-    "We are not responsible for lost data, deleted content, or inaccessible records."
-  ]
-},
-{
-  "title": "No Expectation of Continued Service",
-  "content": [
-    "The service may shut down, rebrand, merge, reset, wipe data, discontinue features, or permanently cease operations at any time without notice or compensation.",
-    "Users acknowledge that access, data, rewards, or account information are not guaranteed to remain permanently available."
-  ]
-},
-{
-  "title": "Acceptance Through Use",
-  "content": [
-    "Use of any portion of the service, including browsing, account creation, authentication, support usage, or interaction with features, constitutes full acceptance of these Terms regardless of whether an explicit agreement prompt was shown."
-  ]
-},
-{
-  "title": "Age Requirement",
-  "content": [
-    "By using the service, you confirm that you meet any minimum age requirements applicable in your jurisdiction.",
-    "If you are under the age of majority in your region, you confirm that you have permission from a parent or legal guardian.",
-    "We are not responsible for unauthorized use of the service by minors."
-  ]
-},
-{
-  "title": "Refunds and Compensation",
-  "content": [
-    "All purchases, rewards, virtual balances, promotional items, or granted benefits are final unless explicitly stated otherwise.",
-    "We are not obligated to provide refunds, reimbursements, replacements, or compensation for downtime, restrictions, feature removals, lost access, moderation actions, or user dissatisfaction."
-  ]
-},
-{
-  "title": "Artificial Intelligence and Automated Systems",
-  "content": [
-    "Certain systems, moderation tools, recommendations, queues, detections, or responses may be automated or assisted by artificial intelligence.",
-    "Automated systems may produce inaccurate, incomplete, delayed, or unintended results.",
-    "We are not responsible for decisions, actions, or outcomes influenced by automated systems."
-  ]
-},
-{
-  "title": "Copyright and Intellectual Property",
-  "content": [
-    "All branding, systems, interfaces, graphics, layouts, code, text, designs, and original service content remain the property of the service or its licensors unless otherwise stated.",
-    "You may not copy, redistribute, reverse engineer, reproduce, scrape, or commercially exploit any part of the service without permission."
-  ]
-},
-{
-  "title": "Reverse Engineering and Interference",
-  "content": [
-    "You may not attempt to reverse engineer, decompile, probe, scan, interfere with, overload, disrupt, or test the infrastructure or security of the service.",
-    "Unauthorized analysis, automation, scraping, packet inspection, or exploitation attempts may result in immediate enforcement action."
-  ]
-},
-{
-  "title": "Reserved Rights",
-  "content": [
-    "Any rights not explicitly granted to users are fully reserved by the service and its operators.",
-    "Nothing within these Terms grants ownership, licensing rights, partnership status, or authority over any part of the service."
-  ]
-},
-{
-  "title": "Termination of Access",
-  "content": [
-    "We may suspend, terminate, restrict, or permanently revoke access to the service at any time, with or without notice.",
-    "Termination may occur automatically or manually for security, moderation, operational, legal, or discretionary reasons."
-  ]
-},
-{
-  "title": "Consent to Electronic Communication",
-  "content": [
-    "By using the service, you consent to receiving electronic communications including emails, notifications, verification messages, alerts, announcements, and support responses.",
-    "Electronic communications satisfy any legal requirement that such communications be provided in writing."
-  ]
-},
-{
-  "title": "Community Content Disclaimer",
-  "content": [
-    "Content created or submitted by users does not necessarily reflect the views of the service, staff, developers, or affiliates.",
-    "We are not responsible for offensive, misleading, inaccurate, harmful, or inappropriate user-generated content."
-  ]
-},
-{
-  "title": "Metrics and Analytics",
-  "content": [
-    "The service may collect analytics, interaction data, performance metrics, device information, or usage statistics for operational, moderation, development, or security purposes.",
-    "Collected metrics may be processed automatically or through third-party providers."
-  ]
-},
-{
-  "title": "Temporary Restrictions and Locking",
-  "content": [
-    "Accounts, sessions, support tickets, features, or actions may be temporarily locked, delayed, rate-limited, or restricted for operational or security purposes.",
-    "Temporary restrictions do not guarantee restoration timing or explanation."
-  ]
-},
-{
-  "title": "Future Features and Expansion",
-  "content": [
-    "These Terms apply not only to current systems but also to all future features, redesigns, integrations, services, APIs, applications, bots, support tools, and expansions released under the service.",
-    "New systems may introduce additional rules, limitations, or requirements at any time."
-  ]
-},
-{
-  "title": "Waiver of Expectations",
-  "content": [
-    "Users acknowledge that no expectation of uninterrupted access, perfect functionality, guaranteed rewards, guaranteed support, permanent data retention, or permanent account availability is created through use of the service.",
-    "Past behavior, previous outcomes, or historical functionality do not guarantee future results."
-  ]
-},
-{
-  "title": "Security Enforcement",
-  "content": [
-    "Security systems may automatically flag, limit, challenge, review, or restrict accounts, sessions, IPs, devices, or actions deemed suspicious.",
-    "Security actions may occur without warning and do not require prior notification or explanation."
-  ]
-},
-{
-  "title": "Acknowledgement of Risk",
-  "content": [
-    "You acknowledge that online services inherently involve risks including but not limited to downtime, bugs, exploits, data loss, abuse, impersonation, outages, unauthorized access, and unexpected behavior.",
-    "You voluntarily assume all risks associated with using the service."
-  ]
-},
-{
-  "title": "Account Selling and Transfers",
-  "content": [
-    "Accounts may not be sold, traded, shared, transferred, leased, gifted, or otherwise exchanged without explicit authorization.",
-    "Users remain responsible for all activity associated with accounts regardless of ownership disputes or transfers.",
-    "We reserve the right to restrict, recover, or terminate transferred or shared accounts at any time."
-  ]
-},
-{
-  "title": "VPNs, Proxies, and Device Restrictions",
-  "content": [
-    "Use of VPNs, proxies, emulators, virtual machines, datacenter connections, spoofed environments, or similar technologies may be restricted, flagged, limited, or denied.",
-    "We reserve the right to issue hardware, device, browser, network, or fingerprint-based restrictions for security or abuse prevention purposes."
-  ]
-},
-{
-  "title": "Cross-Platform Enforcement",
-  "content": [
-    "Restrictions, bans, or enforcement actions may apply across all related services, platforms, integrations, support channels, linked accounts, or future systems associated with the service.",
-    "Enforcement actions may extend to associated accounts, devices, sessions, IPs, or related entities."
-  ]
-},
-{
-  "title": "Automated Detection and False Positives",
-  "content": [
-    "Security, moderation, anti-abuse, fraud, or integrity systems may automatically flag or restrict users based on internal heuristics or automated analysis.",
-    "Automated systems may occasionally produce false positives or inaccurate results.",
-    "We are not obligated to disclose internal detection methods, scoring systems, or review criteria."
-  ]
-},
-{
-  "title": "Fraud Prevention and Risk Analysis",
-  "content": [
-    "The service may internally evaluate accounts, devices, sessions, actions, or activity patterns for fraud, abuse, trust, risk, or security purposes.",
-    "Risk evaluations may influence restrictions, delays, verification requirements, moderation decisions, or access limitations."
-  ]
-},
-{
-  "title": "Hidden or Silent Enforcement",
-  "content": [
-    "Moderation, restrictions, flagging, review states, monitoring, scoring, visibility limitations, or enforcement measures may occur silently without notice.",
-    "We are not required to disclose the existence, duration, or reasoning behind silent enforcement actions."
-  ]
-},
-{
-  "title": "Appeals and Review Limitations",
-  "content": [
-    "Appeals, reviews, reconsiderations, or disputes are handled entirely at staff discretion.",
-    "We may limit, deny, ignore, delay, or permanently close appeals without explanation.",
-    "Repeated appeals, spam appeals, or abuse of review systems may result in additional restrictions."
-  ]
-},
-{
-  "title": "Community Guidelines Incorporation",
-  "content": [
-    "Any published rules, policies, moderation notices, feature rules, community guidelines, or platform instructions are incorporated into these Terms by reference.",
-    "Violation of any associated guideline or policy may result in enforcement action."
-  ]
-},
-{
-  "title": "Monitoring and Investigation",
-  "content": [
-    "We reserve the right to monitor, review, investigate, log, preserve, or analyze activity, interactions, messages, sessions, uploads, metadata, or communications at any time.",
-    "Investigations may occur without notice and may involve automated or manual review systems."
-  ]
-},
-{
-  "title": "Data Resets and Rollbacks",
-  "content": [
-    "We reserve the right to reset, modify, remove, roll back, correct, or invalidate balances, rewards, progress, statistics, account data, or feature states at any time.",
-    "Corrections or rollbacks may occur automatically or manually without prior notice."
-  ]
-},
-{
-  "title": "Inactive Accounts",
-  "content": [
-    "Inactive accounts, usernames, linked accounts, stored content, or associated data may be restricted, archived, reclaimed, anonymized, or permanently deleted after extended inactivity.",
-    "We are not obligated to preserve inactive account data indefinitely."
-  ]
-},
-{
-  "title": "Browser Extensions and Unauthorized Modifications",
-  "content": [
-    "Use of unauthorized browser extensions, injected scripts, automation tools, modified clients, overlays, packet manipulation, or interference tools may result in restrictions or bans.",
-    "We are not responsible for issues caused by third-party modifications or unsupported environments."
-  ]
-},
-{
-  "title": "Caching and Archived Content",
-  "content": [
-    "Deleted, modified, or updated content may continue to exist temporarily through browser caches, third-party archives, search engines, mirrors, backups, or content delivery systems.",
-    "We are not responsible for persistence of cached or archived content outside our direct control."
-  ]
-},
-{
-  "title": "Public Information and Metadata",
-  "content": [
-    "Publicly visible data, metadata, statistics, usernames, timestamps, identifiers, or activity information may be indexed, archived, mirrored, or stored by third parties.",
-    "We are not responsible for third-party storage or indexing of publicly accessible information."
-  ]
-},
-{
-  "title": "Regional Availability",
-  "content": [
-    "Certain features, services, integrations, rewards, or functionality may be unavailable or restricted in specific regions, jurisdictions, devices, or environments.",
-    "We reserve the right to restrict access based on geographic, technical, operational, legal, or security considerations."
-  ]
-},
-{
-  "title": "Emergency Security Actions",
-  "content": [
-    "We may take immediate emergency actions including restrictions, lockouts, session revocations, feature disabling, service interruption, or account suspension in response to suspected risks or threats.",
-    "Emergency actions may occur without warning or prior review."
-  ]
-},
-{
-  "title": "No Obligation of Preservation",
-  "content": [
-    "We are not obligated to preserve any account, data, content, ticket, message, upload, reward, statistic, or record for any specific duration.",
-    "Users are responsible for retaining their own backups or copies where necessary."
-  ]
-},
-{
-  "title": "Translation and Interpretation Disclaimer",
-  "content": [
-    "Translated, localized, summarized, or machine-generated versions of these Terms or platform content may contain inaccuracies or inconsistencies.",
-    "The primary service language version shall take precedence in the event of conflicts."
-  ]
-},
-{
-  "title": "Service Monetization Rights",
-  "content": [
-    "We reserve the right to introduce advertisements, subscriptions, premium systems, monetization features, sponsorships, or paid functionality at any time.",
-    "Future monetization changes may affect access, availability, or functionality of features."
-  ]
-},
-{
-  "title": "No Backwards Compatibility Guarantee",
-  "content": [
-    "Updates, redesigns, migrations, APIs, systems, or feature modifications may remove compatibility with previous versions, behaviors, integrations, workflows, or expectations.",
-    "We are not obligated to maintain backwards compatibility with older systems or user setups."
-  ]
-},
-  {
-    "title": "Mandatory Arbitration",
-    "content": [
-      "Any dispute, claim, or controversy arising from or relating to the service shall be resolved exclusively through binding arbitration.",
-      "Users waive the right to pursue disputes through courts except where prohibited by law."
-    ]
-  },
-  {
-    "title": "Waiver of Class Action Lawsuits",
-    "content": [
-      "Users agree that disputes may only be brought individually and not as part of any class action, consolidated action, representative action, or collective proceeding."
-    ]
-  },
-  {
-    "title": "Waiver of Jury Trial",
-    "content": [
-      "Users knowingly and voluntarily waive any right to a jury trial in connection with disputes relating to the service."
-    ]
-  },
-  {
-    "title": "Governing Law and Legal Venue",
-    "content": [
-      "These Terms shall be governed by and interpreted under applicable laws chosen by the service operators.",
-      "Any legal venue, where permitted, shall be determined solely by the service."
-    ]
-  },
-  {
-    "title": "Entire Agreement",
-    "content": [
-      "These Terms constitute the entire agreement between users and the service regarding use of the platform and supersede all prior understandings or communications."
-    ]
-  },
-  {
-    "title": "Survival After Termination",
-    "content": [
-      "All provisions relating to liability limitations, indemnification, enforcement, intellectual property, monitoring, dispute resolution, and moderation shall survive account termination or service discontinuation."
-    ]
-  },
-  {
-    "title": "Assignment and Transfer of Rights",
-    "content": [
-      "The service may assign, transfer, delegate, or sublicense its rights and obligations at any time without notice.",
-      "Users may not transfer rights or obligations without explicit authorization."
-    ]
-  },
-  {
-    "title": "Export Control and Sanctions Compliance",
-    "content": [
-      "Users agree not to access or use the service in violation of applicable export laws, sanctions, embargoes, or trade restrictions."
-    ]
-  },
-  {
-    "title": "Government and Law Enforcement Cooperation",
-    "content": [
-      "We may cooperate with law enforcement agencies, regulators, courts, or governmental authorities and may disclose information where deemed necessary or legally requested."
-    ]
-  },
-  {
-    "title": "Court Orders and Legal Compliance",
-    "content": [
-      "We reserve the right to comply with subpoenas, warrants, legal demands, court orders, or governmental requests without notice to users."
-    ]
-  },
-  {
-    "title": "DMCA and Copyright Enforcement",
-    "content": [
-      "We reserve the right to remove content alleged to infringe copyrights, trademarks, or intellectual property rights.",
-      "Accounts associated with repeated infringement may be restricted or terminated."
-    ]
-  },
-  {
-    "title": "Trademark Ownership",
-    "content": [
-      "All service names, branding, logos, designs, and trademarks remain the exclusive property of the service or its licensors."
-    ]
-  },
-  {
-    "title": "Patent and Licensing Disclaimer",
-    "content": [
-      "Nothing within the service grants users any ownership, patent rights, sublicenses, or intellectual property permissions unless explicitly stated."
-    ]
-  },
-  {
-    "title": "Payment and Subscription Systems",
-    "content": [
-      "Subscriptions, recurring billing, or paid systems may renew automatically unless cancelled where applicable.",
-      "Payment providers operate independently and we are not responsible for processor failures or payment disputes."
-    ]
-  },
-  {
-    "title": "Chargebacks and Payment Recovery",
-    "content": [
-      "Chargebacks, fraudulent payment disputes, or unauthorized reversals may result in restrictions, permanent bans, debt recovery actions, or account termination."
-    ]
-  },
-  {
-    "title": "Tax Responsibility",
-    "content": [
-      "Users are solely responsible for any taxes, duties, fees, or reporting obligations arising from transactions, rewards, or purchases."
-    ]
-  },
-  {
-    "title": "Confidential and Beta Features",
-    "content": [
-      "Beta, experimental, early-access, or confidential systems may be subject to additional restrictions and confidentiality expectations.",
-      "Unauthorized disclosure of confidential systems may result in enforcement action."
-    ]
-  },
-  {
-    "title": "Internal Information Protection",
-    "content": [
-      "Internal staff information, moderation tools, security systems, enforcement logic, unpublished rules, or confidential operational details may not be disclosed, copied, or redistributed."
-    ]
-  },
-  {
-    "title": "Consent to Recording",
-    "content": [
-      "Users consent to potential recording, logging, storage, or review of communications, support interactions, voice calls, video calls, or related activity where permitted."
-    ]
-  },
-  {
-    "title": "Analytics, Fingerprinting, and Tracking",
-    "content": [
-      "The service may use analytics systems, cookies, session replay systems, browser fingerprinting, device fingerprinting, interaction tracking, and related technologies for operational, moderation, development, security, or analytical purposes."
-    ]
-  },
-  {
-    "title": "Artificial Intelligence and Automated Processing",
-    "content": [
-      "Artificial intelligence, machine-learning systems, automation tools, recommendation systems, moderation systems, or behavioral analysis tools may be used throughout the service.",
-      "Automated systems may produce inaccurate or unintended outcomes."
-    ]
-  },
-  {
-    "title": "Screen, Clipboard, and Client Interaction",
-    "content": [
-      "The service may detect screenshots, screen recordings, overlays, clipboard interactions, modified clients, or suspicious software behavior for security or moderation purposes."
-    ]
-  },
-  {
-    "title": "Ranking, Recommendation, and Advertising Systems",
-    "content": [
-      "Content visibility, recommendations, rankings, advertisements, or search results may be determined algorithmically, manually, commercially, behaviorally, or operationally.",
-      "We reserve the right to prioritize, suppress, filter, or reorder content at any time."
-    ]
-  },
-  {
-    "title": "Behavioral Profiling and Reputation Systems",
-    "content": [
-      "Accounts may be evaluated through trust systems, behavioral scoring, reputation analysis, anti-spam heuristics, fraud detection, or internal risk analysis systems."
-    ]
-  },
-  {
-    "title": "Abuse Prevention Systems",
-    "content": [
-      "Anti-raiding systems, anti-social-engineering systems, anti-extortion systems, anti-doxxing systems, anti-swatting systems, and related abuse protections may operate automatically or manually."
-    ]
-  },
-  {
-    "title": "Defamation and Public Accusations",
-    "content": [
-      "False accusations, defamatory claims, targeted harassment, malicious misinformation, or reputational attacks against users, staff, or the service may result in enforcement action."
-    ]
-  },
-  {
-    "title": "Blacklist and Association Enforcement",
-    "content": [
-      "Users may be associated with linked accounts, devices, IPs, sessions, or related entities.",
-      "Restrictions, blacklists, collateral punishments, or linked-account enforcement may apply across associated entities."
-    ]
-  },
-  {
-    "title": "Fraud and Manipulation Detection",
-    "content": [
-      "Referral abuse, fake engagement, economic abuse, manipulation of systems, statistic inflation, exploitation of balancing systems, or artificial activity may result in enforcement action."
-    ]
-  },
-  {
-    "title": "Retroactive Enforcement",
-    "content": [
-      "Moderation actions, punishments, removals, corrections, reward revocations, or restrictions may be applied retroactively based on newly discovered information or policy changes."
-    ]
-  },
-  {
-    "title": "Internal Moderation Standards",
-    "content": [
-      "The service may maintain unpublished, internal, dynamic, confidential, or evolving moderation criteria and enforcement standards."
-    ]
-  },
-  {
-    "title": "Infrastructure and Synchronization Limitations",
-    "content": [
-      "Content delivery systems, asynchronous systems, synchronization layers, caches, backups, APIs, or infrastructure providers may introduce delays, inconsistencies, propagation delays, corruption, or temporary inaccuracies."
-    ]
-  },
-  {
-    "title": "Catastrophic Failure Disclaimer",
-    "content": [
-      "We are not responsible for catastrophic infrastructure failures, corruption events, hosting failures, provider outages, backup loss, or irreversible technical incidents."
-    ]
-  },
-  {
-    "title": "Service Ownership Changes",
-    "content": [
-      "The service may be sold, merged, transferred, acquired, restructured, renamed, or operated by successor entities at any time.",
-      "User rights and obligations may transfer to successor operators."
-    ]
-  },
-  {
-    "title": "Username and Identity Recycling",
-    "content": [
-      "Usernames, identifiers, linked accounts, or inactive identities may be reclaimed, recycled, reassigned, or modified without notice."
-    ]
-  },
-  {
-    "title": "No Relationship or Reliance",
-    "content": [
-      "Use of the service does not create employment, partnership, fiduciary, agency, friendship, mentorship, or professional relationships.",
-      "Users may not rely emotionally, socially, financially, or professionally on the service or its staff."
-    ]
-  },
-  {
-    "title": "Search Engines and Archiving",
-    "content": [
-      "Content, metadata, or publicly accessible information may be indexed, archived, mirrored, cached, or stored by search engines, third parties, or automated systems beyond our control."
-    ]
-  },
-  {
-    "title": "Scraping and Competitive Restrictions",
-    "content": [
-      "Scraping, mirroring, automated extraction, benchmarking, reverse branding, competitive analysis, automated indexing, or unauthorized data collection is prohibited."
-    ]
-  },
-  {
-    "title": "Support Accuracy Disclaimer",
-    "content": [
-      "Support responses, automated systems, artificial intelligence outputs, moderation explanations, or human guidance may be incomplete, delayed, inconsistent, inaccurate, or unofficial."
-    ]
-  },
-  {
-    "title": "Accessibility and Compatibility Limitations",
-    "content": [
-      "The service may not function correctly across all devices, accessibility tools, browsers, operating systems, languages, hardware, or environments."
-    ]
-  },
-  {
-    "title": "Session and Device Security",
-    "content": [
-      "Sessions may be invalidated remotely, devices may be quarantined, accounts may be isolated, and integrity verification systems may operate automatically for security purposes."
-    ]
-  },
-  {
-    "title": "Anti-Cheat and Integrity Systems",
-    "content": [
-      "Anti-cheat systems, integrity verification systems, behavioral analysis, packet inspection, or anti-tampering systems may operate automatically or manually."
-    ]
-  },
-  {
-    "title": "Network and Connectivity Disclaimer",
-    "content": [
-      "Packet loss, unstable connections, network interruptions, ISP failures, regional restrictions, or infrastructure instability may affect service behavior."
-    ]
-  },
-  {
-    "title": "Content Filtering and Regional Compliance",
-    "content": [
-      "Content may be filtered, restricted, censored, hidden, modified, or blocked to comply with operational, legal, regional, moderation, or security requirements."
-    ]
-  },
-  {
-    "title": "Dynamic Features and Deprecation",
-    "content": [
-      "Features, APIs, systems, legacy functionality, or integrations may be gated, deprecated, removed, replaced, disabled, or migrated without warning or compatibility guarantees."
-    ]
-  },
-  {
-    "title": "Data Aggregation and Anonymization",
-    "content": [
-      "Data may be anonymized, aggregated, transformed, processed, or analyzed for operational, analytical, security, moderation, business, or development purposes."
-    ]
-  },
-  {
-    "title": "Purchases and Digital Transactions",
-    "content": [
-      "All purchases, upgrades, subscriptions, digital unlocks, premium access benefits, cosmetic systems, VIP systems, and virtual features are provided on an as-available basis without guarantees of uninterrupted availability.",
-      "Digital purchases do not grant ownership rights over the service, systems, accounts, interfaces, rewards, virtual items, or platform infrastructure.",
-      "We reserve the right to modify, remove, disable, replace, limit, reset, migrate, or discontinue any purchased feature, system, cosmetic, reward, or premium benefit at any time without notice.",
-      "Purchase availability, pricing, discounts, bundles, subscription structures, supported currencies, and supported payment methods may change at any time without notice.",
-      "We reserve the right to refuse, cancel, limit, review, or revoke purchases or transactions at our sole discretion for operational, moderation, legal, fraud prevention, abuse prevention, payment, or security reasons."
-    ]
-  },
-  {
-    "title": "No Refund Policy",
-    "content": [
-      "All purchases, subscriptions, upgrades, VIP access, cosmetic systems, premium themes, virtual balances, promotional unlocks, and digital benefits are final and non-refundable unless explicitly stated otherwise.",
-      "We are not obligated to provide refunds, reimbursements, replacements, compensation, credits, or partial refunds for dissatisfaction, feature removal, downtime, restrictions, bans, layout changes, redesigns, unsupported devices, compatibility issues, or discontinued functionality.",
-      "Chargebacks, payment reversals, fraudulent disputes, unauthorized claims, or abuse of refund systems may result in immediate restrictions, permanent bans, revocation of purchased benefits, debt recovery actions, or cross-platform enforcement."
-    ]
-  },
-  {
-    "title": "PayPal Transactions",
-    "content": [
-      "Payments processed through PayPal or related payment processors are subject to third-party processing systems, provider limitations, verification requirements, regional restrictions, disputes, delays, outages, and independent provider policies.",
-      "We are not responsible for failed transactions, delayed processing, frozen funds, verification holds, payment disputes, account limitations, processor downtime, unauthorized access, or payment provider errors.",
-      "Users are solely responsible for ensuring payment information, billing details, linked payment accounts, and transaction details are accurate before submitting payment."
-    ]
-  },
-  {
-    "title": "Cryptocurrency Transactions",
-    "content": [
-      "Cryptocurrency transactions are processed entirely at the user's own risk.",
-      "Blockchain transactions may be irreversible, delayed, permanently lost, rejected, incorrectly routed, or inaccessible due to wallet errors, unsupported networks, incorrect addresses, exchange failures, insufficient confirmations, blockchain congestion, user mistakes, or provider outages.",
-      "We are not responsible for exchange rate fluctuations, gas fees, network congestion, failed transfers, wallet incompatibility, delayed confirmations, blockchain forks, unsupported assets, or permanent loss of cryptocurrency.",
-      "Users are solely responsible for verifying wallet addresses, supported currencies, network compatibility, and payment instructions before sending cryptocurrency transactions."
-    ]
-  },
-  {
-    "title": "Subscriptions and Recurring Billing",
-    "content": [
-      "Subscriptions, recurring memberships, automatic renewals, premium access systems, or recurring payment features may renew automatically unless cancelled where applicable.",
-      "Users are responsible for managing cancellations, payment methods, recurring billing permissions, and subscription settings.",
-      "We are not responsible for recurring charges caused by user failure to cancel subscriptions, expired payment methods, billing provider issues, or delayed cancellation processing."
-    ]
-  },
-  {
-    "title": "VIP Access and Premium Systems",
-    "content": [
-      "VIP systems, premium dashboards, exclusive themes, cosmetic layouts, upgraded interfaces, premium tools, premium commands, premium effects, and related features may be modified, redesigned, replaced, disabled, restricted, or removed at any time without notice.",
-      "VIP access may depend on account standing, verification systems, linked accounts, anti-abuse systems, operational requirements, risk analysis systems, moderation decisions, or payment verification.",
-      "We reserve the right to revoke, suspend, limit, or terminate VIP access or premium systems at any time for security, moderation, operational, abuse prevention, legal, payment, or discretionary reasons."
-    ]
-  },
-  {
-    "title": "Virtual Items and Digital Content",
-    "content": [
-      "Virtual items, premium cosmetics, digital unlocks, account upgrades, rewards, balances, statistics, themes, badges, or premium content have no real-world monetary value unless explicitly required by law.",
-      "Digital content may be changed, corrected, reset, revoked, removed, migrated, deprecated, or discontinued at any time without notice or compensation.",
-      "Users acknowledge that digital purchases do not constitute financial investments, securities, assets, or transferable ownership rights."
-    ]
-  },
-  {
-    "title": "Fraud Prevention and Payment Security",
-    "content": [
-      "Transactions, purchases, subscriptions, and payment activity may be reviewed automatically or manually for fraud prevention, abuse prevention, anti-money laundering, risk analysis, or security purposes.",
-      "Accounts, purchases, devices, sessions, payment methods, IP addresses, or linked entities may be restricted, delayed, flagged, challenged, limited, or suspended if suspicious activity is detected.",
-      "We reserve the right to deny, cancel, reverse, limit, hold, or investigate transactions without prior notice."
-    ]
-  },
-  {
-    "title": "Store Availability and Errors",
-    "content": [
-      "Store systems, checkout systems, pricing displays, discount systems, promotional systems, purchase confirmations, and payment integrations may contain delays, inaccuracies, synchronization issues, temporary inconsistencies, visual bugs, or availability interruptions.",
-      "We are not responsible for pricing inaccuracies, temporary store outages, expired discounts, duplicate charges caused by provider issues, synchronization delays, visual display inconsistencies, or temporary failures during checkout.",
-      "We reserve the right to correct pricing mistakes, transaction errors, promotional inaccuracies, duplicated rewards, or unintended purchases at any time."
-    ]
-  },
-    {
-    "title": "Desktop Application",
-    "content": [
-      "The Zyphor Desktop Application is provided on an as-available basis and may contain bugs, unfinished features, compatibility issues, or unexpected behavior.",
-      "The Desktop Application may run in the system tray, start automatically with the operating system, remain active after the window is closed, and use native operating system notifications where supported.",
-      "Users are responsible for securing the devices on which the Desktop Application is installed. We are not responsible for unauthorized access caused by shared devices, unattended sessions, operating system settings, or user configuration.",
-      "We reserve the right to modify, disable, restrict, or discontinue the Desktop Application or any desktop-specific functionality at any time without notice."
-    ]
-  },
-  {
-    "title": "Downloads and Version History",
-    "content": [
-      "Download pages, installers, archived versions, version history entries, and previous releases are provided for convenience only.",
-      "We do not guarantee the availability, integrity, compatibility, or continued hosting of any specific version, installer, patch, or archived download.",
-      "Older versions may contain known bugs, missing features, security risks, or compatibility issues, and are used entirely at the user's own risk."
-    ]
-  },
-  {
-    "title": "Platform Selection and Mobile Status Pages",
-    "content": [
-      "Platform selection pages, device-specific download options, and status pages are provided for convenience and may change at any time without notice.",
-      "Android, Windows, and any future platform-specific pages may display development status, availability, or progress information that is not guaranteed to remain current or accurate.",
-      "We are not responsible for delays, inaccuracies, or changes in the status of any platform-specific application, download, or support page."
-    ]
-  },
-  {
-    "title": "Mobile Compatibility",
-    "content": [
-      "Mobile support, responsive layouts, and touch-based interactions are provided on an as-available basis and may vary by device, browser, and screen size.",
-      "We are not responsible for layout issues, display differences, touch problems, chat rendering issues, or usability limitations on smaller screens or mobile browsers.",
-      "Mobile-specific improvements may be added, changed, limited, or removed at any time without notice."
-    ]
-  },
-  {
-    "title": "Notifications, DMs, and Social Messaging",
-    "content": [
-      "Notification systems, unread counters, support alerts, direct messages, friend requests, and related messaging features may be delayed, incomplete, duplicated, or unavailable at any time.",
-      "Messages, conversations, notifications, read receipts, and related records may be stored, processed, synchronized, or displayed with delays or inconsistencies across devices and pages.",
-      "We are not responsible for missed notifications, incorrect unread counts, failed delivery, sync errors, or message history issues caused by client behavior, network issues, or system delays.",
-      "Messaging and notification features may be modified, restricted, or discontinued at any time without notice."
-    ]
-  },
-  {
-    "title": "Regional Restrictions and Compliance",
-    "content": [
-      "Purchases, subscriptions, payment methods, cryptocurrency support, premium systems, rewards, or monetization features may be unavailable, limited, or restricted in certain jurisdictions, regions, devices, or environments.",
-      "Users are solely responsible for complying with local laws, tax obligations, payment restrictions, financial regulations, export laws, and regional requirements related to purchases or transactions.",
-      "We reserve the right to block, restrict, or disable purchases or premium functionality in specific regions or environments at any time."
-    ]
-  },
-  {
-    "title": "Future Monetization Systems",
-    "content": [
-      "Future monetization systems including advertisements, subscriptions, premium tiers, cosmetic systems, battle passes, unlock systems, marketplace systems, premium integrations, paid APIs, or additional payment functionality automatically fall under these Terms upon release.",
-      "Future paid systems may introduce additional rules, restrictions, requirements, verification systems, eligibility conditions, or payment limitations at any time."
-    ]
-  },
-  {
-  "title": "Native Mobile Application and Push Notifications",
-  "content": [
-    "The Zyphor mobile application is provided on an as-is and as-available basis and may depend on device settings, operating system behavior, third-party services, and network availability.",
-    "Mobile notifications, including but not limited to direct messages, alerts, updates, reminders, and account notifications, are provided for convenience only and are not guaranteed to be delivered instantly, correctly, or at all.",
-    "Push notifications may fail, be delayed, duplicated, blocked, hidden, or restricted due to device settings, battery optimization, permissions, internet connection, operating system limitations, Firebase Cloud Messaging availability, or third-party provider issues.",
-    "We are not responsible for missed messages, missed alerts, delayed notifications, failed delivery, incorrect notification content, or consequences caused by relying on notifications.",
-    "Users are responsible for enabling notification permissions, maintaining device compatibility, and configuring their device settings correctly."
-  ]
-},
-{
-  "title": "Mobile Device Registration and Tokens",
-  "content": [
-    "The mobile application may register device identifiers, notification tokens, session information, or similar technical data required for application functionality.",
-    "Device tokens may be stored, updated, removed, or invalidated automatically for security, compatibility, notification delivery, or operational purposes.",
-    "Changing devices, reinstalling the application, clearing data, logging out, or modifying system settings may remove or reset mobile functionality.",
-    "We are not responsible for lost notification access, invalid device sessions, or issues caused by device changes."
-  ]
-},
-{
-  "title": "Mobile Application Updates and Versions",
-  "content": [
-    "The mobile application may receive updates, patches, redesigns, security changes, or functionality modifications at any time.",
-    "Older application versions may stop working, lose compatibility, contain missing features, or become unsupported without notice.",
-    "Users are responsible for installing updates when required.",
-    "We are not responsible for issues caused by outdated, modified, unofficial, or unsupported application versions."
-  ]
-},
-{
-  "title": "Service Integrity and Protection",
-  "content": [
-    "Users may not copy, clone, imitate, reproduce, mirror, or create derivative works of Zyphor, its systems, interfaces, layouts, branding, APIs, backend logic, security systems, or functionality without prior written permission.",
-    "Attempting to bypass, disable, interfere with, probe, benchmark, reverse engineer, decompile, inspect, or analyze any part of the service for unauthorized purposes is strictly prohibited.",
-    "Automated data collection including scraping, crawling, indexing, mirroring, mass downloading, or similar activities is prohibited unless explicitly authorized.",
-    "Attempts to identify security vulnerabilities for unauthorized purposes, exploit implementation details, or interfere with platform integrity may result in immediate enforcement and legal action where applicable."
-  ]
-},
-{
-  "title": "Confidential Information",
-  "content": [
-    "Internal tools, dashboards, administrative systems, moderation interfaces, backend APIs, unpublished features, source code, infrastructure details, security implementations, and operational information are confidential.",
-    "Unauthorized disclosure, publication, redistribution, sale, or sharing of confidential information is strictly prohibited."
-  ]
-},
-{
-  "title": "Impersonation and Misrepresentation",
-  "content": [
-    "Users may not falsely represent themselves as Zyphor staff, developers, partners, affiliates, or official representatives.",
-    "Users may not falsely claim endorsements, partnerships, ownership, employment, or authorization from Zyphor."
-  ]
-},
-{
-  "title": "Abuse of Reports and Support",
-  "content": [
-    "False reports, fraudulent support requests, fabricated evidence, spam tickets, or attempts to manipulate moderation decisions may result in restrictions or permanent account termination.",
-    "Repeated abuse of support resources may result in delayed responses, ticket limitations, or loss of support access."
-  ]
-},
-{
-  "title": "Security Research",
-  "content": [
-    "Security testing is only permitted with prior written authorization.",
-    "Unauthorized vulnerability scanning, penetration testing, packet analysis, traffic interception, fuzzing, or exploit development targeting Zyphor is prohibited."
-  ]
-},
-{
-  "title": "API and Backend Usage",
-  "content": [
-    "Public or private APIs may only be used as intended.",
-    "Excessive requests, automated abuse, bypassing authentication, or attempting to access undocumented endpoints may result in immediate suspension."
-  ]
-},
-{
-  "title": "Reservation of Future Rights",
-  "content": [
-    "Zyphor reserves all rights not expressly granted within these Terms.",
-    "Future products, applications, APIs, services, integrations, branding, intellectual property, and platform expansions shall automatically be protected under these Terms."
-  ]
-},
-{
-  "title": "Legal Remedies",
-  "content": [
-    "Nothing within these Terms limits Zyphor's ability to seek injunctive relief, damages, account restrictions, or any other remedies available under applicable law for violations of these Terms.",
-    "Violations involving fraud, abuse, intellectual property infringement, unauthorized access, or malicious interference may be referred to appropriate authorities where permitted by law."
-  ]
-},
-{
-  "title": "Evidence Preservation",
-  "content": [
-    "We reserve the right to preserve logs, uploaded files, messages, metadata, device information, network information, and other relevant records for investigation, moderation, security, legal compliance, or dispute resolution.",
-    "Evidence may be retained after account termination where reasonably necessary."
-  ]
-},
-{
-  "title": "Desktop Application Behavior",
-  "content": [
-    "The Zyphor Desktop Application may continue running in the system tray after its main window is closed unless fully exited by the user.",
-    "The application may automatically start with the operating system if enabled by the user or application settings.",
-    "Background operation is required for certain features including notifications, synchronization, and future functionality.",
-    "Users are responsible for configuring startup behavior and notification settings on their device."
-  ]
-},
-{
-  "title": "Desktop Notifications",
-  "content": [
-    "Desktop notifications are provided for convenience only and are not guaranteed to be delivered instantly, correctly, or at all.",
-    "Notification delivery depends on operating system settings, notification permissions, internet connectivity, background execution, battery optimization, and third-party operating system behavior.",
-    "We are not responsible for delayed, duplicated, blocked, missing, or incorrect desktop notifications.",
-    "Notification previews may display usernames, message previews, support updates, or other account activity depending on user settings and operating system behavior."
-  ]
-},
-{
-  "title": "Mobile Application",
-  "content": [
-    "The Zyphor Android application is provided on an 'as is' and 'as available' basis.",
-    "Application functionality may vary depending on Android version, manufacturer, device model, operating system modifications, battery optimization, permissions, and hardware capabilities.",
-    "Older application versions may become unsupported or lose functionality without notice.",
-    "Users are responsible for installing official updates to maintain compatibility and security."
-  ]
-},
-{
-  "title": "Push Notifications",
-  "content": [
-    "Push notifications rely on third-party notification providers and operating system services.",
-    "Notifications may be delayed, blocked, duplicated, throttled, or never delivered due to internet connectivity, battery optimization, notification permissions, provider outages, or operating system restrictions.",
-    "We are not responsible for missed direct messages, support notifications, friend requests, or account alerts resulting from notification delivery failures.",
-    "Notification content may differ between devices or operating system versions."
-  ]
-},
-{
-  "title": "Device Registration",
-  "content": [
-    "Desktop and mobile applications may register devices, notification tokens, session identifiers, installation identifiers, or similar technical information required for authentication, synchronization, security, and notification delivery.",
-    "Registered devices may automatically expire, be removed, replaced, or invalidated for operational or security reasons."
-  ]
-},
-{
-  "title": "Application Permissions",
-  "content": [
-    "Certain application features require operating system permissions including notifications, storage access, internet connectivity, or future permissions.",
-    "Denying, revoking, or restricting permissions may disable or limit application functionality.",
-    "We are not responsible for issues caused by disabled permissions or operating system restrictions."
-  ]
-},
-{
-  "title": "Background Services",
-  "content": [
-    "Desktop and mobile applications may perform background synchronization, session validation, notification handling, update checks, caching, and similar operational tasks while running.",
-    "Background services may stop functioning due to operating system limitations, user settings, battery optimization, antivirus software, firewalls, or third-party security software.",
-    "We are not responsible for functionality lost due to background process termination."
-  ]
-},
-{
-  "title": "Application Updates",
-  "content": [
-    "Updates may modify, remove, redesign, replace, or discontinue features, interfaces, layouts, settings, notification behavior, synchronization systems, or application functionality at any time.",
-    "We are not obligated to maintain compatibility with previous application versions or operating systems."
-  ]
-},
-{
-  "title": "Downloads and Installers",
-  "content": [
-    "Installers, archived versions, previous releases, beta builds, and download links are provided for convenience only.",
-    "We do not guarantee permanent availability, compatibility, integrity, or continued hosting of any application version.",
-    "Older versions may contain known security vulnerabilities, missing features, bugs, or compatibility issues and are used entirely at the user's own risk."
-  ]
-},
-{
-  "title": "Operating System Limitations",
-  "content": [
-    "Application behavior may differ across Windows versions, Android versions, hardware configurations, accessibility settings, antivirus software, virtualization environments, and operating system updates.",
-    "We are not responsible for crashes, installation failures, startup issues, notification failures, compatibility problems, rendering differences, or performance limitations caused by operating system behavior or third-party software."
-  ]
-},
-{
-  "title": "Unofficial Applications",
-  "content": [
-    "Only applications distributed through official Zyphor sources are supported.",
-    "Modified, unofficial, reverse-engineered, repackaged, or third-party versions of Zyphor applications are used entirely at the user's own risk and may be denied access or permanently blocked."
-  ]
-},
-{
-  "title": "Future Applications",
-  "content": [
-    "These Terms automatically apply to all future Zyphor applications including desktop, mobile, web, browser extensions, APIs, integrations, launchers, utilities, and any future software released under the Zyphor brand.",
-    "Future applications may introduce additional features, permissions, requirements, or limitations without prior notice."
-  ]
-},
-{
-  "title": "No Circumvention",
-  "content": [
-    "Users may not attempt to circumvent bans, restrictions, rate limits, verification systems, security protections, payment limitations, moderation actions, eligibility requirements, or any technical or administrative safeguards implemented by Zyphor.",
-    "Attempts to evade enforcement through alternate accounts, devices, networks, VPNs, proxies, virtual machines, modified clients, or third-party services may result in additional enforcement."
-  ]
-},
-{
-  "title": "Application Permissions",
-  "content": [
-    "Certain application features may require permissions including but not limited to notifications, internet access, storage access, or future device capabilities.",
-    "Denying or removing permissions may limit or disable application functionality.",
-    "Granting permissions does not guarantee that related features will always function correctly.",
-    "Users may manage application permissions through their device settings where supported."
-  ]
-},
-{
-  "title": "Application Availability and Compatibility",
-  "content": [
-    "The mobile application may not function on all devices, Android versions, manufacturers, custom operating systems, emulators, modified devices, or restricted environments.",
-    "Performance, battery usage, loading behavior, notification delivery, and appearance may vary between devices.",
-    "We are not responsible for crashes, compatibility issues, installation failures, device-specific problems, or operating system restrictions."
-  ]
-},
-{
-  "title": "Jurisdiction and Interpretation",
-  "content": [
-    "These Terms shall be interpreted to the maximum extent permitted by applicable law.",
-    "If any provision is found unenforceable, the remaining provisions shall remain fully valid and enforceable.",
-    "Any ambiguity in interpretation shall not be construed against the service or its operators."
-  ]
-}
-],
-"extras": {
-  "cards": [
-    {
-      "title": "Account Recovery",
-      "content": "Account recovery is not guaranteed and is subject to verification and staff discretion."
+      "title": "Audio, Visual, and Interface Effects",
+      "content": [
+        "The service may include animations, sounds, visual effects, hover effects, mouse tracking effects, transitions, and other interface behavior.",
+        "You acknowledge that such effects may vary between devices, browsers, and operating systems.",
+        "We are not responsible for discomfort, distraction, hardware limitations, audio issues, visual sensitivity, or user preference conflicts caused by interface effects.",
+        "Visual or audio elements may be modified, removed, or expanded at any time without notice."
+      ]
     },
     {
-      "title": "Support Records",
-      "content": "Support interactions may be logged, stored, and reviewed for moderation and operational purposes."
+      "title": "Interactive Features and Client Behavior",
+      "content": [
+        "Interactive systems including but not limited to messaging systems, changelog navigation, authentication shortcuts, audio playback, popups, previews, or UI interactions may behave differently depending on browser compatibility or device limitations.",
+        "We are not responsible for failed interactions caused by unsupported environments, browser modifications, extensions, or user-side configurations.",
+        "Client-side features are provided as-is without guarantees of uninterrupted or error-free operation."
+      ]
+    },
+    {
+      "title": "External Links and Third-Party Navigation",
+      "content": [
+        "The service may contain links to external websites, services, platforms, or content.",
+        "We are not responsible for third-party content, availability, actions, policies, or damages arising from visiting external websites.",
+        "Confirmation prompts before opening external links are provided for convenience only and do not constitute security guarantees.",
+        "You access all external links entirely at your own risk."
+      ]
+    },
+    {
+      "title": "Messaging and Uploaded Content",
+      "content": [
+        "Messages, attachments, links, uploaded media, usernames, and support content may be stored, processed, reviewed, logged, or displayed for operational, moderation, or security purposes.",
+        "We are not responsible for user-generated content, uploaded files, embedded links, or communications sent through the platform.",
+        "You are solely responsible for all content submitted or shared through tickets, chats, support systems, or other communication features."
+      ]
+    },
+    {
+      "title": "No Warranty",
+      "content": [
+        "The service is provided on an 'as is' and 'as available' basis without warranties of any kind.",
+        "We disclaim all warranties including but not limited to reliability, fitness for a particular purpose, uninterrupted access, security, compatibility, or availability.",
+        "Use of the service is entirely at your own risk."
+      ]
+    },
+    {
+      "title": "Limitation of Claims",
+      "content": [
+        "You agree not to hold the service, staff, owners, developers, contributors, or affiliates liable for any claim, dispute, damages, emotional distress, data loss, access issues, financial loss, inconvenience, or dissatisfaction arising from use of the service.",
+        "You waive any right to pursue legal or financial claims related to downtime, moderation decisions, account restrictions, feature changes, or user-generated content.",
+        "Maximum liability, where legally unavoidable, shall not exceed the amount paid by the user to the service within the previous thirty days."
+      ]
+    },
+    {
+      "title": "Service Changes and Experimental Features",
+      "content": [
+        "Features, systems, layouts, APIs, audio systems, authentication flows, visual effects, rewards, or functionality may be added, removed, redesigned, disabled, tested, or modified at any time without notice.",
+        "Experimental, beta, unfinished, or preview systems may contain bugs, instability, missing functionality, or unexpected behavior.",
+        "You acknowledge that features may not always function as expected and may change without warning."
+      ]
+    },
+    {
+      "title": "Browser, Device, and Compatibility Disclaimer",
+      "content": [
+        "The service may behave differently depending on browser version, extensions, operating system, hardware, network quality, display settings, device limitations, or user configuration.",
+        "We are not responsible for graphical issues, sound issues, lag, crashes, unsupported functionality, browser incompatibility, rendering differences, or input-related issues.",
+        "You are responsible for ensuring your environment supports the features you choose to use."
+      ]
+    },
+    {
+      "title": "User Conduct and Platform Atmosphere",
+      "content": [
+        "Users acknowledge that interactions with other users or staff may vary and may include disagreements, moderation actions, denied requests, or rejected appeals.",
+        "We are not responsible for emotional reactions, dissatisfaction, misunderstandings, offense taken, or disagreements arising from platform interactions or enforcement decisions.",
+        "Staff retain full authority to moderate conversations, support systems, tickets, accounts, and interactions as deemed necessary."
+      ]
+    },
+    {
+      "title": "Rewards and Virtual Items Disclaimer",
+      "content": [
+        "Any rewards, balances, currencies, quests, statistics, virtual items, or promotional systems displayed on the service are subject to change, correction, limitation, delay, removal, or cancellation at any time.",
+        "Displayed balances, counts, or statistics may be inaccurate temporarily due to caching, synchronization delays, or backend updates.",
+        "No virtual value, reward, or feature constitutes real-world property, ownership, or financial entitlement."
+      ]
+    },
+    {
+      "title": "Sound, Animation, and Accessibility Notice",
+      "content": [
+        "The service may include sounds, animations, transitions, flashing effects, mouse effects, interactive feedback, hover effects, or motion-based interface elements.",
+        "Users sensitive to motion, flashing visuals, sound effects, or interactive elements use the service at their own discretion.",
+        "We are not responsible for discomfort, accessibility concerns, device behavior, or performance issues related to visual or audio features."
+      ]
+    },
+    {
+      "title": "Administrative Authority",
+      "content": [
+        "Staff may modify accounts, messages, tickets, rewards, usernames, linked accounts, authentication settings, or access permissions at their sole discretion.",
+        "Administrative decisions may be made automatically or manually and do not require explanation.",
+        "Refusal to comply with staff instructions or enforcement actions may result in restrictions or permanent loss of access."
+      ]
+    },
+    {
+      "title": "Indemnification",
+      "content": [
+        "You agree to defend, indemnify, and hold harmless the service, owners, developers, staff, moderators, affiliates, and contributors from and against any claims, liabilities, damages, losses, expenses, disputes, or legal costs arising from your use of the service or violation of these Terms."
+      ]
+    },
+    {
+      "title": "Automation and Rate Limiting",
+      "content": [
+        "Automated systems including queues, cooldowns, rate limits, verification systems, security checks, or anti-abuse protections may restrict or delay access at any time.",
+        "We are not responsible for delays, denied requests, failed actions, expired sessions, or automated enforcement outcomes caused by such systems.",
+        "Attempting to bypass automated protections may result in immediate restrictions or permanent bans."
+      ]
+    },
+    {
+      "title": "Session and Token Handling",
+      "content": [
+        "Authentication sessions, tokens, cookies, login states, or verification states may expire, reset, become invalid, or be revoked at any time for security or operational reasons.",
+        "We are not responsible for loss of access caused by expired sessions, revoked tokens, browser clearing, or device changes."
+      ]
+    },
+    {
+      "title": "Notification and Email Disclaimer",
+      "content": [
+        "Notifications, emails, verification codes, password resets, alerts, or support responses may be delayed, filtered, blocked, lost, or never delivered.",
+        "We are not responsible for third-party mail providers, spam filtering, inbox restrictions, provider outages, or notification failures."
+      ]
+    },
+    {
+      "title": "Media and File Uploads",
+      "content": [
+        "Uploaded files, attachments, images, videos, or other media may be compressed, modified, scanned, processed, logged, removed, or rejected automatically or manually.",
+        "We are not responsible for corrupted uploads, failed processing, unsupported file types, lost media, or inaccessible attachments."
+      ]
+    },
+    {
+      "title": "No Professional Advice",
+      "content": [
+        "Nothing provided through the service constitutes legal, financial, technical, medical, or professional advice.",
+        "Any guidance, moderation responses, or support communication is provided for informational purposes only."
+      ]
+    },
+    {
+      "title": "Force Majeure",
+      "content": [
+        "We are not responsible for failures, interruptions, or damages caused by events beyond reasonable control, including but not limited to outages, attacks, natural disasters, provider failures, infrastructure issues, governmental actions, or third-party disruptions."
+      ]
+    },
+    {
+      "title": "Third-Party Services",
+      "content": [
+        "The service may rely on third-party providers, APIs, hosting platforms, authentication systems, email systems, analytics providers, or integrations.",
+        "We are not responsible for downtime, errors, data loss, policy changes, bans, restrictions, or failures caused by third-party services."
+      ]
+    },
+    {
+      "title": "Content Removal and Preservation",
+      "content": [
+        "We reserve the right to remove, preserve, modify, archive, or delete any content, message, account data, uploads, tickets, or logs at any time without notice.",
+        "We are not responsible for lost data, deleted content, or inaccessible records."
+      ]
+    },
+    {
+      "title": "No Expectation of Continued Service",
+      "content": [
+        "The service may shut down, rebrand, merge, reset, wipe data, discontinue features, or permanently cease operations at any time without notice or compensation.",
+        "Users acknowledge that access, data, rewards, or account information are not guaranteed to remain permanently available."
+      ]
+    },
+    {
+      "title": "Acceptance Through Use",
+      "content": [
+        "Use of any portion of the service, including browsing, account creation, authentication, support usage, or interaction with features, constitutes full acceptance of these Terms regardless of whether an explicit agreement prompt was shown."
+      ]
+    },
+    {
+      "title": "Age Requirement",
+      "content": [
+        "By using the service, you confirm that you meet any minimum age requirements applicable in your jurisdiction.",
+        "If you are under the age of majority in your region, you confirm that you have permission from a parent or legal guardian.",
+        "We are not responsible for unauthorized use of the service by minors."
+      ]
+    },
+    {
+      "title": "Refunds and Compensation",
+      "content": [
+        "All purchases, rewards, virtual balances, promotional items, or granted benefits are final unless explicitly stated otherwise.",
+        "We are not obligated to provide refunds, reimbursements, replacements, or compensation for downtime, restrictions, feature removals, lost access, moderation actions, or user dissatisfaction."
+      ]
+    },
+    {
+      "title": "Artificial Intelligence and Automated Systems",
+      "content": [
+        "Certain systems, moderation tools, recommendations, queues, detections, or responses may be automated or assisted by artificial intelligence.",
+        "Automated systems may produce inaccurate, incomplete, delayed, or unintended results.",
+        "We are not responsible for decisions, actions, or outcomes influenced by automated systems."
+      ]
+    },
+    {
+      "title": "Copyright and Intellectual Property",
+      "content": [
+        "All branding, systems, interfaces, graphics, layouts, code, text, designs, and original service content remain the property of the service or its licensors unless otherwise stated.",
+        "You may not copy, redistribute, reverse engineer, reproduce, scrape, or commercially exploit any part of the service without permission."
+      ]
+    },
+    {
+      "title": "Reverse Engineering and Interference",
+      "content": [
+        "You may not attempt to reverse engineer, decompile, probe, scan, interfere with, overload, disrupt, or test the infrastructure or security of the service.",
+        "Unauthorized analysis, automation, scraping, packet inspection, or exploitation attempts may result in immediate enforcement action."
+      ]
+    },
+    {
+      "title": "Reserved Rights",
+      "content": [
+        "Any rights not explicitly granted to users are fully reserved by the service and its operators.",
+        "Nothing within these Terms grants ownership, licensing rights, partnership status, or authority over any part of the service."
+      ]
+    },
+    {
+      "title": "Termination of Access",
+      "content": [
+        "We may suspend, terminate, restrict, or permanently revoke access to the service at any time, with or without notice.",
+        "Termination may occur automatically or manually for security, moderation, operational, legal, or discretionary reasons."
+      ]
+    },
+    {
+      "title": "Consent to Electronic Communication",
+      "content": [
+        "By using the service, you consent to receiving electronic communications including emails, notifications, verification messages, alerts, announcements, and support responses.",
+        "Electronic communications satisfy any legal requirement that such communications be provided in writing."
+      ]
+    },
+    {
+      "title": "Community Content Disclaimer",
+      "content": [
+        "Content created or submitted by users does not necessarily reflect the views of the service, staff, developers, or affiliates.",
+        "We are not responsible for offensive, misleading, inaccurate, harmful, or inappropriate user-generated content."
+      ]
+    },
+    {
+      "title": "Metrics and Analytics",
+      "content": [
+        "The service may collect analytics, interaction data, performance metrics, device information, or usage statistics for operational, moderation, development, or security purposes.",
+        "Collected metrics may be processed automatically or through third-party providers."
+      ]
+    },
+    {
+      "title": "Temporary Restrictions and Locking",
+      "content": [
+        "Accounts, sessions, support tickets, features, or actions may be temporarily locked, delayed, rate-limited, or restricted for operational or security purposes.",
+        "Temporary restrictions do not guarantee restoration timing or explanation."
+      ]
+    },
+    {
+      "title": "Future Features and Expansion",
+      "content": [
+        "These Terms apply not only to current systems but also to all future features, redesigns, integrations, services, APIs, applications, bots, support tools, and expansions released under the service.",
+        "New systems may introduce additional rules, limitations, or requirements at any time."
+      ]
+    },
+    {
+      "title": "Waiver of Expectations",
+      "content": [
+        "Users acknowledge that no expectation of uninterrupted access, perfect functionality, guaranteed rewards, guaranteed support, permanent data retention, or permanent account availability is created through use of the service.",
+        "Past behavior, previous outcomes, or historical functionality do not guarantee future results."
+      ]
+    },
+    {
+      "title": "Security Enforcement",
+      "content": [
+        "Security systems may automatically flag, limit, challenge, review, or restrict accounts, sessions, IPs, devices, or actions deemed suspicious.",
+        "Security actions may occur without warning and do not require prior notification or explanation."
+      ]
+    },
+    {
+      "title": "Acknowledgement of Risk",
+      "content": [
+        "You acknowledge that online services inherently involve risks including but not limited to downtime, bugs, exploits, data loss, abuse, impersonation, outages, unauthorized access, and unexpected behavior.",
+        "You voluntarily assume all risks associated with using the service."
+      ]
+    },
+    {
+      "title": "Account Selling and Transfers",
+      "content": [
+        "Accounts may not be sold, traded, shared, transferred, leased, gifted, or otherwise exchanged without explicit authorization.",
+        "Users remain responsible for all activity associated with accounts regardless of ownership disputes or transfers.",
+        "We reserve the right to restrict, recover, or terminate transferred or shared accounts at any time."
+      ]
+    },
+    {
+      "title": "VPNs, Proxies, and Device Restrictions",
+      "content": [
+        "Use of VPNs, proxies, emulators, virtual machines, datacenter connections, spoofed environments, or similar technologies may be restricted, flagged, limited, or denied.",
+        "We reserve the right to issue hardware, device, browser, network, or fingerprint-based restrictions for security or abuse prevention purposes."
+      ]
+    },
+    {
+      "title": "Cross-Platform Enforcement",
+      "content": [
+        "Restrictions, bans, or enforcement actions may apply across all related services, platforms, integrations, support channels, linked accounts, or future systems associated with the service.",
+        "Enforcement actions may extend to associated accounts, devices, sessions, IPs, or related entities."
+      ]
+    },
+    {
+      "title": "Automated Detection and False Positives",
+      "content": [
+        "Security, moderation, anti-abuse, fraud, or integrity systems may automatically flag or restrict users based on internal heuristics or automated analysis.",
+        "Automated systems may occasionally produce false positives or inaccurate results.",
+        "We are not obligated to disclose internal detection methods, scoring systems, or review criteria."
+      ]
+    },
+    {
+      "title": "Fraud Prevention and Risk Analysis",
+      "content": [
+        "The service may internally evaluate accounts, devices, sessions, actions, or activity patterns for fraud, abuse, trust, risk, or security purposes.",
+        "Risk evaluations may influence restrictions, delays, verification requirements, moderation decisions, or access limitations."
+      ]
+    },
+    {
+      "title": "Hidden or Silent Enforcement",
+      "content": [
+        "Moderation, restrictions, flagging, review states, monitoring, scoring, visibility limitations, or enforcement measures may occur silently without notice.",
+        "We are not required to disclose the existence, duration, or reasoning behind silent enforcement actions."
+      ]
+    },
+    {
+      "title": "Appeals and Review Limitations",
+      "content": [
+        "Appeals, reviews, reconsiderations, or disputes are handled entirely at staff discretion.",
+        "We may limit, deny, ignore, delay, or permanently close appeals without explanation.",
+        "Repeated appeals, spam appeals, or abuse of review systems may result in additional restrictions."
+      ]
+    },
+    {
+      "title": "Community Guidelines Incorporation",
+      "content": [
+        "Any published rules, policies, moderation notices, feature rules, community guidelines, or platform instructions are incorporated into these Terms by reference.",
+        "Violation of any associated guideline or policy may result in enforcement action."
+      ]
+    },
+    {
+      "title": "Monitoring and Investigation",
+      "content": [
+        "We reserve the right to monitor, review, investigate, log, preserve, or analyze activity, interactions, messages, sessions, uploads, metadata, or communications at any time.",
+        "Investigations may occur without notice and may involve automated or manual review systems."
+      ]
+    },
+    {
+      "title": "Data Resets and Rollbacks",
+      "content": [
+        "We reserve the right to reset, modify, remove, roll back, correct, or invalidate balances, rewards, progress, statistics, account data, or feature states at any time.",
+        "Corrections or rollbacks may occur automatically or manually without prior notice."
+      ]
+    },
+    {
+      "title": "Inactive Accounts",
+      "content": [
+        "Inactive accounts, usernames, linked accounts, stored content, or associated data may be restricted, archived, reclaimed, anonymized, or permanently deleted after extended inactivity.",
+        "We are not obligated to preserve inactive account data indefinitely."
+      ]
+    },
+    {
+      "title": "Browser Extensions and Unauthorized Modifications",
+      "content": [
+        "Use of unauthorized browser extensions, injected scripts, automation tools, modified clients, overlays, packet manipulation, or interference tools may result in restrictions or bans.",
+        "We are not responsible for issues caused by third-party modifications or unsupported environments."
+      ]
+    },
+    {
+      "title": "Caching and Archived Content",
+      "content": [
+        "Deleted, modified, or updated content may continue to exist temporarily through browser caches, third-party archives, search engines, mirrors, backups, or content delivery systems.",
+        "We are not responsible for persistence of cached or archived content outside our direct control."
+      ]
+    },
+    {
+      "title": "Public Information and Metadata",
+      "content": [
+        "Publicly visible data, metadata, statistics, usernames, timestamps, identifiers, or activity information may be indexed, archived, mirrored, or stored by third parties.",
+        "We are not responsible for third-party storage or indexing of publicly accessible information."
+      ]
+    },
+    {
+      "title": "Regional Availability",
+      "content": [
+        "Certain features, services, integrations, rewards, or functionality may be unavailable or restricted in specific regions, jurisdictions, devices, or environments.",
+        "We reserve the right to restrict access based on geographic, technical, operational, legal, or security considerations."
+      ]
+    },
+    {
+      "title": "Emergency Security Actions",
+      "content": [
+        "We may take immediate emergency actions including restrictions, lockouts, session revocations, feature disabling, service interruption, or account suspension in response to suspected risks or threats.",
+        "Emergency actions may occur without warning or prior review."
+      ]
+    },
+    {
+      "title": "No Obligation of Preservation",
+      "content": [
+        "We are not obligated to preserve any account, data, content, ticket, message, upload, reward, statistic, or record for any specific duration.",
+        "Users are responsible for retaining their own backups or copies where necessary."
+      ]
+    },
+    {
+      "title": "Translation and Interpretation Disclaimer",
+      "content": [
+        "Translated, localized, summarized, or machine-generated versions of these Terms or platform content may contain inaccuracies or inconsistencies.",
+        "The primary service language version shall take precedence in the event of conflicts."
+      ]
+    },
+    {
+      "title": "Service Monetization Rights",
+      "content": [
+        "We reserve the right to introduce advertisements, subscriptions, premium systems, monetization features, sponsorships, or paid functionality at any time.",
+        "Future monetization changes may affect access, availability, or functionality of features."
+      ]
+    },
+    {
+      "title": "No Backwards Compatibility Guarantee",
+      "content": [
+        "Updates, redesigns, migrations, APIs, systems, or feature modifications may remove compatibility with previous versions, behaviors, integrations, workflows, or expectations.",
+        "We are not obligated to maintain backwards compatibility with older systems or user setups."
+      ]
+    },
+    {
+      "title": "Mandatory Arbitration",
+      "content": [
+        "Any dispute, claim, or controversy arising from or relating to the service shall be resolved exclusively through binding arbitration.",
+        "Users waive the right to pursue disputes through courts except where prohibited by law."
+      ]
+    },
+    {
+      "title": "Waiver of Class Action Lawsuits",
+      "content": [
+        "Users agree that disputes may only be brought individually and not as part of any class action, consolidated action, representative action, or collective proceeding."
+      ]
+    },
+    {
+      "title": "Waiver of Jury Trial",
+      "content": [
+        "Users knowingly and voluntarily waive any right to a jury trial in connection with disputes relating to the service."
+      ]
+    },
+    {
+      "title": "Governing Law and Legal Venue",
+      "content": [
+        "These Terms shall be governed by and interpreted under applicable laws chosen by the service operators.",
+        "Any legal venue, where permitted, shall be determined solely by the service."
+      ]
+    },
+    {
+      "title": "Entire Agreement",
+      "content": [
+        "These Terms constitute the entire agreement between users and the service regarding use of the platform and supersede all prior understandings or communications."
+      ]
+    },
+    {
+      "title": "Survival After Termination",
+      "content": [
+        "All provisions relating to liability limitations, indemnification, enforcement, intellectual property, monitoring, dispute resolution, and moderation shall survive account termination or service discontinuation."
+      ]
+    },
+    {
+      "title": "Assignment and Transfer of Rights",
+      "content": [
+        "The service may assign, transfer, delegate, or sublicense its rights and obligations at any time without notice.",
+        "Users may not transfer rights or obligations without explicit authorization."
+      ]
+    },
+    {
+      "title": "Export Control and Sanctions Compliance",
+      "content": [
+        "Users agree not to access or use the service in violation of applicable export laws, sanctions, embargoes, or trade restrictions."
+      ]
+    },
+    {
+      "title": "Government and Law Enforcement Cooperation",
+      "content": [
+        "We may cooperate with law enforcement agencies, regulators, courts, or governmental authorities and may disclose information where deemed necessary or legally requested."
+      ]
+    },
+    {
+      "title": "Court Orders and Legal Compliance",
+      "content": [
+        "We reserve the right to comply with subpoenas, warrants, legal demands, court orders, or governmental requests without notice to users."
+      ]
+    },
+    {
+      "title": "DMCA and Copyright Enforcement",
+      "content": [
+        "We reserve the right to remove content alleged to infringe copyrights, trademarks, or intellectual property rights.",
+        "Accounts associated with repeated infringement may be restricted or terminated."
+      ]
+    },
+    {
+      "title": "Trademark Ownership",
+      "content": [
+        "All service names, branding, logos, designs, and trademarks remain the exclusive property of the service or its licensors."
+      ]
+    },
+    {
+      "title": "Patent and Licensing Disclaimer",
+      "content": [
+        "Nothing within the service grants users any ownership, patent rights, sublicenses, or intellectual property permissions unless explicitly stated."
+      ]
+    },
+    {
+      "title": "Payment and Subscription Systems",
+      "content": [
+        "Subscriptions, recurring billing, or paid systems may renew automatically unless cancelled where applicable.",
+        "Payment providers operate independently and we are not responsible for processor failures or payment disputes."
+      ]
+    },
+    {
+      "title": "Chargebacks and Payment Recovery",
+      "content": [
+        "Chargebacks, fraudulent payment disputes, or unauthorized reversals may result in restrictions, permanent bans, debt recovery actions, or account termination."
+      ]
+    },
+    {
+      "title": "Tax Responsibility",
+      "content": [
+        "Users are solely responsible for any taxes, duties, fees, or reporting obligations arising from transactions, rewards, or purchases."
+      ]
+    },
+    {
+      "title": "Confidential and Beta Features",
+      "content": [
+        "Beta, experimental, early-access, or confidential systems may be subject to additional restrictions and confidentiality expectations.",
+        "Unauthorized disclosure of confidential systems may result in enforcement action."
+      ]
+    },
+    {
+      "title": "Internal Information Protection",
+      "content": [
+        "Internal staff information, moderation tools, security systems, enforcement logic, unpublished rules, or confidential operational details may not be disclosed, copied, or redistributed."
+      ]
+    },
+    {
+      "title": "Consent to Recording",
+      "content": [
+        "Users consent to potential recording, logging, storage, or review of communications, support interactions, voice calls, video calls, or related activity where permitted."
+      ]
+    },
+    {
+      "title": "Analytics, Fingerprinting, and Tracking",
+      "content": [
+        "The service may use analytics systems, cookies, session replay systems, browser fingerprinting, device fingerprinting, interaction tracking, and related technologies for operational, moderation, development, security, or analytical purposes."
+      ]
+    },
+    {
+      "title": "Artificial Intelligence and Automated Processing",
+      "content": [
+        "Artificial intelligence, machine-learning systems, automation tools, recommendation systems, moderation systems, or behavioral analysis tools may be used throughout the service.",
+        "Automated systems may produce inaccurate or unintended outcomes."
+      ]
+    },
+    {
+      "title": "Screen, Clipboard, and Client Interaction",
+      "content": [
+        "The service may detect screenshots, screen recordings, overlays, clipboard interactions, modified clients, or suspicious software behavior for security or moderation purposes."
+      ]
+    },
+    {
+      "title": "Ranking, Recommendation, and Advertising Systems",
+      "content": [
+        "Content visibility, recommendations, rankings, advertisements, or search results may be determined algorithmically, manually, commercially, behaviorally, or operationally.",
+        "We reserve the right to prioritize, suppress, filter, or reorder content at any time."
+      ]
+    },
+    {
+      "title": "Behavioral Profiling and Reputation Systems",
+      "content": [
+        "Accounts may be evaluated through trust systems, behavioral scoring, reputation analysis, anti-spam heuristics, fraud detection, or internal risk analysis systems."
+      ]
+    },
+    {
+      "title": "Abuse Prevention Systems",
+      "content": [
+        "Anti-raiding systems, anti-social-engineering systems, anti-extortion systems, anti-doxxing systems, anti-swatting systems, and related abuse protections may operate automatically or manually."
+      ]
+    },
+    {
+      "title": "Defamation and Public Accusations",
+      "content": [
+        "False accusations, defamatory claims, targeted harassment, malicious misinformation, or reputational attacks against users, staff, or the service may result in enforcement action."
+      ]
+    },
+    {
+      "title": "Blacklist and Association Enforcement",
+      "content": [
+        "Users may be associated with linked accounts, devices, IPs, sessions, or related entities.",
+        "Restrictions, blacklists, collateral punishments, or linked-account enforcement may apply across associated entities."
+      ]
+    },
+    {
+      "title": "Fraud and Manipulation Detection",
+      "content": [
+        "Referral abuse, fake engagement, economic abuse, manipulation of systems, statistic inflation, exploitation of balancing systems, or artificial activity may result in enforcement action."
+      ]
+    },
+    {
+      "title": "Retroactive Enforcement",
+      "content": [
+        "Moderation actions, punishments, removals, corrections, reward revocations, or restrictions may be applied retroactively based on newly discovered information or policy changes."
+      ]
+    },
+    {
+      "title": "Internal Moderation Standards",
+      "content": [
+        "The service may maintain unpublished, internal, dynamic, confidential, or evolving moderation criteria and enforcement standards."
+      ]
+    },
+    {
+      "title": "Infrastructure and Synchronization Limitations",
+      "content": [
+        "Content delivery systems, asynchronous systems, synchronization layers, caches, backups, APIs, or infrastructure providers may introduce delays, inconsistencies, propagation delays, corruption, or temporary inaccuracies."
+      ]
+    },
+    {
+      "title": "Catastrophic Failure Disclaimer",
+      "content": [
+        "We are not responsible for catastrophic infrastructure failures, corruption events, hosting failures, provider outages, backup loss, or irreversible technical incidents."
+      ]
+    },
+    {
+      "title": "Service Ownership Changes",
+      "content": [
+        "The service may be sold, merged, transferred, acquired, restructured, renamed, or operated by successor entities at any time.",
+        "User rights and obligations may transfer to successor operators."
+      ]
+    },
+    {
+      "title": "Username and Identity Recycling",
+      "content": [
+        "Usernames, identifiers, linked accounts, or inactive identities may be reclaimed, recycled, reassigned, or modified without notice."
+      ]
+    },
+    {
+      "title": "No Relationship or Reliance",
+      "content": [
+        "Use of the service does not create employment, partnership, fiduciary, agency, friendship, mentorship, or professional relationships.",
+        "Users may not rely emotionally, socially, financially, or professionally on the service or its staff."
+      ]
+    },
+    {
+      "title": "Search Engines and Archiving",
+      "content": [
+        "Content, metadata, or publicly accessible information may be indexed, archived, mirrored, cached, or stored by search engines, third parties, or automated systems beyond our control."
+      ]
+    },
+    {
+      "title": "Scraping and Competitive Restrictions",
+      "content": [
+        "Scraping, mirroring, automated extraction, benchmarking, reverse branding, competitive analysis, automated indexing, or unauthorized data collection is prohibited."
+      ]
+    },
+    {
+      "title": "Support Accuracy Disclaimer",
+      "content": [
+        "Support responses, automated systems, artificial intelligence outputs, moderation explanations, or human guidance may be incomplete, delayed, inconsistent, inaccurate, or unofficial."
+      ]
+    },
+    {
+      "title": "Accessibility and Compatibility Limitations",
+      "content": [
+        "The service may not function correctly across all devices, accessibility tools, browsers, operating systems, languages, hardware, or environments."
+      ]
+    },
+    {
+      "title": "Session and Device Security",
+      "content": [
+        "Sessions may be invalidated remotely, devices may be quarantined, accounts may be isolated, and integrity verification systems may operate automatically for security purposes."
+      ]
+    },
+    {
+      "title": "Anti-Cheat and Integrity Systems",
+      "content": [
+        "Anti-cheat systems, integrity verification systems, behavioral analysis, packet inspection, or anti-tampering systems may operate automatically or manually."
+      ]
+    },
+    {
+      "title": "Network and Connectivity Disclaimer",
+      "content": [
+        "Packet loss, unstable connections, network interruptions, ISP failures, regional restrictions, or infrastructure instability may affect service behavior."
+      ]
+    },
+    {
+      "title": "Content Filtering and Regional Compliance",
+      "content": [
+        "Content may be filtered, restricted, censored, hidden, modified, or blocked to comply with operational, legal, regional, moderation, or security requirements."
+      ]
+    },
+    {
+      "title": "Dynamic Features and Deprecation",
+      "content": [
+        "Features, APIs, systems, legacy functionality, or integrations may be gated, deprecated, removed, replaced, disabled, or migrated without warning or compatibility guarantees."
+      ]
+    },
+    {
+      "title": "Data Aggregation and Anonymization",
+      "content": [
+        "Data may be anonymized, aggregated, transformed, processed, or analyzed for operational, analytical, security, moderation, business, or development purposes."
+      ]
+    },
+    {
+      "title": "Purchases and Digital Transactions",
+      "content": [
+        "All purchases, upgrades, subscriptions, digital unlocks, premium access benefits, cosmetic systems, VIP systems, and virtual features are provided on an as-available basis without guarantees of uninterrupted availability.",
+        "Digital purchases do not grant ownership rights over the service, systems, accounts, interfaces, rewards, virtual items, or platform infrastructure.",
+        "We reserve the right to modify, remove, disable, replace, limit, reset, migrate, or discontinue any purchased feature, system, cosmetic, reward, or premium benefit at any time without notice.",
+        "Purchase availability, pricing, discounts, bundles, subscription structures, supported currencies, and supported payment methods may change at any time without notice.",
+        "We reserve the right to refuse, cancel, limit, review, or revoke purchases or transactions at our sole discretion for operational, moderation, legal, fraud prevention, abuse prevention, payment, or security reasons."
+      ]
+    },
+    {
+      "title": "No Refund Policy",
+      "content": [
+        "All purchases, subscriptions, upgrades, VIP access, cosmetic systems, premium themes, virtual balances, promotional unlocks, and digital benefits are final and non-refundable unless explicitly stated otherwise.",
+        "We are not obligated to provide refunds, reimbursements, replacements, compensation, credits, or partial refunds for dissatisfaction, feature removal, downtime, restrictions, bans, layout changes, redesigns, unsupported devices, compatibility issues, or discontinued functionality.",
+        "Chargebacks, payment reversals, fraudulent disputes, unauthorized claims, or abuse of refund systems may result in immediate restrictions, permanent bans, revocation of purchased benefits, debt recovery actions, or cross-platform enforcement."
+      ]
+    },
+    {
+      "title": "PayPal Transactions",
+      "content": [
+        "Payments processed through PayPal or related payment processors are subject to third-party processing systems, provider limitations, verification requirements, regional restrictions, disputes, delays, outages, and independent provider policies.",
+        "We are not responsible for failed transactions, delayed processing, frozen funds, verification holds, payment disputes, account limitations, processor downtime, unauthorized access, or payment provider errors.",
+        "Users are solely responsible for ensuring payment information, billing details, linked payment accounts, and transaction details are accurate before submitting payment."
+      ]
+    },
+    {
+      "title": "Cryptocurrency Transactions",
+      "content": [
+        "Cryptocurrency transactions are processed entirely at the user's own risk.",
+        "Blockchain transactions may be irreversible, delayed, permanently lost, rejected, incorrectly routed, or inaccessible due to wallet errors, unsupported networks, incorrect addresses, exchange failures, insufficient confirmations, blockchain congestion, user mistakes, or provider outages.",
+        "We are not responsible for exchange rate fluctuations, gas fees, network congestion, failed transfers, wallet incompatibility, delayed confirmations, blockchain forks, unsupported assets, or permanent loss of cryptocurrency.",
+        "Users are solely responsible for verifying wallet addresses, supported currencies, network compatibility, and payment instructions before sending cryptocurrency transactions."
+      ]
+    },
+    {
+      "title": "Subscriptions and Recurring Billing",
+      "content": [
+        "Subscriptions, recurring memberships, automatic renewals, premium access systems, or recurring payment features may renew automatically unless cancelled where applicable.",
+        "Users are responsible for managing cancellations, payment methods, recurring billing permissions, and subscription settings.",
+        "We are not responsible for recurring charges caused by user failure to cancel subscriptions, expired payment methods, billing provider issues, or delayed cancellation processing."
+      ]
+    },
+    {
+      "title": "VIP Access and Premium Systems",
+      "content": [
+        "VIP systems, premium dashboards, exclusive themes, cosmetic layouts, upgraded interfaces, premium tools, premium commands, premium effects, and related features may be modified, redesigned, replaced, disabled, restricted, or removed at any time without notice.",
+        "VIP access may depend on account standing, verification systems, linked accounts, anti-abuse systems, operational requirements, risk analysis systems, moderation decisions, or payment verification.",
+        "We reserve the right to revoke, suspend, limit, or terminate VIP access or premium systems at any time for security, moderation, operational, abuse prevention, legal, payment, or discretionary reasons."
+      ]
+    },
+    {
+      "title": "Virtual Items and Digital Content",
+      "content": [
+        "Virtual items, premium cosmetics, digital unlocks, account upgrades, rewards, balances, statistics, themes, badges, or premium content have no real-world monetary value unless explicitly required by law.",
+        "Digital content may be changed, corrected, reset, revoked, removed, migrated, deprecated, or discontinued at any time without notice or compensation.",
+        "Users acknowledge that digital purchases do not constitute financial investments, securities, assets, or transferable ownership rights."
+      ]
+    },
+    {
+      "title": "Fraud Prevention and Payment Security",
+      "content": [
+        "Transactions, purchases, subscriptions, and payment activity may be reviewed automatically or manually for fraud prevention, abuse prevention, anti-money laundering, risk analysis, or security purposes.",
+        "Accounts, purchases, devices, sessions, payment methods, IP addresses, or linked entities may be restricted, delayed, flagged, challenged, limited, or suspended if suspicious activity is detected.",
+        "We reserve the right to deny, cancel, reverse, limit, hold, or investigate transactions without prior notice."
+      ]
+    },
+    {
+      "title": "Store Availability and Errors",
+      "content": [
+        "Store systems, checkout systems, pricing displays, discount systems, promotional systems, purchase confirmations, and payment integrations may contain delays, inaccuracies, synchronization issues, temporary inconsistencies, visual bugs, or availability interruptions.",
+        "We are not responsible for pricing inaccuracies, temporary store outages, expired discounts, duplicate charges caused by provider issues, synchronization delays, visual display inconsistencies, or temporary failures during checkout.",
+        "We reserve the right to correct pricing mistakes, transaction errors, promotional inaccuracies, duplicated rewards, or unintended purchases at any time."
+      ]
+    },
+    {
+      "title": "Desktop Application",
+      "content": [
+        "The Zyphor Desktop Application is provided on an as-available basis and may contain bugs, unfinished features, compatibility issues, or unexpected behavior.",
+        "The Desktop Application may run in the system tray, start automatically with the operating system, remain active after the window is closed, and use native operating system notifications where supported.",
+        "Users are responsible for securing the devices on which the Desktop Application is installed. We are not responsible for unauthorized access caused by shared devices, unattended sessions, operating system settings, or user configuration.",
+        "We reserve the right to modify, disable, restrict, or discontinue the Desktop Application or any desktop-specific functionality at any time without notice."
+      ]
+    },
+    {
+      "title": "Downloads and Version History",
+      "content": [
+        "Download pages, installers, archived versions, version history entries, and previous releases are provided for convenience only.",
+        "We do not guarantee the availability, integrity, compatibility, or continued hosting of any specific version, installer, patch, or archived download.",
+        "Older versions may contain known bugs, missing features, security risks, or compatibility issues, and are used entirely at the user's own risk."
+      ]
+    },
+    {
+      "title": "Platform Selection and Mobile Status Pages",
+      "content": [
+        "Platform selection pages, device-specific download options, and status pages are provided for convenience and may change at any time without notice.",
+        "Android, Windows, and any future platform-specific pages may display development status, availability, or progress information that is not guaranteed to remain current or accurate.",
+        "We are not responsible for delays, inaccuracies, or changes in the status of any platform-specific application, download, or support page."
+      ]
+    },
+    {
+      "title": "Mobile Compatibility",
+      "content": [
+        "Mobile support, responsive layouts, and touch-based interactions are provided on an as-available basis and may vary by device, browser, and screen size.",
+        "We are not responsible for layout issues, display differences, touch problems, chat rendering issues, or usability limitations on smaller screens or mobile browsers.",
+        "Mobile-specific improvements may be added, changed, limited, or removed at any time without notice."
+      ]
+    },
+    {
+      "title": "Notifications, DMs, and Social Messaging",
+      "content": [
+        "Notification systems, unread counters, support alerts, direct messages, friend requests, and related messaging features may be delayed, incomplete, duplicated, or unavailable at any time.",
+        "Messages, conversations, notifications, read receipts, and related records may be stored, processed, synchronized, or displayed with delays or inconsistencies across devices and pages.",
+        "We are not responsible for missed notifications, incorrect unread counts, failed delivery, sync errors, or message history issues caused by client behavior, network issues, or system delays.",
+        "Messaging and notification features may be modified, restricted, or discontinued at any time without notice."
+      ]
+    },
+    {
+      "title": "Regional Restrictions and Compliance",
+      "content": [
+        "Purchases, subscriptions, payment methods, cryptocurrency support, premium systems, rewards, or monetization features may be unavailable, limited, or restricted in certain jurisdictions, regions, devices, or environments.",
+        "Users are solely responsible for complying with local laws, tax obligations, payment restrictions, financial regulations, export laws, and regional requirements related to purchases or transactions.",
+        "We reserve the right to block, restrict, or disable purchases or premium functionality in specific regions or environments at any time."
+      ]
+    },
+    {
+      "title": "Future Monetization Systems",
+      "content": [
+        "Future monetization systems including advertisements, subscriptions, premium tiers, cosmetic systems, battle passes, unlock systems, marketplace systems, premium integrations, paid APIs, or additional payment functionality automatically fall under these Terms upon release.",
+        "Future paid systems may introduce additional rules, restrictions, requirements, verification systems, eligibility conditions, or payment limitations at any time."
+      ]
+    },
+    {
+      "title": "Native Mobile Application and Push Notifications",
+      "content": [
+        "The Zyphor mobile application is provided on an as-is and as-available basis and may depend on device settings, operating system behavior, third-party services, and network availability.",
+        "Mobile notifications, including but not limited to direct messages, alerts, updates, reminders, and account notifications, are provided for convenience only and are not guaranteed to be delivered instantly, correctly, or at all.",
+        "Push notifications may fail, be delayed, duplicated, blocked, hidden, or restricted due to device settings, battery optimization, permissions, internet connection, operating system limitations, Firebase Cloud Messaging availability, or third-party provider issues.",
+        "We are not responsible for missed messages, missed alerts, delayed notifications, failed delivery, incorrect notification content, or consequences caused by relying on notifications.",
+        "Users are responsible for enabling notification permissions, maintaining device compatibility, and configuring their device settings correctly."
+      ]
+    },
+    {
+      "title": "Mobile Device Registration and Tokens",
+      "content": [
+        "The mobile application may register device identifiers, notification tokens, session information, or similar technical data required for application functionality.",
+        "Device tokens may be stored, updated, removed, or invalidated automatically for security, compatibility, notification delivery, or operational purposes.",
+        "Changing devices, reinstalling the application, clearing data, logging out, or modifying system settings may remove or reset mobile functionality.",
+        "We are not responsible for lost notification access, invalid device sessions, or issues caused by device changes."
+      ]
+    },
+    {
+      "title": "Mobile Application Updates and Versions",
+      "content": [
+        "The mobile application may receive updates, patches, redesigns, security changes, or functionality modifications at any time.",
+        "Older application versions may stop working, lose compatibility, contain missing features, or become unsupported without notice.",
+        "Users are responsible for installing updates when required.",
+        "We are not responsible for issues caused by outdated, modified, unofficial, or unsupported application versions."
+      ]
+    },
+    {
+      "title": "Service Integrity and Protection",
+      "content": [
+        "Users may not copy, clone, imitate, reproduce, mirror, or create derivative works of Zyphor, its systems, interfaces, layouts, branding, APIs, backend logic, security systems, or functionality without prior written permission.",
+        "Attempting to bypass, disable, interfere with, probe, benchmark, reverse engineer, decompile, inspect, or analyze any part of the service for unauthorized purposes is strictly prohibited.",
+        "Automated data collection including scraping, crawling, indexing, mirroring, mass downloading, or similar activities is prohibited unless explicitly authorized.",
+        "Attempts to identify security vulnerabilities for unauthorized purposes, exploit implementation details, or interfere with platform integrity may result in immediate enforcement and legal action where applicable."
+      ]
+    },
+    {
+      "title": "Confidential Information",
+      "content": [
+        "Internal tools, dashboards, administrative systems, moderation interfaces, backend APIs, unpublished features, source code, infrastructure details, security implementations, and operational information are confidential.",
+        "Unauthorized disclosure, publication, redistribution, sale, or sharing of confidential information is strictly prohibited."
+      ]
+    },
+    {
+      "title": "Impersonation and Misrepresentation",
+      "content": [
+        "Users may not falsely represent themselves as Zyphor staff, developers, partners, affiliates, or official representatives.",
+        "Users may not falsely claim endorsements, partnerships, ownership, employment, or authorization from Zyphor."
+      ]
+    },
+    {
+      "title": "Abuse of Reports and Support",
+      "content": [
+        "False reports, fraudulent support requests, fabricated evidence, spam tickets, or attempts to manipulate moderation decisions may result in restrictions or permanent account termination.",
+        "Repeated abuse of support resources may result in delayed responses, ticket limitations, or loss of support access."
+      ]
+    },
+    {
+      "title": "Security Research",
+      "content": [
+        "Security testing is only permitted with prior written authorization.",
+        "Unauthorized vulnerability scanning, penetration testing, packet analysis, traffic interception, fuzzing, or exploit development targeting Zyphor is prohibited."
+      ]
+    },
+    {
+      "title": "API and Backend Usage",
+      "content": [
+        "Public or private APIs may only be used as intended.",
+        "Excessive requests, automated abuse, bypassing authentication, or attempting to access undocumented endpoints may result in immediate suspension."
+      ]
+    },
+    {
+      "title": "Reservation of Future Rights",
+      "content": [
+        "Zyphor reserves all rights not expressly granted within these Terms.",
+        "Future products, applications, APIs, services, integrations, branding, intellectual property, and platform expansions shall automatically be protected under these Terms."
+      ]
+    },
+    {
+      "title": "Legal Remedies",
+      "content": [
+        "Nothing within these Terms limits Zyphor's ability to seek injunctive relief, damages, account restrictions, or any other remedies available under applicable law for violations of these Terms.",
+        "Violations involving fraud, abuse, intellectual property infringement, unauthorized access, or malicious interference may be referred to appropriate authorities where permitted by law."
+      ]
+    },
+    {
+      "title": "Evidence Preservation",
+      "content": [
+        "We reserve the right to preserve logs, uploaded files, messages, metadata, device information, network information, and other relevant records for investigation, moderation, security, legal compliance, or dispute resolution.",
+        "Evidence may be retained after account termination where reasonably necessary."
+      ]
+    },
+    {
+      "title": "Desktop Application Behavior",
+      "content": [
+        "The Zyphor Desktop Application may continue running in the system tray after its main window is closed unless fully exited by the user.",
+        "The application may automatically start with the operating system if enabled by the user or application settings.",
+        "Background operation is required for certain features including notifications, synchronization, and future functionality.",
+        "Users are responsible for configuring startup behavior and notification settings on their device."
+      ]
+    },
+    {
+      "title": "Desktop Notifications",
+      "content": [
+        "Desktop notifications are provided for convenience only and are not guaranteed to be delivered instantly, correctly, or at all.",
+        "Notification delivery depends on operating system settings, notification permissions, internet connectivity, background execution, battery optimization, and third-party operating system behavior.",
+        "We are not responsible for delayed, duplicated, blocked, missing, or incorrect desktop notifications.",
+        "Notification previews may display usernames, message previews, support updates, or other account activity depending on user settings and operating system behavior."
+      ]
+    },
+    {
+      "title": "Mobile Application",
+      "content": [
+        "The Zyphor Android application is provided on an 'as is' and 'as available' basis.",
+        "Application functionality may vary depending on Android version, manufacturer, device model, operating system modifications, battery optimization, permissions, and hardware capabilities.",
+        "Older application versions may become unsupported or lose functionality without notice.",
+        "Users are responsible for installing official updates to maintain compatibility and security."
+      ]
+    },
+    {
+      "title": "Push Notifications",
+      "content": [
+        "Push notifications rely on third-party notification providers and operating system services.",
+        "Notifications may be delayed, blocked, duplicated, throttled, or never delivered due to internet connectivity, battery optimization, notification permissions, provider outages, or operating system restrictions.",
+        "We are not responsible for missed direct messages, support notifications, friend requests, or account alerts resulting from notification delivery failures.",
+        "Notification content may differ between devices or operating system versions."
+      ]
+    },
+    {
+      "title": "Device Registration",
+      "content": [
+        "Desktop and mobile applications may register devices, notification tokens, session identifiers, installation identifiers, or similar technical information required for authentication, synchronization, security, and notification delivery.",
+        "Registered devices may automatically expire, be removed, replaced, or invalidated for operational or security reasons."
+      ]
+    },
+    {
+      "title": "Application Permissions",
+      "content": [
+        "Certain application features require operating system permissions including notifications, storage access, internet connectivity, or future permissions.",
+        "Denying, revoking, or restricting permissions may disable or limit application functionality.",
+        "We are not responsible for issues caused by disabled permissions or operating system restrictions."
+      ]
+    },
+    {
+      "title": "Background Services",
+      "content": [
+        "Desktop and mobile applications may perform background synchronization, session validation, notification handling, update checks, caching, and similar operational tasks while running.",
+        "Background services may stop functioning due to operating system limitations, user settings, battery optimization, antivirus software, firewalls, or third-party security software.",
+        "We are not responsible for functionality lost due to background process termination."
+      ]
+    },
+    {
+      "title": "Application Updates",
+      "content": [
+        "Updates may modify, remove, redesign, replace, or discontinue features, interfaces, layouts, settings, notification behavior, synchronization systems, or application functionality at any time.",
+        "We are not obligated to maintain compatibility with previous application versions or operating systems."
+      ]
+    },
+    {
+      "title": "Downloads and Installers",
+      "content": [
+        "Installers, archived versions, previous releases, beta builds, and download links are provided for convenience only.",
+        "We do not guarantee permanent availability, compatibility, integrity, or continued hosting of any application version.",
+        "Older versions may contain known security vulnerabilities, missing features, bugs, or compatibility issues and are used entirely at the user's own risk."
+      ]
+    },
+    {
+      "title": "Operating System Limitations",
+      "content": [
+        "Application behavior may differ across Windows versions, Android versions, hardware configurations, accessibility settings, antivirus software, virtualization environments, and operating system updates.",
+        "We are not responsible for crashes, installation failures, startup issues, notification failures, compatibility problems, rendering differences, or performance limitations caused by operating system behavior or third-party software."
+      ]
+    },
+    {
+      "title": "Unofficial Applications",
+      "content": [
+        "Only applications distributed through official Zyphor sources are supported.",
+        "Modified, unofficial, reverse-engineered, repackaged, or third-party versions of Zyphor applications are used entirely at the user's own risk and may be denied access or permanently blocked."
+      ]
+    },
+    {
+      "title": "Future Applications",
+      "content": [
+        "These Terms automatically apply to all future Zyphor applications including desktop, mobile, web, browser extensions, APIs, integrations, launchers, utilities, and any future software released under the Zyphor brand.",
+        "Future applications may introduce additional features, permissions, requirements, or limitations without prior notice."
+      ]
+    },
+    {
+      "title": "No Circumvention",
+      "content": [
+        "Users may not attempt to circumvent bans, restrictions, rate limits, verification systems, security protections, payment limitations, moderation actions, eligibility requirements, or any technical or administrative safeguards implemented by Zyphor.",
+        "Attempts to evade enforcement through alternate accounts, devices, networks, VPNs, proxies, virtual machines, modified clients, or third-party services may result in additional enforcement."
+      ]
+    },
+    {
+      "title": "Application Permissions",
+      "content": [
+        "Certain application features may require permissions including but not limited to notifications, internet access, storage access, or future device capabilities.",
+        "Denying or removing permissions may limit or disable application functionality.",
+        "Granting permissions does not guarantee that related features will always function correctly.",
+        "Users may manage application permissions through their device settings where supported."
+      ]
+    },
+    {
+      "title": "Application Availability and Compatibility",
+      "content": [
+        "The mobile application may not function on all devices, Android versions, manufacturers, custom operating systems, emulators, modified devices, or restricted environments.",
+        "Performance, battery usage, loading behavior, notification delivery, and appearance may vary between devices.",
+        "We are not responsible for crashes, compatibility issues, installation failures, device-specific problems, or operating system restrictions."
+      ]
+    },
+    {
+      "title": "Jurisdiction and Interpretation",
+      "content": [
+        "These Terms shall be interpreted to the maximum extent permitted by applicable law.",
+        "If any provision is found unenforceable, the remaining provisions shall remain fully valid and enforceable.",
+        "Any ambiguity in interpretation shall not be construed against the service or its operators."
+      ]
     }
   ],
-  "footer": "These Terms apply to all current and future features. Continued use constitutes full acceptance of all provisions."
-}
+  "extras": {
+    "cards": [
+      {
+        "title": "Account Recovery",
+        "content": "Account recovery is not guaranteed and is subject to verification and staff discretion."
+      },
+      {
+        "title": "Support Records",
+        "content": "Support interactions may be logged, stored, and reviewed for moderation and operational purposes."
+      }
+    ],
+    "footer": "These Terms apply to all current and future features. Continued use constitutes full acceptance of all provisions."
+  }
 }
