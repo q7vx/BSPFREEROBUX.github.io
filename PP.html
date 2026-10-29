@@ -4,6 +4,9 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<meta name="description" content="Zyphor privacy policy, data categories, cookies, advertising disclosures, controls and contact options.">
+<link rel="canonical" href="https://zyphor.cc/PP.html">
 <title>Privacy Policy</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -274,6 +277,7 @@ border-radius:10px;
 
 <div class="meta" id="metaBox"></div>
 
+<div class="section" aria-label="Advertising and data privacy summary"><h2>Advertising, privacy, and your choices</h2><div class="clause">Zyphor's publisher authorization and public website may be reviewed for Google AdSense. Ads are not activated by this policy alone. If AdSense is enabled, Google and other third-party vendors may use cookies and related technologies to deliver and measure ads, including advertising based on previous visits to this and other websites.</div><div class="clause">You can review <a href="/privacy-ads.html">Zyphor's advertising and cookie explanation</a>, manage personalized Google advertising at <a href="https://adssettings.google.com/" rel="noopener noreferrer">Google Ads Settings</a>, or visit <a href="https://www.aboutads.info/" rel="noopener noreferrer">aboutads.info</a> for further opt-out information. Where legally required, consent choices should be provided by the active certified consent management platform.</div><div class="clause">For questions about Zyphor account data and privacy requests, use <a href="/Support.html">Support</a>. This summary complements the complete Privacy Policy shown below.</div></div>
 <div id="sections"></div>
 
 <div class="grid" id="extras"></div>
@@ -411,7 +415,7 @@ footer.textContent =
 
 }
 
-loadPrivacy()
+loadPrivacy().catch(()=>{document.getElementById("sections").textContent="The full policy document could not be loaded. Refresh the page or contact Support.";})
 </script>
 
 </body>
