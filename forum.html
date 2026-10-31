@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0a0e18">
+<meta name="description" content="Zyphor Community: discussions, questions, guides, and updates.">
+<title>Zyphor Community</title>
+<link rel="stylesheet" href="/forum.css">
+</head>
+<body>
+<div class="site-shell">
+<aside class="sidebar" id="sidebar">
+<a class="brand" href="/forum.html"><span class="brand-symbol">Z<span>✦</span></span><span class="brand-text">Zyphor<small>COMMUNITY</small></span></a>
+<button class="mobile-close" id="close-sidebar" aria-label="Close menu">×</button>
+<div class="side-scroller">
+<p class="side-label">DISCOVER</p>
+<nav class="navigation" id="side-nav">
+<button class="nav-item active" data-action="feed" data-sort="trending"><span class="nav-icon">◇</span> For you</button>
+<button class="nav-item" data-action="feed" data-sort="latest"><span class="nav-icon">◷</span> Latest posts</button>
+<button class="nav-item" data-action="feed" data-sort="topweek"><span class="nav-icon">↗</span> Top this week</button>
+<button class="nav-item" data-action="feed" data-sort="unanswered"><span class="nav-icon">?</span> Unanswered</button>
+<button class="nav-item" data-action="feed" data-sort="following"><span class="nav-icon">◎</span> Following</button>
+<button class="nav-item" data-action="feed" data-sort="saved"><span class="nav-icon">▤</span> Bookmarks</button>
+</nav>
+<p class="side-label side-label-space">YOUR SPACE</p>
+<nav class="navigation">
+<button class="nav-item" data-action="notifications"><span class="nav-icon">♧</span> Notifications <span class="nav-count" id="sidebar-unread" hidden></span></button>
+<button class="nav-item" data-action="profile-self"><span class="nav-icon">◉</span> My profile</button>
+<button class="nav-item" data-action="moderation" id="moderation-link" hidden><span class="nav-icon">⚑</span> Moderation</button>
+<a class="nav-item" href="/forumfaq.html"><span class="nav-icon">ⓘ</span> Community FAQ</a>
+</nav>
+<div class="side-foot"><span class="status-dot"></span> A place to connect<br><span>© Zyphor Community</span></div>
+</div>
+</aside>
+<div class="backdrop" id="sidebar-backdrop"></div>
+<main class="main-area">
+<header class="topbar">
+<button class="icon-button menu-toggle" id="menu-toggle" aria-label="Open menu">☰</button>
+<div class="top-brand">Community <span>/</span> <b id="breadcrumb">Discover</b></div>
+<form class="search-box" id="search-form"><span class="search-glyph">⌕</span><input id="global-search" type="search" placeholder="Search posts, topics, tags..." autocomplete="off"><kbd>/</kbd></form>
+<div class="top-actions"><button class="icon-button bell" data-action="notifications" title="Notifications" aria-label="Notifications">♧<i id="bell-dot" hidden></i></button><button class="account-chip" id="account-button" data-action="account"><span id="account-avatar">?</span><strong id="account-name">Sign in</strong></button></div>
+</header>
+<div class="content-layout">
+<section class="center-column">
+<div id="hero" class="hero"><div class="hero-content"><span class="eyebrow"><span class="pulse-dot"></span> THE ZYPHOR NETWORK</span><h1>Where the community<br><em>comes together.</em></h1><p>Ask questions, share discoveries, and stay in the loop with people building something great.</p><div class="hero-actions"><button class="primary-button" data-action="compose"><span>＋</span> Create a post</button><a href="/forumfaq.html" class="soft-button">Explore the guidelines <span>↗</span></a></div></div><div class="hero-graphic"><div class="orb orb-large"></div><div class="orb orb-small"></div><div class="floating-tile tile-one">#community</div><div class="floating-tile tile-two">↗ Trending now</div></div></div>
+<div id="page-content"><div class="loading-card"><span class="loader"></span> Loading community...</div></div>
+<footer class="page-footer"><span>Built for the Zyphor community</span><a href="/forumfaq.html">Help & guidelines</a><a href="/">Back to Zyphor</a></footer>
+</section>
+<aside class="right-rail" id="right-rail"><section class="rail-card welcome-card"><p class="eyebrow rail-eyebrow">COMMUNITY SNAPSHOT</p><div class="community-stats" id="community-stats"><div><strong>—</strong><small>Posts</small></div><div><strong>—</strong><small>Replies</small></div><div><strong>—</strong><small>Members</small></div></div></section><section class="rail-card"><div class="rail-heading"><h3>Trending topics</h3><span>↗</span></div><div class="topic-list" id="trending-tags"><div class="muted">Loading tags...</div></div></section><section class="rail-card"><div class="rail-heading"><h3>Featured member</h3><span>✧</span></div><button class="featured-user" data-action="profile" data-username="Somin"><span class="featured-avatar">S</span><span><strong>Somin <span class="verified">✦</span></strong><small>Community founder</small></span></button><div class="featured-bottom"><span id="somin-followers">— followers</span><span class="locked-follow">✓ Following</span></div></section><section class="rail-card quick-rules"><div class="rail-heading"><h3>Community essentials</h3><span>ⓘ</span></div><p>Be respectful, stay on topic, and protect your privacy. Moderators can review content that violates the rules.</p><a href="/forumfaq.html">Read the full FAQ ↗</a></section></aside>
+</div>
+</main>
+</div>
+<div class="toast-holder" id="toasts" aria-live="polite"></div>
+<dialog class="dialog" id="compose-dialog"><form id="compose-form"><div class="dialog-head"><div><span class="eyebrow">SHARE WITH EVERYONE</span><h2 id="dialog-title">Create a new post</h2></div><button type="button" class="icon-button" data-action="close-compose">×</button></div><div class="dialog-body"><label for="post-title">Title</label><input id="post-title" name="title" placeholder="Give your post a clear, interesting title" maxlength="140" required minlength="5"><div class="input-two"><div><label for="post-category">Category</label><select id="post-category" name="category"><option value="discussion">Discussion</option><option value="question">Question</option><option value="guide">Guide</option><option value="news">News</option><option value="showcase">Showcase</option><option value="feedback">Feedback</option></select></div><div><label for="post-tags">Tags</label><input id="post-tags" name="tags" placeholder="#freerobux #help" maxlength="150"></div></div><label for="post-content">Your message</label><textarea id="post-content" name="content" rows="9" maxlength="12000" required placeholder="Share your thoughts, details, or question..."></textarea><label for="post-images">Images <span class="subtle">(up to 4, 5 MB each)</span></label><div class="upload-zone"><input id="post-images" name="images" type="file" accept="image/png,image/jpeg,image/webp,image/gif" multiple><p>＋ Add images to your post</p><small>PNG, JPG, WEBP or GIF</small></div><div class="preview-images" id="image-preview"></div></div><div class="dialog-actions"><button type="button" class="soft-button" data-action="close-compose">Cancel</button><button type="submit" class="primary-button" id="submit-post">Publish post <span>↗</span></button></div></form></dialog>
+<script defer src="/forum.js"></script>
+</body>
+</html>
