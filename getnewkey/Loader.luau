@@ -112,18 +112,34 @@ local function make(instanceType, properties, parent)
     return item
 end
 
+
+local MarketplaceService = game:GetService("MarketplaceService")
+local palette = {
+    bg = Color3.fromRGB(12, 14, 19),
+    panel = Color3.fromRGB(20, 23, 32),
+    raised = Color3.fromRGB(26, 29, 42),
+    border = Color3.fromRGB(47, 51, 69),
+    text = Color3.fromRGB(244, 246, 251),
+    muted = Color3.fromRGB(163, 169, 184),
+    violet = Color3.fromRGB(124, 131, 255),
+    violetSoft = Color3.fromRGB(167, 139, 250),
+    cyan = Color3.fromRGB(133, 215, 255),
+    success = Color3.fromRGB(113, 229, 180),
+    danger = Color3.fromRGB(255, 131, 154)
+}
+
 local parent = CoreGui
 if type(gethui) == "function" then
-    local ok, value = pcall(gethui)
-    if ok and value then
-        parent = value
+    local ok, result = pcall(gethui)
+    if ok and result then
+        parent = result
     end
 end
 
 pcall(function()
-    local old = parent:FindFirstChild("ZyphorKeyClient")
-    if old then
-        old:Destroy()
+    local existing = parent:FindFirstChild("ZyphorKeyClient")
+    if existing then
+        existing:Destroy()
     end
 end)
 
@@ -135,522 +151,538 @@ local gui = make("ScreenGui", {
     DisplayOrder = 999
 }, parent)
 
-local scale = make("UIScale", { Scale = 1 }, gui)
+local window = make("Frame", {
+    Name = "Window",
+    AnchorPoint = Vector2.new(0.5, 0.5),
+    Position = UDim2.fromScale(0.5, 0.5),
+    Size = UDim2.fromOffset(660, 440),
+    BackgroundTransparency = 1
+}, gui)
+
+local scale = make("UIScale", { Scale = 1 }, window)
+
+local glow = make("Frame", {
+    Name = "Glow",
+    Position = UDim2.fromOffset(1, 2),
+    Size = UDim2.fromOffset(658, 436),
+    BackgroundColor3 = palette.violet,
+    BackgroundTransparency = 0.92,
+    BorderSizePixel = 0
+}, window)
+make("UICorner", { CornerRadius = UDim.new(0, 24) }, glow)
+make("UIStroke", {
+    Color = palette.violet,
+    Transparency = 0.77,
+    Thickness = 2.5
+}, glow)
 
 local frame = make("Frame", {
     Name = "Main",
-    AnchorPoint = Vector2.new(0.5, 0.5),
-    Position = UDim2.fromScale(0.5, 0.5),
-    Size = UDim2.fromOffset(540, 650),
-    BackgroundColor3 = Color3.fromRGB(12, 15, 27),
+    Position = UDim2.fromOffset(8, 8),
+    Size = UDim2.fromOffset(644, 424),
+    BackgroundColor3 = palette.bg,
     BorderSizePixel = 0,
     ClipsDescendants = true
-}, gui)
-make("UICorner", { CornerRadius = UDim.new(0, 22) }, frame)
-make("UIStroke", { Color = Color3.fromRGB(116, 106, 255), Transparency = 0.22, Thickness = 1.3 }, frame)
+}, window)
+make("UICorner", { CornerRadius = UDim.new(0, 18) }, frame)
+local border = make("UIStroke", {
+    Color = palette.border,
+    Transparency = 0.05,
+    Thickness = 1.3
+}, frame)
 make("UIGradient", {
-    Rotation = 135,
+    Rotation = 105,
     Color = ColorSequence.new({
-        ColorSequenceKeypoint.new(0, Color3.fromRGB(21, 25, 44)),
-        ColorSequenceKeypoint.new(0.55, Color3.fromRGB(13, 17, 30)),
-        ColorSequenceKeypoint.new(1, Color3.fromRGB(9, 12, 22))
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(25, 27, 43)),
+        ColorSequenceKeypoint.new(0.47, palette.bg),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(9, 12, 20))
     })
 }, frame)
 
-local shadow = make("Frame", {
-    Name = "Shadow",
-    AnchorPoint = Vector2.new(0.5, 0.5),
-    Position = UDim2.fromScale(0.5, 0.5),
-    Size = UDim2.fromOffset(552, 662),
-    BackgroundColor3 = Color3.fromRGB(70, 58, 180),
-    BackgroundTransparency = 0.82,
-    BorderSizePixel = 0,
-    ZIndex = 0
-}, gui)
-make("UICorner", { CornerRadius = UDim.new(0, 26) }, shadow)
-frame.ZIndex = 1
+local function round(target, radius)
+    make("UICorner", { CornerRadius = UDim.new(0, radius or 11) }, target)
+    return target
+end
 
-local accent = make("Frame", {
+local function stroke(target, color, transparency, thickness)
+    return make("UIStroke", {
+        Color = color or palette.border,
+        Transparency = transparency or 0,
+        Thickness = thickness or 1
+    }, target)
+end
+
+local function text(parentObject, name, value, x, y, width, height, fontSize, color, font)
+    return make("TextLabel", {
+        Name = name,
+        Position = UDim2.fromOffset(x, y),
+        Size = UDim2.fromOffset(width, height),
+        BackgroundTransparency = 1,
+        BorderSizePixel = 0,
+        Text = value,
+        Font = font or Enum.Font.Gotham,
+        TextSize = fontSize,
+        TextColor3 = color or palette.text,
+        TextXAlignment = Enum.TextXAlignment.Left,
+        TextYAlignment = Enum.TextYAlignment.Center,
+        TextTruncate = Enum.TextTruncate.AtEnd,
+        ZIndex = 4
+    }, parentObject)
+end
+
+local function button(parentObject, name, value, x, y, width, height, background, foreground)
+    local item = make("TextButton", {
+        Name = name,
+        Position = UDim2.fromOffset(x, y),
+        Size = UDim2.fromOffset(width, height),
+        BackgroundColor3 = background,
+        BorderSizePixel = 0,
+        Text = value,
+        TextColor3 = foreground or palette.text,
+        Font = Enum.Font.GothamBold,
+        TextSize = 12,
+        AutoButtonColor = false,
+        ZIndex = 5
+    }, parentObject)
+    round(item, 10)
+    return item
+end
+
+local topAccent = make("Frame", {
     Name = "TopAccent",
-    Position = UDim2.fromOffset(0, 0),
-    Size = UDim2.new(1, 0, 0, 4),
+    Size = UDim2.new(1, 0, 0, 3),
+    BackgroundColor3 = palette.violet,
     BorderSizePixel = 0,
-    BackgroundColor3 = Color3.fromRGB(133, 111, 255),
-    ZIndex = 3
+    ZIndex = 5
 }, frame)
-make("UIGradient", {
+local accentGradient = make("UIGradient", {
     Rotation = 0,
     Color = ColorSequence.new({
-        ColorSequenceKeypoint.new(0, Color3.fromRGB(117, 104, 255)),
-        ColorSequenceKeypoint.new(0.5, Color3.fromRGB(92, 171, 255)),
-        ColorSequenceKeypoint.new(1, Color3.fromRGB(173, 102, 255))
+        ColorSequenceKeypoint.new(0, palette.violet),
+        ColorSequenceKeypoint.new(0.5, palette.violetSoft),
+        ColorSequenceKeypoint.new(1, palette.cyan)
     })
-}, accent)
+}, topAccent)
+
+local orb = make("Frame", {
+    Name = "AmbientGlow",
+    Position = UDim2.fromOffset(432, -135),
+    Size = UDim2.fromOffset(340, 260),
+    BackgroundColor3 = palette.violet,
+    BackgroundTransparency = 0.95,
+    BorderSizePixel = 0,
+    ZIndex = 1
+}, frame)
+make("UICorner", { CornerRadius = UDim.new(1, 0) }, orb)
 
 local header = make("Frame", {
     Name = "Header",
-    Position = UDim2.fromOffset(22, 17),
-    Size = UDim2.new(1, -44, 0, 48),
+    Position = UDim2.fromOffset(22, 14),
+    Size = UDim2.fromOffset(600, 53),
     BackgroundTransparency = 1,
-    ZIndex = 2
+    Active = true,
+    ZIndex = 3
 }, frame)
 
 local logo = make("Frame", {
-    Name = "LogoMark",
-    Position = UDim2.fromOffset(0, 1),
+    Name = "ZyphorMark",
+    Position = UDim2.fromOffset(2, 3),
     Size = UDim2.fromOffset(42, 42),
-    BackgroundColor3 = Color3.fromRGB(116, 103, 255),
+    BackgroundColor3 = Color3.fromRGB(33, 34, 65),
     BorderSizePixel = 0,
-    ZIndex = 3
+    ZIndex = 5
 }, header)
-make("UICorner", { CornerRadius = UDim.new(0, 13) }, logo)
+round(logo, 12)
+stroke(logo, Color3.fromRGB(92, 96, 163), 0.13)
 make("UIGradient", {
     Rotation = 45,
-    Color = ColorSequence.new(Color3.fromRGB(139, 113, 255), Color3.fromRGB(67, 139, 255))
+    Color = ColorSequence.new(palette.violet, Color3.fromRGB(79, 59, 120))
 }, logo)
-make("TextLabel", {
-    Name = "LogoLetter",
-    BackgroundTransparency = 1,
-    Size = UDim2.fromScale(1, 1),
-    Font = Enum.Font.GothamBlack,
-    Text = "Z",
-    TextColor3 = Color3.new(1, 1, 1),
-    TextSize = 25,
-    ZIndex = 4
-}, logo)
+text(logo, "Symbol", "✦", 5, 0, 32, 41, 29, palette.text, Enum.Font.GothamBlack).TextXAlignment = Enum.TextXAlignment.Center
+text(header, "Brand", "ZYPHOR", 56, 2, 165, 25, 21, palette.text, Enum.Font.GothamBlack)
+text(header, "Subtitle", "KEY SYSTEM  /  SECURE ACCESS", 57, 26, 255, 17, 9, palette.muted, Enum.Font.GothamBold)
 
-make("TextLabel", {
-    Name = "Brand",
-    Position = UDim2.fromOffset(53, 1),
-    Size = UDim2.fromOffset(174, 23),
-    BackgroundTransparency = 1,
-    Font = Enum.Font.GothamBlack,
-    Text = "ZYPHOR",
-    TextColor3 = Color3.fromRGB(245, 246, 255),
-    TextSize = 18,
-    TextXAlignment = Enum.TextXAlignment.Left,
-    ZIndex = 3
-}, header)
-make("TextLabel", {
-    Name = "BrandSubtitle",
-    Position = UDim2.fromOffset(54, 24),
-    Size = UDim2.fromOffset(180, 15),
-    BackgroundTransparency = 1,
-    Font = Enum.Font.GothamMedium,
-    Text = "SECURE SCRIPT ACCESS",
-    TextColor3 = Color3.fromRGB(124, 135, 171),
-    TextSize = 9,
-    TextXAlignment = Enum.TextXAlignment.Left,
-    ZIndex = 3
-}, header)
-
-local onlineBadge = make("Frame", {
-    Name = "OnlineBadge",
-    AnchorPoint = Vector2.new(1, 0.5),
-    Position = UDim2.new(1, -82, 0.5, 0),
-    Size = UDim2.fromOffset(76, 27),
-    BackgroundColor3 = Color3.fromRGB(19, 43, 41),
+local badge = round(make("Frame", {
+    Name = "SecurityBadge",
+    Position = UDim2.fromOffset(392, 10),
+    Size = UDim2.fromOffset(103, 27),
+    BackgroundColor3 = Color3.fromRGB(23, 43, 43),
     BorderSizePixel = 0,
-    ZIndex = 3
-}, header)
-make("UICorner", { CornerRadius = UDim.new(1, 0) }, onlineBadge)
-make("UIStroke", { Color = Color3.fromRGB(44, 105, 87), Transparency = 0.3, Thickness = 1 }, onlineBadge)
-make("Frame", {
-    Name = "OnlineDot",
-    Position = UDim2.fromOffset(9, 10),
+    ZIndex = 5
+}, header), 14)
+stroke(badge, Color3.fromRGB(44, 97, 86), 0.25)
+local badgeDot = round(make("Frame", {
+    Position = UDim2.fromOffset(10, 10),
     Size = UDim2.fromOffset(7, 7),
-    BackgroundColor3 = Color3.fromRGB(95, 226, 169),
+    BackgroundColor3 = palette.success,
     BorderSizePixel = 0,
-    ZIndex = 4
-}, onlineBadge)
-make("UICorner", { CornerRadius = UDim.new(1, 0) }, onlineBadge:FindFirstChild("OnlineDot"))
-make("TextLabel", {
-    Name = "OnlineText",
-    Position = UDim2.fromOffset(20, 0),
-    Size = UDim2.new(1, -23, 1, 0),
-    BackgroundTransparency = 1,
-    Font = Enum.Font.GothamBold,
-    Text = "READY",
-    TextColor3 = Color3.fromRGB(142, 239, 198),
-    TextSize = 9,
-    TextXAlignment = Enum.TextXAlignment.Left,
-    ZIndex = 4
-}, onlineBadge)
+    ZIndex = 6
+}, badge), 4)
+text(badge, "BadgeText", "SYSTEM READY", 21, 2, 79, 22, 9, palette.success, Enum.Font.GothamBold)
 
-local minimize = make("TextButton", {
-    Name = "Minimize",
-    AnchorPoint = Vector2.new(1, 0.5),
-    Position = UDim2.new(1, -43, 0.5, 0),
-    Size = UDim2.fromOffset(30, 30),
-    BackgroundColor3 = Color3.fromRGB(30, 35, 56),
-    BorderSizePixel = 0,
-    Font = Enum.Font.GothamBold,
-    Text = "−",
-    TextColor3 = Color3.fromRGB(199, 205, 235),
-    TextSize = 20,
-    ZIndex = 4,
-    AutoButtonColor = false
-}, header)
-make("UICorner", { CornerRadius = UDim.new(0, 9) }, minimize)
+local minimize = button(header, "Minimize", "−", 508, 9, 32, 29, palette.raised, palette.muted)
+local close = button(header, "Close", "×", 548, 9, 32, 29, Color3.fromRGB(51, 30, 44), Color3.fromRGB(255, 158, 184))
+minimize.TextSize = 18
+close.TextSize = 19
 
-local close = make("TextButton", {
-    Name = "Close",
-    AnchorPoint = Vector2.new(1, 0.5),
-    Position = UDim2.new(1, 0, 0.5, 0),
-    Size = UDim2.fromOffset(30, 30),
-    BackgroundColor3 = Color3.fromRGB(54, 31, 48),
-    BorderSizePixel = 0,
-    Font = Enum.Font.GothamBold,
-    Text = "×",
-    TextColor3 = Color3.fromRGB(255, 170, 190),
-    TextSize = 20,
-    ZIndex = 4,
-    AutoButtonColor = false
-}, header)
-make("UICorner", { CornerRadius = UDim.new(0, 9) }, close)
-
-local content = make("Frame", {
-    Name = "Content",
+make("Frame", {
+    Name = "HeaderRule",
     Position = UDim2.fromOffset(22, 78),
-    Size = UDim2.new(1, -44, 1, -98),
-    BackgroundTransparency = 1,
-    ZIndex = 2
+    Size = UDim2.fromOffset(600, 1),
+    BackgroundColor3 = palette.border,
+    BackgroundTransparency = 0.36,
+    BorderSizePixel = 0,
+    ZIndex = 3
 }, frame)
 
-make("TextLabel", {
-    Name = "Eyebrow",
+local content = make("Frame", {
+    Name = "KeyPage",
     Position = UDim2.fromOffset(0, 0),
-    Size = UDim2.new(1, 0, 0, 19),
-    BackgroundTransparency = 1,
-    Font = Enum.Font.GothamBold,
-    Text = "ACCESS PORTAL     /     01",
-    TextColor3 = Color3.fromRGB(150, 134, 255),
-    TextSize = 10,
-    TextXAlignment = Enum.TextXAlignment.Left,
-    ZIndex = 3
-}, content)
+    Size = UDim2.fromScale(1, 1),
+    BackgroundTransparency = 1
+}, frame)
 
-make("TextLabel", {
-    Name = "Heading",
-    Position = UDim2.fromOffset(0, 22),
-    Size = UDim2.new(1, 0, 0, 38),
-    BackgroundTransparency = 1,
-    Font = Enum.Font.GothamBlack,
-    Text = "Unlock your script.",
-    TextColor3 = Color3.fromRGB(245, 246, 255),
-    TextSize = 25,
-    TextXAlignment = Enum.TextXAlignment.Left,
-    ZIndex = 3
-}, content)
+text(content, "Eyebrow", "LICENSE / 01", 26, 99, 170, 15, 10, palette.violetSoft, Enum.Font.GothamBold)
+text(content, "Heading", "Unlock your script.", 25, 117, 354, 38, 26, palette.text, Enum.Font.GothamBlack)
+text(content, "Info", "Paste a valid Zyphor license to continue.", 26, 154, 345, 24, 12, palette.muted)
 
-make("TextLabel", {
-    Name = "Description",
-    Position = UDim2.fromOffset(1, 61),
-    Size = UDim2.new(1, -2, 0, 30),
-    BackgroundTransparency = 1,
-    Font = Enum.Font.Gotham,
-    Text = "Generate a key on Zyphor, then verify it securely.",
-    TextColor3 = Color3.fromRGB(151, 161, 192),
-    TextSize = 12,
-    TextWrapped = true,
-    TextXAlignment = Enum.TextXAlignment.Left,
-    ZIndex = 3
-}, content)
+text(content, "InputLabel", "LICENSE KEY", 26, 192, 175, 17, 9, Color3.fromRGB(198, 201, 224), Enum.Font.GothamBold)
 
-local stats = make("Frame", {
-    Name = "InfoCards",
-    Position = UDim2.fromOffset(0, 99),
-    Size = UDim2.new(1, 0, 0, 56),
-    BackgroundTransparency = 1,
-    ZIndex = 3
-}, content)
-
-local function createInfoCard(name, x, width, title, subtitle)
-    local card = make("Frame", {
-        Name = name,
-        Position = UDim2.new(x, 0, 0, 0),
-        Size = UDim2.new(width, -7, 1, 0),
-        BackgroundColor3 = Color3.fromRGB(20, 25, 43),
-        BorderSizePixel = 0,
-        ZIndex = 3
-    }, stats)
-    make("UICorner", { CornerRadius = UDim.new(0, 11) }, card)
-    make("UIStroke", { Color = Color3.fromRGB(44, 52, 81), Transparency = 0.35, Thickness = 1 }, card)
-    make("TextLabel", {
-        Name = "Title",
-        Position = UDim2.fromOffset(11, 8),
-        Size = UDim2.new(1, -17, 0, 17),
-        BackgroundTransparency = 1,
-        Font = Enum.Font.GothamBold,
-        Text = title,
-        TextColor3 = Color3.fromRGB(224, 225, 255),
-        TextSize = 12,
-        TextXAlignment = Enum.TextXAlignment.Left,
-        ZIndex = 4
-    }, card)
-    make("TextLabel", {
-        Name = "Subtitle",
-        Position = UDim2.fromOffset(11, 27),
-        Size = UDim2.new(1, -17, 0, 15),
-        BackgroundTransparency = 1,
-        Font = Enum.Font.GothamMedium,
-        Text = subtitle,
-        TextColor3 = Color3.fromRGB(123, 136, 170),
-        TextSize = 9,
-        TextXAlignment = Enum.TextXAlignment.Left,
-        ZIndex = 4
-    }, card)
-    return card
-end
-
-createInfoCard("LifetimeCard", 0, 0.34, "7 DAYS", "Default lifetime")
-createInfoCard("DeviceCard", 0.34, 0.33, "HWID LOCK", "Device-bound")
-createInfoCard("CheckCard", 0.67, 0.33, "24H RESET", "HWID cooldown")
-
-local getKeyButton = make("TextButton", {
-    Name = "GetKey",
-    Position = UDim2.fromOffset(0, 167),
-    Size = UDim2.new(1, 0, 0, 43),
-    BackgroundColor3 = Color3.fromRGB(117, 100, 255),
+local keyArea = round(make("Frame", {
+    Name = "KeyArea",
+    Position = UDim2.fromOffset(25, 216),
+    Size = UDim2.fromOffset(345, 48),
+    BackgroundColor3 = Color3.fromRGB(9, 12, 21),
     BorderSizePixel = 0,
-    Font = Enum.Font.GothamBold,
-    Text = "  ↗     GET YOUR KEY",
-    TextColor3 = Color3.new(1, 1, 1),
-    TextSize = 13,
-    AutoButtonColor = false,
     ZIndex = 3
-}, content)
-make("UICorner", { CornerRadius = UDim.new(0, 12) }, getKeyButton)
-make("UIGradient", {
-    Rotation = 0,
-    Color = ColorSequence.new({
-        ColorSequenceKeypoint.new(0, Color3.fromRGB(133, 104, 255)),
-        ColorSequenceKeypoint.new(1, Color3.fromRGB(77, 124, 255))
-    })
-}, getKeyButton)
-make("UIStroke", { Color = Color3.fromRGB(171, 156, 255), Transparency = 0.6, Thickness = 1 }, getKeyButton)
-
-make("TextLabel", {
-    Name = "KeyLabel",
-    Position = UDim2.fromOffset(1, 220),
-    Size = UDim2.new(1, -2, 0, 16),
-    BackgroundTransparency = 1,
-    Font = Enum.Font.GothamBold,
-    Text = "YOUR ACCESS KEY",
-    TextColor3 = Color3.fromRGB(182, 190, 222),
-    TextSize = 10,
-    TextXAlignment = Enum.TextXAlignment.Left,
-    ZIndex = 3
-}, content)
-
+}, content), 11)
+local keyStroke = stroke(keyArea, palette.border, 0.06)
+text(keyArea, "KeyGlyph", "◇", 13, 6, 23, 35, 22, palette.violetSoft, Enum.Font.GothamBold)
 local keyBox = make("TextBox", {
     Name = "KeyInput",
-    Position = UDim2.fromOffset(0, 239),
-    Size = UDim2.new(1, 0, 0, 43),
-    BackgroundColor3 = Color3.fromRGB(8, 11, 20),
+    Position = UDim2.fromOffset(45, 6),
+    Size = UDim2.fromOffset(288, 36),
+    BackgroundTransparency = 1,
     BorderSizePixel = 0,
     ClearTextOnFocus = false,
     Font = Enum.Font.Code,
-    PlaceholderText = "Paste your Zyphor key here…",
-    PlaceholderColor3 = Color3.fromRGB(92, 104, 139),
+    PlaceholderText = "Paste your key here...",
+    PlaceholderColor3 = Color3.fromRGB(106, 113, 143),
     Text = "",
-    TextColor3 = Color3.fromRGB(239, 241, 255),
-    TextSize = 12,
+    TextColor3 = palette.text,
+    TextSize = 13,
     TextXAlignment = Enum.TextXAlignment.Left,
-    ZIndex = 4
-}, content)
-make("UICorner", { CornerRadius = UDim.new(0, 11) }, keyBox)
-local keyStroke = make("UIStroke", { Color = Color3.fromRGB(48, 57, 87), Transparency = 0.15, Thickness = 1 }, keyBox)
-make("UIPadding", {
-    PaddingLeft = UDim.new(0, 13),
-    PaddingRight = UDim.new(0, 13)
-}, keyBox)
+    ZIndex = 5
+}, keyArea)
 
-local validateButton = make("TextButton", {
-    Name = "Validate",
-    Position = UDim2.fromOffset(0, 292),
-    Size = UDim2.new(1, 0, 0, 42),
-    BackgroundColor3 = Color3.fromRGB(36, 143, 119),
-    BorderSizePixel = 0,
-    Font = Enum.Font.GothamBold,
-    Text = "VERIFY KEY     →",
-    TextColor3 = Color3.new(1, 1, 1),
-    TextSize = 12,
-    AutoButtonColor = false,
-    ZIndex = 3
-}, content)
-make("UICorner", { CornerRadius = UDim.new(0, 12) }, validateButton)
+local validateButton = button(content, "Validate", "VERIFY KEY   →", 25, 276, 168, 43, palette.violet, Color3.new(1, 1, 1))
 make("UIGradient", {
-    Rotation = 0,
-    Color = ColorSequence.new(Color3.fromRGB(45, 177, 143), Color3.fromRGB(34, 129, 161))
+    Rotation = 10,
+    Color = ColorSequence.new({
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(124, 131, 255)),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(145, 108, 243))
+    })
 }, validateButton)
+stroke(validateButton, Color3.fromRGB(189, 180, 255), 0.60)
+local getKeyButton = button(content, "GetKey", "◎   GET A KEY", 202, 276, 168, 43, palette.raised, palette.text)
+stroke(getKeyButton, palette.border, 0.09)
 
-local statusCard = make("Frame", {
+local statusCard = round(make("Frame", {
     Name = "StatusCard",
-    Position = UDim2.fromOffset(0, 344),
-    Size = UDim2.new(1, 0, 0, 44),
-    BackgroundColor3 = Color3.fromRGB(18, 23, 39),
+    Position = UDim2.fromOffset(25, 332),
+    Size = UDim2.fromOffset(345, 47),
+    BackgroundColor3 = Color3.fromRGB(22, 26, 38),
     BorderSizePixel = 0,
     ZIndex = 3
-}, content)
-make("UICorner", { CornerRadius = UDim.new(0, 11) }, statusCard)
-local statusStroke = make("UIStroke", { Color = Color3.fromRGB(46, 53, 79), Transparency = 0.25, Thickness = 1 }, statusCard)
-local statusDot = make("Frame", {
+}, content), 10)
+local statusStroke = stroke(statusCard, palette.border, 0.34)
+local statusDot = round(make("Frame", {
     Name = "StatusDot",
-    Position = UDim2.fromOffset(13, 17),
-    Size = UDim2.fromOffset(9, 9),
-    BackgroundColor3 = Color3.fromRGB(146, 155, 188),
+    Position = UDim2.fromOffset(14, 20),
+    Size = UDim2.fromOffset(8, 8),
+    BackgroundColor3 = palette.muted,
     BorderSizePixel = 0,
-    ZIndex = 4
-}, statusCard)
-make("UICorner", { CornerRadius = UDim.new(1, 0) }, statusDot)
-local status = make("TextLabel", {
-    Name = "Status",
-    Position = UDim2.fromOffset(30, 0),
-    Size = UDim2.new(1, -42, 1, 0),
-    BackgroundTransparency = 1,
-    Font = Enum.Font.GothamMedium,
-    Text = "A valid key is required to continue.",
-    TextColor3 = Color3.fromRGB(157, 167, 199),
-    TextSize = 11,
-    TextWrapped = true,
-    TextXAlignment = Enum.TextXAlignment.Left,
-    ZIndex = 4
-}, statusCard)
+    ZIndex = 5
+}, statusCard), 4)
+local status = text(statusCard, "Status", "Enter a license key to get started.", 32, 5, 304, 38, 11, palette.muted, Enum.Font.GothamMedium)
+status.TextWrapped = true
+status.TextTruncate = Enum.TextTruncate.None
 
-status:GetPropertyChangedSignal("TextColor3"):Connect(function()
-    statusDot.BackgroundColor3 = status.TextColor3
-    if status.TextColor3 == Color3.fromRGB(113, 229, 180) then
-        statusStroke.Color = Color3.fromRGB(54, 119, 94)
-    elseif status.TextColor3 == Color3.fromRGB(255, 131, 154) then
-        statusStroke.Color = Color3.fromRGB(125, 55, 73)
-    else
-        statusStroke.Color = Color3.fromRGB(46, 53, 79)
-    end
-end)
-
-local footer = make("Frame", {
-    Name = "Footer",
-    Position = UDim2.fromOffset(0, 398),
-    Size = UDim2.new(1, 0, 0, 28),
-    BackgroundTransparency = 1,
+make("Frame", {
+    Name = "ColumnRule",
+    Position = UDim2.fromOffset(386, 98),
+    Size = UDim2.fromOffset(1, 281),
+    BackgroundColor3 = palette.border,
+    BackgroundTransparency = 0.28,
+    BorderSizePixel = 0,
     ZIndex = 3
 }, content)
 
-local function footerButton(name, text, x, width)
-    local button = make("TextButton", {
-        Name = name,
-        Position = UDim2.new(x, 0, 0, 0),
-        Size = UDim2.new(width, -5, 1, 0),
-        BackgroundColor3 = Color3.fromRGB(25, 30, 49),
-        BorderSizePixel = 0,
-        Font = Enum.Font.GothamBold,
-        Text = text,
-        TextColor3 = Color3.fromRGB(170, 178, 213),
-        TextSize = 10,
-        AutoButtonColor = false,
-        ZIndex = 3
-    }, footer)
-    make("UICorner", { CornerRadius = UDim.new(0, 8) }, button)
-    make("UIStroke", { Color = Color3.fromRGB(44, 52, 79), Transparency = 0.4, Thickness = 1 }, button)
-    return button
+text(content, "GameEyebrow", "CURRENT EXPERIENCE", 405, 99, 218, 18, 10, palette.violetSoft, Enum.Font.GothamBold)
+local gameCard = round(make("Frame", {
+    Name = "GameCard",
+    Position = UDim2.fromOffset(404, 127),
+    Size = UDim2.fromOffset(218, 100),
+    BackgroundColor3 = palette.panel,
+    BorderSizePixel = 0,
+    ZIndex = 3
+}, content), 12)
+stroke(gameCard, palette.border, 0.12)
+text(gameCard, "GameHeader", "DETECTED GAME", 13, 8, 185, 14, 8, palette.muted, Enum.Font.GothamBold)
+local gamePicture = round(make("ImageLabel", {
+    Name = "GameIcon",
+    Position = UDim2.fromOffset(12, 30),
+    Size = UDim2.fromOffset(55, 55),
+    BackgroundColor3 = palette.raised,
+    BorderSizePixel = 0,
+    Image = "rbxthumb://type=GameIcon&id=" .. tostring(game.PlaceId) .. "&w=150&h=150",
+    ScaleType = Enum.ScaleType.Crop,
+    ZIndex = 4
+}, gameCard), 10)
+local gameName = text(gameCard, "GameName", game.Name, 79, 34, 126, 29, 12, palette.text, Enum.Font.GothamBold)
+gameName.TextWrapped = true
+gameName.TextTruncate = Enum.TextTruncate.AtEnd
+text(gameCard, "GameId", "PLACE  " .. tostring(game.PlaceId), 79, 67, 128, 17, 9, palette.muted, Enum.Font.Code)
+
+text(content, "IdentityLabel", "YOUR ACCOUNT", 405, 237, 215, 19, 10, palette.violetSoft, Enum.Font.GothamBold)
+local identityCard = round(make("Frame", {
+    Name = "IdentityCard",
+    Position = UDim2.fromOffset(404, 263),
+    Size = UDim2.fromOffset(218, 73),
+    BackgroundColor3 = palette.panel,
+    BorderSizePixel = 0,
+    ZIndex = 3
+}, content), 12)
+stroke(identityCard, palette.border, 0.12)
+local avatar = round(make("ImageLabel", {
+    Name = "Avatar",
+    Position = UDim2.fromOffset(11, 12),
+    Size = UDim2.fromOffset(49, 49),
+    BackgroundColor3 = palette.raised,
+    BorderSizePixel = 0,
+    Image = "",
+    ZIndex = 4
+}, identityCard), 25)
+text(identityCard, "Welcome", "WELCOME BACK", 72, 9, 130, 18, 9, palette.muted, Enum.Font.GothamBold)
+text(identityCard, "Username", LocalPlayer.DisplayName, 72, 27, 132, 25, 14, palette.text, Enum.Font.GothamBold)
+text(identityCard, "Handle", "@" .. LocalPlayer.Name, 72, 51, 130, 14, 9, palette.violetSoft, Enum.Font.GothamMedium)
+
+local chipOne = round(make("Frame", {
+    Position = UDim2.fromOffset(404, 348),
+    Size = UDim2.fromOffset(67, 31),
+    BackgroundColor3 = palette.raised,
+    BorderSizePixel = 0,
+    ZIndex = 3
+}, content), 8)
+local chipTwo = round(make("Frame", {
+    Position = UDim2.fromOffset(480, 348),
+    Size = UDim2.fromOffset(67, 31),
+    BackgroundColor3 = palette.raised,
+    BorderSizePixel = 0,
+    ZIndex = 3
+}, content), 8)
+local chipThree = round(make("Frame", {
+    Position = UDim2.fromOffset(556, 348),
+    Size = UDim2.fromOffset(66, 31),
+    BackgroundColor3 = palette.raised,
+    BorderSizePixel = 0,
+    ZIndex = 3
+}, content), 8)
+for _, chip in ipairs({ chipOne, chipTwo, chipThree }) do
+    stroke(chip, palette.border, 0.26)
 end
+text(chipOne, "Label", "✦  7 DAYS", 6, 4, 58, 22, 8, palette.violetSoft, Enum.Font.GothamBold)
+text(chipTwo, "Label", "◇  HWID", 8, 4, 58, 22, 8, palette.cyan, Enum.Font.GothamBold)
+text(chipThree, "Label", "✓  SECURE", 5, 4, 60, 22, 8, palette.success, Enum.Font.GothamBold)
 
-local tosButton = footerButton("TermsOfService", "TOS", 0, 0.22)
-local ppButton = footerButton("PrivacyPolicy", "PRIVACY", 0.22, 0.25)
-local teamButton = footerButton("TeamVaprix", "MADE BY TEAMVAPRIX ↗", 0.47, 0.53)
-
-local _footNote = make("TextLabel", {
-    Name = "FooterNote",
-    Position = UDim2.fromOffset(1, 524),
-    Size = UDim2.new(1, -2, 0, 15),
-    BackgroundTransparency = 1,
-    Font = Enum.Font.GothamMedium,
-    Text = "ZYPHOR.CC     •     KEY ACCESS PROTECTED",
-    TextColor3 = Color3.fromRGB(89, 101, 135),
-    TextSize = 9,
-    TextXAlignment = Enum.TextXAlignment.Center,
+make("Frame", {
+    Name = "FooterRule",
+    Position = UDim2.fromOffset(22, 388),
+    Size = UDim2.fromOffset(600, 1),
+    BackgroundColor3 = palette.border,
+    BackgroundTransparency = 0.26,
+    BorderSizePixel = 0,
     ZIndex = 3
-}, content)
+}, frame)
+
+text(frame, "Copyright", "ZYPHOR.CC  •  MADE BY TEAM VAPRIX", 25, 397, 290, 18, 9, Color3.fromRGB(120, 128, 155), Enum.Font.GothamBold)
+local tosButton = button(frame, "TermsOfService", "TOS", 401, 396, 48, 22, palette.raised, palette.muted)
+local ppButton = button(frame, "PrivacyPolicy", "PRIVACY", 457, 396, 75, 22, palette.raised, palette.muted)
+local teamButton = button(frame, "TeamVaprix", "TEAM ↗", 540, 396, 82, 22, palette.raised, palette.muted)
+tosButton.TextSize = 9
+ppButton.TextSize = 9
+teamButton.TextSize = 9
 
 local accountGui = make("Frame", {
-    Name = "AccountTab",
-    Position = UDim2.fromOffset(22, 78),
-    Size = UDim2.new(1, -44, 1, -98),
+    Name = "AccountPage",
+    Size = UDim2.fromScale(1, 1),
     BackgroundTransparency = 1,
     Visible = false,
     ZIndex = 3
 }, frame)
 
-make("TextLabel", { Name = "AccountTitle", Position = UDim2.fromOffset(0, 0), Size = UDim2.new(1, 0, 0, 28), BackgroundTransparency = 1, Font = Enum.Font.GothamBlack, Text = "Your key account", TextColor3 = Color3.fromRGB(245, 246, 255), TextSize = 23, TextXAlignment = Enum.TextXAlignment.Left, ZIndex = 4 }, accountGui)
-make("TextLabel", { Name = "AccountDescription", Position = UDim2.fromOffset(1, 32), Size = UDim2.new(1, -2, 0, 30), BackgroundTransparency = 1, Font = Enum.Font.Gotham, Text = "Key status, device binding, and latest account use.", TextColor3 = Color3.fromRGB(151, 161, 192), TextSize = 11, TextWrapped = true, TextXAlignment = Enum.TextXAlignment.Left, ZIndex = 4 }, accountGui)
+text(accountGui, "Eyebrow", "ACCOUNT / 02", 26, 98, 200, 17, 10, palette.violetSoft, Enum.Font.GothamBold)
+text(accountGui, "Title", "Your license dashboard", 25, 118, 447, 40, 25, palette.text, Enum.Font.GothamBlack)
+text(accountGui, "Description", "Active license details for this Roblox session.", 26, 160, 490, 20, 11, palette.muted)
 
-local accountTabs = make("Frame", { Name = "Tabs", Position = UDim2.fromOffset(0, 70), Size = UDim2.new(1, 0, 0, 36), BackgroundTransparency = 1, ZIndex = 4 }, accountGui)
-local accountTabButton = make("TextButton", { Name = "AccountTabButton", Size = UDim2.new(0.5, -5, 1, 0), BackgroundColor3 = Color3.fromRGB(117, 100, 255), BorderSizePixel = 0, Font = Enum.Font.GothamBold, Text = "KEY DETAILS", TextColor3 = Color3.new(1, 1, 1), TextSize = 10, AutoButtonColor = false, ZIndex = 4 }, accountTabs)
-make("UICorner", { CornerRadius = UDim.new(0, 9) }, accountTabButton)
-local accessTabButton = make("TextButton", { Name = "AccessTabButton", Position = UDim2.new(0.5, 5, 0, 0), Size = UDim2.new(0.5, -5, 1, 0), BackgroundColor3 = Color3.fromRGB(25, 30, 49), BorderSizePixel = 0, Font = Enum.Font.GothamBold, Text = "ACCESS", TextColor3 = Color3.fromRGB(170, 178, 213), TextSize = 10, AutoButtonColor = false, ZIndex = 4 }, accountTabs)
-make("UICorner", { CornerRadius = UDim.new(0, 9) }, accessTabButton)
+local accountTabs = make("Frame", {
+    Name = "Tabs",
+    Position = UDim2.fromOffset(25, 194),
+    Size = UDim2.fromOffset(322, 35),
+    BackgroundTransparency = 1,
+    ZIndex = 4
+}, accountGui)
+local accountTabButton = button(accountTabs, "Details", "LICENSE DETAILS", 0, 0, 155, 35, palette.violet, palette.text)
+local accessTabButton = button(accountTabs, "Access", "SECURITY", 165, 0, 155, 35, palette.raised, palette.muted)
+accountTabButton.TextSize = 10
+accessTabButton.TextSize = 10
 
-local accountPanel = make("Frame", { Name = "AccountPanel", Position = UDim2.fromOffset(0, 118), Size = UDim2.new(1, 0, 0, 246), BackgroundColor3 = Color3.fromRGB(18, 23, 39), BorderSizePixel = 0, ZIndex = 4 }, accountGui)
-make("UICorner", { CornerRadius = UDim.new(0, 14) }, accountPanel)
-make("UIStroke", { Color = Color3.fromRGB(46, 53, 79), Transparency = 0.2, Thickness = 1 }, accountPanel)
+local accountPanel = round(make("Frame", {
+    Name = "AccountPanel",
+    Position = UDim2.fromOffset(25, 240),
+    Size = UDim2.fromOffset(598, 122),
+    BackgroundColor3 = palette.panel,
+    BorderSizePixel = 0,
+    ZIndex = 4
+}, accountGui), 13)
+stroke(accountPanel, palette.border, 0.14)
 
-local function accountField(name, label, y, height)
-    make("TextLabel", { Name = name .. "Label", Position = UDim2.fromOffset(15, y), Size = UDim2.new(1, -30, 0, 15), BackgroundTransparency = 1, Font = Enum.Font.GothamBold, Text = label, TextColor3 = Color3.fromRGB(150, 160, 192), TextSize = 9, TextXAlignment = Enum.TextXAlignment.Left, ZIndex = 5 }, accountPanel)
-    return make("TextLabel", { Name = name, Position = UDim2.fromOffset(15, y + 17), Size = UDim2.new(1, -30, 0, height), BackgroundTransparency = 1, Font = Enum.Font.GothamMedium, Text = "—", TextColor3 = Color3.fromRGB(232, 235, 255), TextSize = 12, TextWrapped = true, TextXAlignment = Enum.TextXAlignment.Left, TextYAlignment = Enum.TextYAlignment.Top, ZIndex = 5 }, accountPanel)
+local function field(name, title, x, y, w)
+    text(accountPanel, name .. "Label", title, x, y, w, 16, 9, palette.muted, Enum.Font.GothamBold)
+    return text(accountPanel, name, "—", x, y + 20, w, 23, 13, palette.text, Enum.Font.GothamBold)
 end
 
-local expiryValue = accountField("ExpiryValue", "TIME LEFT", 14, 30)
-local accountValue = accountField("AccountValue", "LATEST ACCOUNT USED", 68, 24)
-local lastUsedValue = accountField("LastUsedValue", "LATEST USE", 122, 24)
-local resetValue = accountField("ResetValue", "HWID RESET AVAILABLE", 176, 24)
+local expiryValue = field("TimeLeft", "TIME REMAINING", 16, 12, 255)
+local accountValue = field("LastAccount", "LAST ACCOUNT", 305, 12, 275)
+local lastUsedValue = field("LastUsed", "LAST USED", 16, 66, 255)
+local resetValue = field("ResetAvailable", "HWID RESET AVAILABLE", 305, 66, 275)
 
-local hwidCard = make("Frame", { Name = "HwidCard", Position = UDim2.fromOffset(0, 378), Size = UDim2.new(1, 0, 0, 78), BackgroundColor3 = Color3.fromRGB(15, 37, 34), BorderSizePixel = 0, ZIndex = 4 }, accountGui)
-make("UICorner", { CornerRadius = UDim.new(0, 12) }, hwidCard)
-make("UIStroke", { Color = Color3.fromRGB(51, 125, 96), Transparency = 0.18, Thickness = 1 }, hwidCard)
-make("TextLabel", { Name = "HwidLabel", Position = UDim2.fromOffset(13, 10), Size = UDim2.new(1, -26, 0, 15), BackgroundTransparency = 1, Font = Enum.Font.GothamBold, Text = "BOUND HWID · HOLD TO REVEAL", TextColor3 = Color3.fromRGB(125, 231, 181), TextSize = 9, TextXAlignment = Enum.TextXAlignment.Left, ZIndex = 5 }, hwidCard)
-local hwidValue = make("TextButton", { Name = "HwidValue", Position = UDim2.fromOffset(13, 31), Size = UDim2.new(1, -26, 0, 34), BackgroundTransparency = 1, BorderSizePixel = 0, Font = Enum.Font.Code, Text = "••••••••••••••••", TextColor3 = Color3.fromRGB(222, 248, 236), TextSize = 10, TextWrapped = true, TextXAlignment = Enum.TextXAlignment.Left, TextYAlignment = Enum.TextYAlignment.Top, AutoButtonColor = false, ZIndex = 5 }, hwidCard)
+local accountAccessPanel = round(make("Frame", {
+    Name = "SecurityPanel",
+    Position = UDim2.fromOffset(25, 240),
+    Size = UDim2.fromOffset(598, 122),
+    BackgroundColor3 = palette.panel,
+    BorderSizePixel = 0,
+    Visible = false,
+    ZIndex = 4
+}, accountGui), 13)
+stroke(accountAccessPanel, palette.border, 0.14)
+text(accountAccessPanel, "SecurityTitle", "✓   Your device is authenticated", 18, 12, 495, 27, 16, palette.success, Enum.Font.GothamBold)
+local hwidValue = button(accountAccessPanel, "BoundHWID", "••••••••••••••••", 18, 52, 561, 49, Color3.fromRGB(12, 20, 27), Color3.fromRGB(191, 223, 214))
+hwidValue.Font = Enum.Font.Code
+hwidValue.TextSize = 12
+hwidValue.TextXAlignment = Enum.TextXAlignment.Left
+make("UIPadding", {
+    PaddingLeft = UDim.new(0, 13),
+    PaddingRight = UDim.new(0, 13)
+}, hwidValue)
+stroke(hwidValue, Color3.fromRGB(55, 96, 87), 0.4)
 
-local accountAccessPanel = make("Frame", { Name = "AccessPanel", Position = UDim2.fromOffset(0, 118), Size = UDim2.new(1, 0, 0, 180), BackgroundColor3 = Color3.fromRGB(18, 23, 39), BorderSizePixel = 0, Visible = false, ZIndex = 4 }, accountGui)
-make("UICorner", { CornerRadius = UDim.new(0, 14) }, accountAccessPanel)
-make("UIStroke", { Color = Color3.fromRGB(46, 53, 79), Transparency = 0.2, Thickness = 1 }, accountAccessPanel)
-make("TextLabel", { Position = UDim2.fromOffset(16, 16), Size = UDim2.new(1, -32, 0, 27), BackgroundTransparency = 1, Font = Enum.Font.GothamBold, Text = "Access verified", TextColor3 = Color3.fromRGB(113, 229, 180), TextSize = 16, TextXAlignment = Enum.TextXAlignment.Left, ZIndex = 5 }, accountAccessPanel)
-make("TextLabel", { Position = UDim2.fromOffset(16, 49), Size = UDim2.new(1, -32, 0, 53), BackgroundTransparency = 1, Font = Enum.Font.Gotham, Text = "This key is valid for the bound device. Your license countdown updates automatically.", TextColor3 = Color3.fromRGB(151, 161, 192), TextSize = 11, TextWrapped = true, TextXAlignment = Enum.TextXAlignment.Left, TextYAlignment = Enum.TextYAlignment.Top, ZIndex = 5 }, accountAccessPanel)
-local accountBackButton = make("TextButton", { Name = "BackToLogin", Position = UDim2.fromOffset(0, 470), Size = UDim2.new(1, 0, 0, 38), BackgroundColor3 = Color3.fromRGB(25, 30, 49), BorderSizePixel = 0, Font = Enum.Font.GothamBold, Text = "BACK TO KEY LOGIN", TextColor3 = Color3.fromRGB(196, 199, 255), TextSize = 10, AutoButtonColor = false, ZIndex = 4 }, accountGui)
-make("UICorner", { CornerRadius = UDim.new(0, 10) }, accountBackButton)
+local accountBackButton = button(accountGui, "Back", "←  BACK TO ACCESS PORTAL", 372, 194, 250, 35, palette.raised, palette.muted)
+accountBackButton.TextSize = 10
+
+local function tween(object, properties, duration)
+    local t = TweenService:Create(object, TweenInfo.new(duration or 0.20, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), properties)
+    t:Play()
+    return t
+end
+
+local function setStatus(message, level)
+    status.Text = tostring(message)
+    if level == "error" then
+        status.TextColor3 = palette.danger
+    elseif level == "success" then
+        status.TextColor3 = palette.success
+    elseif level == "info" then
+        status.TextColor3 = palette.violetSoft
+    else
+        status.TextColor3 = palette.muted
+    end
+end
+
+status:GetPropertyChangedSignal("TextColor3"):Connect(function()
+    statusDot.BackgroundColor3 = status.TextColor3
+    if status.TextColor3 == palette.danger then
+        statusStroke.Color = Color3.fromRGB(112, 55, 79)
+    elseif status.TextColor3 == palette.success then
+        statusStroke.Color = Color3.fromRGB(43, 99, 84)
+    else
+        statusStroke.Color = palette.border
+    end
+end)
+
+local function addHover(item, rest, hover)
+    item.MouseEnter:Connect(function()
+        if item.Active then
+            tween(item, { BackgroundColor3 = hover }, 0.13)
+        end
+    end)
+    item.MouseLeave:Connect(function()
+        tween(item, { BackgroundColor3 = rest }, 0.14)
+    end)
+end
+
+addHover(getKeyButton, palette.raised, Color3.fromRGB(42, 45, 70))
+addHover(close, Color3.fromRGB(51, 30, 44), Color3.fromRGB(96, 45, 70))
+addHover(minimize, palette.raised, Color3.fromRGB(47, 50, 77))
+for _, item in ipairs({ tosButton, ppButton, teamButton, accountBackButton }) do
+    addHover(item, palette.raised, Color3.fromRGB(43, 46, 69))
+end
+
+keyBox.Focused:Connect(function()
+    tween(keyStroke, { Color = palette.violet, Transparency = 0, Thickness = 1.5 }, 0.15)
+end)
+keyBox.FocusLost:Connect(function()
+    tween(keyStroke, { Color = palette.border, Transparency = 0.06, Thickness = 1 }, 0.15)
+end)
+
+local function openLink(url)
+    local ok = openUrl(url)
+    if ok then
+        setStatus("Opened or copied: " .. url, "info")
+    else
+        setStatus("Open this link manually: " .. url, "info")
+    end
+end
+tosButton.MouseButton1Click:Connect(function() openLink(TOS_PAGE) end)
+ppButton.MouseButton1Click:Connect(function() openLink(PP_PAGE) end)
+teamButton.MouseButton1Click:Connect(function() openLink(TEAM_PAGE) end)
+getKeyButton.MouseButton1Click:Connect(function() openLink(KEY_PAGE) end)
+
 local minimized = false
-local expandedSize = UDim2.fromOffset(540, 650)
-local minimizedSize = UDim2.fromOffset(540, 82)
-local function tween(instance, properties, duration)
-    local animation = TweenService:Create(instance, TweenInfo.new(duration or 0.18, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), properties)
-    animation:Play()
-    return animation
-end
-
+local activePage = "key"
 local function updateScale()
     local camera = workspace.CurrentCamera
-    if not camera then
-        scale.Scale = 1
-        return
-    end
+    if not camera then return end
     local viewport = camera.ViewportSize
-    scale.Scale = math.clamp(math.min((viewport.X - 24) / 552, (viewport.Y - 24) / 662, 1), 0.55, 1)
+    scale.Scale = math.clamp(math.min((viewport.X - 26) / 660, (viewport.Y - 26) / 440, 1), 0.42, 1)
 end
-
 updateScale()
-if workspace.CurrentCamera then
-    workspace.CurrentCamera:GetPropertyChangedSignal("ViewportSize"):Connect(updateScale)
+local cameraConnection
+local function connectCamera(camera)
+    if cameraConnection then cameraConnection:Disconnect() end
+    if camera then cameraConnection = camera:GetPropertyChangedSignal("ViewportSize"):Connect(updateScale) end
+    updateScale()
 end
+connectCamera(workspace.CurrentCamera)
+local cameraChanged = workspace:GetPropertyChangedSignal("CurrentCamera"):Connect(function()
+    connectCamera(workspace.CurrentCamera)
+end)
+gui.Destroying:Connect(function()
+    cameraChanged:Disconnect()
+    if cameraConnection then cameraConnection:Disconnect() end
+end)
 
 local dragging = false
-local dragInput = nil
-local dragStart = nil
-local startPosition = nil
+local dragStart
+local startPosition
+local dragInput
 header.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
         dragging = true
         dragStart = input.Position
-        startPosition = frame.Position
+        startPosition = window.Position
+        dragInput = input
         input.Changed:Connect(function()
             if input.UserInputState == Enum.UserInputState.End then
                 dragging = false
@@ -659,107 +691,63 @@ header.InputBegan:Connect(function(input)
     end
 end)
 header.InputChanged:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+    if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
         dragInput = input
     end
 end)
 UserInputService.InputChanged:Connect(function(input)
-    if dragging and input == dragInput and dragStart and startPosition then
-        local delta = input.Position - dragStart
-        frame.Position = UDim2.new(startPosition.X.Scale, startPosition.X.Offset + delta.X, startPosition.Y.Scale, startPosition.Y.Offset + delta.Y)
-        shadow.Position = frame.Position
+    if dragging and dragInput == input and dragStart and startPosition then
+        local delta = (input.Position - dragStart) / scale.Scale
+        window.Position = UDim2.new(startPosition.X.Scale, startPosition.X.Offset + delta.X, startPosition.Y.Scale, startPosition.Y.Offset + delta.Y)
     end
 end)
 
-local function addHover(button, normalColor, hoverColor)
-    button.MouseEnter:Connect(function()
-        if button.Active then
-            tween(button, { BackgroundColor3 = hoverColor }, 0.14)
-        end
-    end)
-    button.MouseLeave:Connect(function()
-        tween(button, { BackgroundColor3 = normalColor }, 0.14)
-    end)
+local function updateVisible()
+    content.Visible = not minimized and activePage == "key"
+    accountGui.Visible = not minimized and activePage == "account"
 end
 
-addHover(close, Color3.fromRGB(54, 31, 48), Color3.fromRGB(93, 38, 59))
-addHover(minimize, Color3.fromRGB(30, 35, 56), Color3.fromRGB(47, 54, 83))
-addHover(tosButton, Color3.fromRGB(25, 30, 49), Color3.fromRGB(42, 47, 77))
-addHover(ppButton, Color3.fromRGB(25, 30, 49), Color3.fromRGB(42, 47, 77))
-addHover(teamButton, Color3.fromRGB(25, 30, 49), Color3.fromRGB(42, 47, 77))
-
-keyBox.Focused:Connect(function()
-    tween(keyStroke, { Color = Color3.fromRGB(133, 119, 255), Transparency = 0, Thickness = 1.5 }, 0.14)
-end)
-keyBox.FocusLost:Connect(function()
-    tween(keyStroke, { Color = Color3.fromRGB(48, 57, 87), Transparency = 0.15, Thickness = 1 }, 0.14)
-end)
-
 close.MouseButton1Click:Connect(function()
-    tween(frame, { BackgroundTransparency = 1, Size = UDim2.fromOffset(510, 530) }, 0.14)
-    tween(shadow, { BackgroundTransparency = 1 }, 0.14)
-    task.delay(0.16, function()
-        if gui and gui.Parent then
-            gui:Destroy()
-        end
+    tween(window, { BackgroundTransparency = 1 }, 0.12)
+    tween(frame, { BackgroundTransparency = 1 }, 0.15)
+    tween(glow, { BackgroundTransparency = 1 }, 0.15)
+    task.delay(0.17, function()
+        if gui and gui.Parent then gui:Destroy() end
     end)
 end)
-
 minimize.MouseButton1Click:Connect(function()
     minimized = not minimized
-    if minimized then
-        content.Visible = false
-        minimize.Text = "+"
-        tween(frame, { Size = minimizedSize }, 0.22)
-        tween(shadow, { Size = UDim2.fromOffset(552, 94) }, 0.22)
-    else
-        frame.Size = minimizedSize
-        shadow.Size = UDim2.fromOffset(552, 94)
-        content.Visible = true
-        minimize.Text = "−"
-        tween(frame, { Size = expandedSize }, 0.24)
-        tween(shadow, { Size = UDim2.fromOffset(552, 662) }, 0.24)
+    minimize.Text = minimized and "+" or "−"
+    updateVisible()
+    tween(frame, { Size = minimized and UDim2.fromOffset(644, 68) or UDim2.fromOffset(644, 424) }, 0.22)
+    tween(glow, { Size = minimized and UDim2.fromOffset(658, 81) or UDim2.fromOffset(658, 436) }, 0.22)
+    tween(window, { Size = minimized and UDim2.fromOffset(660, 83) or UDim2.fromOffset(660, 440) }, 0.22)
+end)
+
+task.spawn(function()
+    local ok, thumbnail = pcall(function()
+        return Players:GetUserThumbnailAsync(LocalPlayer.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size100x100)
+    end)
+    if ok and gui.Parent then avatar.Image = thumbnail end
+end)
+task.spawn(function()
+    local ok, info = pcall(function()
+        return MarketplaceService:GetProductInfo(game.PlaceId, Enum.InfoType.Asset)
+    end)
+    if ok and type(info) == "table" and type(info.Name) == "string" and gui.Parent then
+        gameName.Text = info.Name
     end
 end)
 
-tosButton.MouseButton1Click:Connect(function()
-    local ok = openUrl(TOS_PAGE)
-    status.Text = ok and "Opening Terms of Service…" or "TOS URL copied: " .. TOS_PAGE
-    status.TextColor3 = Color3.fromRGB(196, 199, 255)
-end)
-
-ppButton.MouseButton1Click:Connect(function()
-    local ok = openUrl(PP_PAGE)
-    status.Text = ok and "Opening Privacy Policy…" or "Privacy URL copied: " .. PP_PAGE
-    status.TextColor3 = Color3.fromRGB(196, 199, 255)
-end)
-
-teamButton.MouseButton1Click:Connect(function()
-    local ok = openUrl(TEAM_PAGE)
-    status.Text = ok and "Opening TeamVaprix…" or "TeamVaprix URL copied: " .. TEAM_PAGE
-    status.TextColor3 = Color3.fromRGB(196, 199, 255)
-end)
-
-getKeyButton.MouseButton1Click:Connect(function()
-    local ok = openKeyPage()
-    if ok then
-        status.Text = "Opening the Zyphor key page…"
-        status.TextColor3 = Color3.fromRGB(155, 164, 193)
-        tween(getKeyButton, { BackgroundColor3 = Color3.fromRGB(101, 91, 226) }, 0.12)
-        task.delay(0.18, function()
-            if getKeyButton and getKeyButton.Parent then
-                tween(getKeyButton, { BackgroundColor3 = Color3.fromRGB(117, 100, 255) }, 0.18)
-            end
-        end)
-    elseif type(setclipboard) == "function" then
-        status.Text = "Key page URL copied to clipboard."
-        status.TextColor3 = Color3.fromRGB(255, 207, 121)
-    else
-        status.Text = "Open https://zyphor.cc/getnewkey in your browser."
-        status.TextColor3 = Color3.fromRGB(255, 207, 121)
+task.spawn(function()
+    while gui.Parent do
+        tween(accentGradient, { Offset = Vector2.new(0.35, 0) }, 4.5)
+        task.wait(4.5)
+        if not gui.Parent then break end
+        tween(accentGradient, { Offset = Vector2.new(-0.35, 0) }, 4.5)
+        task.wait(4.5)
     end
 end)
-
 local function formatDuration(milliseconds)
     if milliseconds == nil then
         return "No expiry"
@@ -809,35 +797,42 @@ local function parseIsoTimestamp(value)
     return nil
 end
 
+
 local function showAccountTab()
-    content.Visible = false
-    accountGui.Visible = true
-    frame.Size = expandedSize
-    shadow.Size = UDim2.fromOffset(552, 662)
-    minimize.Text = "−"
-    minimized = false
+    activePage = "account"
+    if minimized then
+        minimized = false
+        minimize.Text = "−"
+        frame.Size = UDim2.fromOffset(644, 424)
+        glow.Size = UDim2.fromOffset(658, 436)
+        window.Size = UDim2.fromOffset(660, 440)
+    end
+    updateVisible()
 end
 
 local function setAccountTab(tab)
     local details = tab == "details"
     accountPanel.Visible = details
-    hwidCard.Visible = details
     accountAccessPanel.Visible = not details
-    accountTabButton.BackgroundColor3 = details and Color3.fromRGB(117, 100, 255) or Color3.fromRGB(25, 30, 49)
-    accountTabButton.TextColor3 = details and Color3.new(1, 1, 1) or Color3.fromRGB(170, 178, 213)
-    accessTabButton.BackgroundColor3 = details and Color3.fromRGB(25, 30, 49) or Color3.fromRGB(117, 100, 255)
-    accessTabButton.TextColor3 = details and Color3.fromRGB(170, 178, 213) or Color3.new(1, 1, 1)
+    accountTabButton.BackgroundColor3 = details and palette.violet or palette.raised
+    accessTabButton.BackgroundColor3 = details and palette.raised or palette.violet
+    accountTabButton.TextColor3 = details and palette.text or palette.muted
+    accessTabButton.TextColor3 = details and palette.muted or palette.text
 end
-
 accountTabButton.MouseButton1Click:Connect(function() setAccountTab("details") end)
-accessTabButton.MouseButton1Click:Connect(function() setAccountTab("access") end)
-accountBackButton.MouseButton1Click:Connect(function() accountGui.Visible = false content.Visible = true end)
+accessTabButton.MouseButton1Click:Connect(function() setAccountTab("security") end)
+accountBackButton.MouseButton1Click:Connect(function()
+    activePage = "key"
+    updateVisible()
+end)
 
 local boundHwid = ""
 local function maskHwid()
-    hwidValue.Text = boundHwid == "" and "Unavailable" or string.rep("•", math.clamp(#boundHwid, 8, 32))
+    hwidValue.Text = boundHwid == "" and "HWID unavailable" or "BOUND HWID   " .. string.rep("•", math.clamp(#boundHwid, 10, 26)) .. "   (hold to reveal)"
 end
-local function revealHwid() if boundHwid ~= "" then hwidValue.Text = boundHwid end end
+local function revealHwid()
+    if boundHwid ~= "" then hwidValue.Text = boundHwid end
+end
 hwidValue.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then revealHwid() end
 end)
@@ -859,17 +854,28 @@ local function updateAccountDetails()
         KEY_INFO.remainingMs = remainingMs
     end
     expiryValue.Text = formatDuration(remainingMs)
-    accountValue.Text = tostring(KEY_INFO.lastAccount or (LocalPlayer.Name .. " (" .. tostring(LocalPlayer.UserId) .. ")"))
+    accountValue.Text = tostring(KEY_INFO.lastAccount or LocalPlayer.Name)
     lastUsedValue.Text = tostring(KEY_INFO.lastUsedAt or "Just now")
     resetValue.Text = tostring(KEY_INFO.hwidResetAvailableAt or "Not provided by server")
-    expiryValue.TextColor3 = remainingMs ~= nil and remainingMs <= 0 and Color3.fromRGB(255, 131, 154) or Color3.fromRGB(113, 229, 180)
+    expiryValue.TextColor3 = remainingMs ~= nil and remainingMs <= 0 and palette.danger or palette.success
 end
-task.spawn(function() while gui and gui.Parent do updateAccountDetails() task.wait(1) end end)
 
+task.spawn(function()
+    while gui.Parent do
+        updateAccountDetails()
+        task.wait(1)
+    end
+end)
+
+keyBox.FocusLost:Connect(function(enterPressed)
+    if enterPressed and not KEY_VALID and validateButton.Active then
+        validateButton:Activate()
+    end
+end)
 validateButton.MouseButton1Click:Connect(function()
     if KEY_VALID then
-        print("correct key")
-        status.Text = "correct key"
+        print("Zyphor key verified")
+        status.Text = "License verified. Welcome to Zyphor."
         status.TextColor3 = Color3.fromRGB(113, 229, 180)
         return
     end
@@ -914,7 +920,7 @@ validateButton.MouseButton1Click:Connect(function()
             end
             return decoded
         end)
-        validateButton.Text = "VERIFY KEY     →"
+        validateButton.Text = "VERIFY KEY   →"
         validateButton.Active = true
         validateButton.AutoButtonColor = true
         if not ok then
@@ -977,10 +983,10 @@ validateButton.MouseButton1Click:Connect(function()
             boundHwid = tostring(KEY_INFO.hwid or "")
             maskHwid()
             updateAccountDetails()
-            print("correct key")
-            status.Text = "correct key"
+            print("Zyphor key verified")
+            status.Text = "License verified. Welcome to Zyphor."
             status.TextColor3 = Color3.fromRGB(113, 229, 180)
-            validateButton.Text = "ACCESS GRANTED     ✓"
+            validateButton.Text = "ACCESS GRANTED   ✓"
             tween(validateButton, { BackgroundColor3 = Color3.fromRGB(40, 157, 119) }, 0.2)
             task.delay(0.65, function()
                 if gui and gui.Parent then
