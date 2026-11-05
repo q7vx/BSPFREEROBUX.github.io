@@ -867,12 +867,7 @@ task.spawn(function()
     end
 end)
 
-keyBox.FocusLost:Connect(function(enterPressed)
-    if enterPressed and not KEY_VALID and validateButton.Active then
-        validateButton:Activate()
-    end
-end)
-validateButton.MouseButton1Click:Connect(function()
+local function verifyKey()
     if KEY_VALID then
         print("Zyphor key verified")
         status.Text = "License verified. Welcome to Zyphor."
@@ -999,4 +994,11 @@ validateButton.MouseButton1Click:Connect(function()
             status.TextColor3 = Color3.fromRGB(255, 131, 154)
         end
     end)
+end
+
+validateButton.MouseButton1Click:Connect(verifyKey)
+keyBox.FocusLost:Connect(function(enterPressed)
+    if enterPressed and validateButton.Active then
+        verifyKey()
+    end
 end)
