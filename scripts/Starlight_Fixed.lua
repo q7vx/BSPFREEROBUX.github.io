@@ -22,132 +22,6 @@ local function replaceExact(old, new, expected)
     table.insert(pieces, source:sub(cursor))
     source = table.concat(pieces)
 end
-replaceExact([==[if not getgenv().SecureMode then
-	InputManager = GetService("VirtualInputManager")
-end]==], [==[if not (getgenv and getgenv().SecureMode) then
-	local ok, manager = pcall(GetService, "VirtualInputManager")
-	if ok then
-		InputManager = manager
-	end
-end]==], 1)
-replaceExact([==[Acrylic.Init()
-]==], [==[local starlightPreviousDepthOfField = {}
-for _, effect in ipairs(Lighting:GetChildren()) do
-	if effect:IsA("DepthOfFieldEffect") then
-		starlightPreviousDepthOfField[effect] = true
-	end
-end
-Acrylic.Init()
-local starlightAcrylicDepthOfField = {}
-local starlightAcrylicDepthOfFieldStates = {}
-for _, effect in ipairs(Lighting:GetChildren()) do
-	if effect:IsA("DepthOfFieldEffect") and not starlightPreviousDepthOfField[effect] then
-		table.insert(starlightAcrylicDepthOfField, effect)
-	end
-end
-local starlightAcrylicPaintOriginal = Acrylic.AcrylicPaint
-local starlightAcrylicInstances = {}
-local starlightAcrylicSaved = {}
-local starlightAcrylicSuspended = false
-Acrylic.AcrylicPaint = function(...)
-	local paint = starlightAcrylicPaintOriginal(...)
-	table.insert(starlightAcrylicInstances, paint)
-	if starlightAcrylicSuspended and paint and paint.Model then
-		starlightAcrylicSaved[paint] = paint.Model.Transparency
-		paint.Model.Transparency = 1
-	end
-	return paint
-end
-local function StarlightSuspendAcrylic(suspend)
-	starlightAcrylicSuspended = suspend
-	for _, effect in ipairs(starlightAcrylicDepthOfField) do
-		if effect.Parent then
-			if suspend then
-				if starlightAcrylicDepthOfFieldStates[effect] == nil then
-					starlightAcrylicDepthOfFieldStates[effect] = effect.Enabled
-				end
-				effect.Enabled = false
-			else
-				local wasEnabled = starlightAcrylicDepthOfFieldStates[effect]
-				if wasEnabled ~= nil then
-					effect.Enabled = wasEnabled
-					starlightAcrylicDepthOfFieldStates[effect] = nil
-				end
-			end
-		end
-	end
-	for _, paint in ipairs(starlightAcrylicInstances) do
-		pcall(function()
-			if paint.Model then
-				if suspend then
-					if starlightAcrylicSaved[paint] == nil then
-						starlightAcrylicSaved[paint] = paint.Model.Transparency
-					end
-					paint.Model.Transparency = 1
-				else
-					local saved = starlightAcrylicSaved[paint]
-					if saved ~= nil then
-						paint.Model.Transparency = saved
-						starlightAcrylicSaved[paint] = nil
-					end
-				end
-			end
-		end)
-	end
-end
-]==], 1)
-replaceExact([==[if v.ClassName == "UIStroke" or Interface.ClassName == "UIGradient" then]==], [==[if v.ClassName == "UIStroke" or v.ClassName == "UIGradient" then]==], 1)
-replaceExact([==[(v.ClassName == "UIStroke" or Interface.ClassName == "UIGradient")]==], [==[(v.ClassName == "UIStroke" or v.ClassName == "UIGradient")]==], 1)
-replaceExact([==[	-- hide popups
-	if InputManager then]==], [==[	if Starlight.Instance and Interface == Starlight.Instance:FindFirstChild("MainWindow") then
-		StarlightSuspendAcrylic(true)
-		if Starlight.Window and Starlight.Window.ActiveChangelogOverlay then
-			Starlight.Window.ActiveChangelogOverlay:Destroy()
-			Starlight.Window.ActiveChangelogOverlay = nil
-		end
-		if Starlight.Instance:FindFirstChild("PopupOverlay") then
-			for _, popup in ipairs(Starlight.Instance.PopupOverlay:GetChildren()) do
-				if popup:IsA("GuiObject") and popup.Visible then
-					popup.Visible = false
-				end
-			end
-		end
-	end
-	if InputManager then]==], 1)
-replaceExact([==[local function Unhide(Interface)
-	if Interface.ClassName]==], [==[local function Unhide(Interface)
-	if Starlight.Instance and Interface == Starlight.Instance:FindFirstChild("MainWindow") then
-		StarlightSuspendAcrylic(false)
-	end
-	if Interface.ClassName]==], 1)
-replaceExact([==[function Starlight:Destroy()
-	task.wait()
-	StarlightUI:Destroy()
-end]==], [==[function Starlight:Destroy()
-	StarlightSuspendAcrylic(true)
-	StarlightUI:Destroy()
-end]==], 1)
-replaceExact([==[StarlightUI.Destroying:Connect(function()
-	pcall(Starlight.DestroyFunction)]==], [==[StarlightUI.Destroying:Connect(function()
-	StarlightSuspendAcrylic(true)
-	pcall(Starlight.DestroyFunction)]==], 1)
-replaceExact([==[	for i, v in pairs(Starlight) do
-		v = nil
-	end]==], [==[	for _, paint in ipairs(starlightAcrylicInstances) do
-		pcall(function()
-			if paint.Model then
-				paint.Model:Destroy()
-			end
-		end)
-	end
-	starlightAcrylicInstances = {}
-	starlightAcrylicSaved = {}
-	for _, effect in ipairs(starlightAcrylicDepthOfField) do
-		pcall(function() effect:Destroy() end)
-	end
-	themeEvent:Destroy()
-	acrylicEvent:Destroy()
-	notificationAcrylicEvent:Destroy()]==], 1)
 replaceExact([==[themeEvent.Event:Connect(set)
 		set()]==], [==[local themeConnection = themeEvent.Event:Connect(set)
 		object.Destroying:Once(function()
@@ -238,6 +112,12 @@ replaceExact([==[							"Hollywood Fluent",
 							"Catppuccin Frappe",
 							"Catppuccin Latte",
 						}]==], 2)
+replaceExact([==[					Style = 1,
+				}, "__prebuiltConfigLoader")]==], [==[					Style = 1,
+				}, "__prebuiltConfigAutoload")]==], 1)
+replaceExact([==[					Style = 2,
+				}, "__prebuiltConfigDeleter")]==], [==[					Style = 2,
+				}, "__prebuiltConfigClearAutoload")]==], 1)
 replaceExact([==[		function TabSection:Set(NewName)
 			Name = NewName
 			TabSection.Instance.Header.Text = Name]==], [==[		function TabSection:Set(NewName)
@@ -248,14 +128,14 @@ replaceExact([==[		function TabSection:Set(NewName)
 replaceExact([==[							connections[ParentIndex .. "_" .. Index] = UserInputService.InputBegan:Connect(]==], [==[							local connectionKey = table.concat({ tostring(Name), tostring(TabIndex), tostring(GroupIndex), tostring(ParentIndex), tostring(NestedIndex) }, "_")
 							connections[connectionKey] = UserInputService.InputBegan:Connect(]==], 1)
 replaceExact([==[connections[ParentIndex .. "_" .. Index]]==], [==[connections[connectionKey]]==], -1)
-replaceExact([==[								NestedElement.Instances[1]:Destroy()
-								NestedElement.Instances[2]:Destroy()
-								Parent.Instance.Size = UDim2.fromOffset(0, Parent.Instance.Size.Y.Offset - additionSize)]==], [==[								NestedElement.Instances[1]:Destroy()
-								NestedElement.Instances[2]:Destroy()
-								for _, connection in ipairs(localConnections) do
-									connection:Disconnect()
-								end
-								Parent.Instance.Size = UDim2.fromOffset(0, Parent.Instance.Size.Y.Offset - additionSize)]==], 1)
+replaceExact([==[							NestedElement.Instances[1]:Destroy()
+							NestedElement.Instances[2]:Destroy()
+							Parent.Instance.Size = UDim2.fromOffset(0, Parent.Instance.Size.Y.Offset - additionSize)]==], [==[							NestedElement.Instances[1]:Destroy()
+							NestedElement.Instances[2]:Destroy()
+							for _, connection in ipairs(localConnections) do
+								connection:Disconnect()
+							end
+							Parent.Instance.Size = UDim2.fromOffset(0, Parent.Instance.Size.Y.Offset - additionSize)]==], 1)
 replaceExact([==[								end)
 								local c
 								c = Players.ChildRemoved:Connect(function()]==], [==[								end)
@@ -386,12 +266,6 @@ replaceExact([==[			if Action.Enter then]==], [==[			if Action.Enter and Enter t
 replaceExact([==[				Action.Enter = Action.Enter or true]==], [==[				if Action.Enter == nil then
 					Action.Enter = true
 				end]==], 1)
-replaceExact([==[		local function close(x)
-			Tween(Modal.Instance.UIScale, { Scale = 1.25 })]==], [==[		local function close(x)
-			if not Modal.Instance or not Modal.Instance.Parent then
-				return
-			end
-			Tween(Modal.Instance.UIScale, { Scale = 1.25 })]==], 1)
 replaceExact([==[							if isStudio or not isfile then
 								return "File System unavailable."
 							end]==], [==[							if isStudio or not isfile or not writefile then
@@ -441,47 +315,6 @@ replaceExact([==[Save = function(Idx, Data, Type)
 		end
 		return { type = Type, idx = Idx, data = saved }
 	end,]==], 1)
-replaceExact([==[							local hover = false
-							local sliders = {}]==], [==[							local hover = false
-							local popupConnection
-							local sliders = {}]==], 1)
-replaceExact([==[							local hover = false
-							local height = 175]==], [==[							local hover = false
-							local popupConnection
-							local height = 175]==], 1)
-replaceExact([==[							local function close()
-]==], [==[							local function close()
-								if popupConnection then
-									popupConnection:Disconnect()
-									popupConnection = nil
-								end
-]==], 2)
-replaceExact([==[									local connection
-									connection = UserInputService.InputBegan:Connect(function(i)]==], [==[									popupConnection = UserInputService.InputBegan:Connect(function(i)]==], 2)
-replaceExact([==[											close()
-											connection:Disconnect()]==], [==[											close()]==], 2)
-replaceExact([==[							function NestedElement:Destroy()
-								NestedElement.Instances[1]:Destroy()]==], [==[							function NestedElement:Destroy()
-								if popupConnection then
-									popupConnection:Disconnect()
-									popupConnection = nil
-								end
-								NestedElement.Instances[1]:Destroy()]==], 2)
-replaceExact([==[							acrylicEvent.Event:Connect(function()
-								if mainAcrylic then
-									NestedElement.Instances[2].BackgroundTransparency = 0.5]==], [==[							local acrylicConnection = acrylicEvent.Event:Connect(function()
-								if mainAcrylic then
-									NestedElement.Instances[2].BackgroundTransparency = 0.5]==], 2)
-replaceExact([==[								if popupConnection then
-									popupConnection:Disconnect()
-									popupConnection = nil
-								end
-								NestedElement.Instances[1]:Destroy()]==], [==[								if popupConnection then
-									popupConnection:Disconnect()
-									popupConnection = nil
-								end
-								if acrylicConnection then acrylicConnection:Disconnect() end
-								NestedElement.Instances[1]:Destroy()]==], 2)
 replaceExact([==[		if TabSettings.Changelog[1] then
 			Tab.Instances.Page.Holder.Center.Changelog.latest.Visible = true
 			Tab.Instances.Page.Holder.Center.Changelog.latest.Header.Text = TabSettings.Changelog[1].Title
@@ -514,7 +347,7 @@ replaceExact([==[		if TabSettings.Changelog[1] then
 			overlay.BorderSizePixel = 0
 			overlay.Size = UDim2.fromScale(1, 1)
 			overlay.ZIndex = 600
-			overlay.Parent = StarlightUI
+			overlay.Parent = mainWindow
 			Starlight.Window.ActiveChangelogOverlay = overlay
 			local dialog = Instance.new("Frame")
 			dialog.Name = "History"
@@ -707,26 +540,6 @@ replaceExact([==[		if TabSettings.Changelog[1] then
 			changelogPanel.Interact.MouseButton1Click:Connect(openChangelogHistory)
 		end
 ]==], 1)
-replaceExact([==[		function Tab:Destroy()
-			Tab.Instances.Page:Destroy()
-			Tab.Instances.Button:Destroy()
-			connections.__homeTabTime:Disconnect()
-		end]==], [==[		function Tab:Destroy()
-			if Starlight.Window and Starlight.Window.ActiveChangelogOverlay then
-				Starlight.Window.ActiveChangelogOverlay:Destroy()
-				Starlight.Window.ActiveChangelogOverlay = nil
-			end
-			Tab.Instances.Page:Destroy()
-			Tab.Instances.Button:Destroy()
-			if connections.__homeTabTime then
-				connections.__homeTabTime:Disconnect()
-				connections.__homeTabTime = nil
-			end
-			if connections.__fpscheck then
-				connections.__fpscheck:Disconnect()
-				connections.__fpscheck = nil
-			end
-		end]==], 1)
 local startPos = source:find([==[				function Groupbox:Set(NewGroupboxSettings)]==], 1, true)
 local endPos = startPos and source:find([==[				function Groupbox:Destroy()]==], startPos, true)
 if not startPos or not endPos then error("Groupbox patch mismatch") end
@@ -802,5 +615,5 @@ cursor = source:find([==[Name = "Clear Autoload"]==], 1, true)
 target = cursor and source:find([==["__prebuiltConfigDeleter"]==], cursor, true)
 if not target then error("Clear Autoload index mismatch") end
 source = source:sub(1, target - 1) .. [==["__prebuiltConfigClearAutoload"]==] .. source:sub(target + 25)
-if type(writefile) == "function" then pcall(writefile, "Starlight_Source_Fixed.lua", source) end
+if type(writefile) == "function" then pcall(writefile, "Starlight_Source_RevertedControls.lua", source) end
 return loadstring(source)()
