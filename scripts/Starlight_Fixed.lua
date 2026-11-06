@@ -732,301 +732,206 @@ replaceExact([==[		mainWindow.Content.Topbar.Search["MouseLeave"]:Connect(functi
 		end)]==], [==[		mainWindow.Content.Topbar.Search["MouseLeave"]:Connect(function()
 			Tween(mainWindow.Content.Topbar.Search, { ImageColor3 = Starlight.CurrentTheme.Foregrounds.Dark })
 		end)
-
 		local searchIcon = mainWindow.Content.Topbar.Search
-		local searchTrigger = Instance.new("TextButton")
-		searchTrigger.Name = "FeatureSearchButton"
-		searchTrigger.Size = UDim2.fromScale(1, 1)
-		searchTrigger.BackgroundTransparency = 1
-		searchTrigger.Text = ""
-		searchTrigger.ZIndex = searchIcon.ZIndex + 1
-		searchTrigger.Parent = searchIcon
-		local searchOverlay = nil
-		local searchKeyConnection = nil
-		local searchAnimation = TweenInfo.new(0.22, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
+		local searchButton = Instance.new("TextButton")
+		searchButton.Name = "FeatureSearchButton"
+		searchButton.Size = UDim2.fromScale(1, 1)
+		searchButton.BackgroundTransparency = 1
+		searchButton.Text = ""
+		searchButton.ZIndex = searchIcon.ZIndex + 1
+		searchButton.Parent = searchIcon
+		local searchGui
+		local searchEscape
 		local function closeFeatureSearch(immediate)
-			if searchKeyConnection then
-				searchKeyConnection:Disconnect()
-				searchKeyConnection = nil
+			if searchEscape then
+				searchEscape:Disconnect()
+				searchEscape = nil
 			end
-			if not searchOverlay then return end
-			local old = searchOverlay
-			searchOverlay = nil
-			if immediate == true then
-				old:Destroy()
+			local oldGui = searchGui
+			if not oldGui then return end
+			searchGui = nil
+			if immediate then
+				oldGui:Destroy()
 				return
 			end
-			old.Active = false
-			local oldPanel = old:FindFirstChild("FeatureSearchPanel")
-			if oldPanel then
-				local scale = oldPanel:FindFirstChildOfClass("UIScale")
-				if scale then
-					TweenService:Create(scale, TweenInfo.new(0.14, Enum.EasingStyle.Quad, Enum.EasingDirection.In), { Scale = 0.96 }):Play()
-				end
+			local backdrop = oldGui:FindFirstChild("Backdrop")
+			local panel = oldGui:FindFirstChild("FeatureSearchPanel")
+			if not backdrop or not panel then
+				oldGui:Destroy()
+				return
 			end
-			local fade = TweenService:Create(old, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.In), { BackgroundTransparency = 1 })
-			fade.Completed:Once(function()
-				if old.Parent then old:Destroy() end
+			local outside = oldGui:FindFirstChild("Outside")
+			if outside then outside.Active = false end
+			local closeTween = TweenService:Create(backdrop, TweenInfo.new(0.14, Enum.EasingStyle.Quad, Enum.EasingDirection.In), { BackgroundTransparency = 1 })
+			local scale = panel:FindFirstChildOfClass("UIScale")
+			if scale then
+				TweenService:Create(scale, TweenInfo.new(0.14, Enum.EasingStyle.Quad, Enum.EasingDirection.In), { Scale = 0.96 }):Play()
+			end
+			closeTween.Completed:Once(function()
+				if oldGui.Parent then oldGui:Destroy() end
 			end)
-			fade:Play()
+			closeTween:Play()
 		end
-		local function makeSearchLabel(parent, text, y, height, size, color)
+		local function makeSearchText(parent, text, position, size, fontSize, color, zIndex)
 			local label = Instance.new("TextLabel")
-			label.Size = UDim2.new(1, -34, 0, height)
-			label.Position = UDim2.fromOffset(17, y)
-			label.Text = text
 			label.BackgroundTransparency = 1
+			label.Text = tostring(text or "")
+			label.Position = position
+			label.Size = size
+			label.TextSize = fontSize
 			label.TextColor3 = color
-			label.TextSize = size
-			label.Font = Enum.Font.GothamSemibold
+			label.Font = Enum.Font.Gotham
 			label.TextXAlignment = Enum.TextXAlignment.Left
-			label.ZIndex = 704
+			label.TextTruncate = Enum.TextTruncate.AtEnd
+			label.ZIndex = zIndex or 4
 			label.Parent = parent
 			return label
 		end
 		local function openFeatureSearch()
-			if searchOverlay then
+			if searchGui then
 				closeFeatureSearch()
 				return
 			end
-			local overlay = Instance.new("TextButton")
-			overlay.Name = "StarlightFeatureSearch"
-			overlay.BackgroundColor3 = Color3.new(0, 0, 0)
-			overlay.BackgroundTransparency = 1
-			overlay.BorderSizePixel = 0
-			overlay.Size = UDim2.fromScale(1, 1)
-			overlay.Text = ""
-			overlay.Modal = true
-			overlay.ZIndex = 700
-			overlay.Parent = mainWindow
-			searchOverlay = overlay
+			local gui = Instance.new("ScreenGui")
+			gui.Name = "StarlightFeatureSearch"
+			gui.ResetOnSpawn = false
+			gui.IgnoreGuiInset = true
+			gui.ZIndexBehavior = Enum.ZIndexBehavior.Global
+			gui.DisplayOrder = math.max(100, StarlightUI.DisplayOrder + 20)
+			local parent = StarlightUI.Parent
+			if not parent then return end
+			gui.Parent = parent
+			searchGui = gui
+			local backdrop = Instance.new("Frame")
+			backdrop.Name = "Backdrop"
+			backdrop.BackgroundColor3 = Color3.new(0, 0, 0)
+			backdrop.BackgroundTransparency = 1
+			backdrop.BorderSizePixel = 0
+			backdrop.Size = UDim2.fromScale(1, 1)
+			backdrop.ZIndex = 1
+			backdrop.Parent = gui
+			local outside = Instance.new("TextButton")
+			outside.Name = "Outside"
+			outside.BackgroundTransparency = 1
+			outside.Text = ""
+			outside.Size = UDim2.fromScale(1, 1)
+			outside.ZIndex = 2
+			outside.Parent = gui
 			local panel = Instance.new("Frame")
 			panel.Name = "FeatureSearchPanel"
+			panel.Size = UDim2.fromScale(0.76, 0.76)
 			panel.AnchorPoint = Vector2.new(0.5, 0.5)
 			panel.Position = UDim2.fromScale(0.5, 0.5)
-			panel.Size = UDim2.fromScale(0.84, 0.82)
 			panel.BackgroundColor3 = Starlight.CurrentTheme.Backgrounds.Medium
 			panel.BorderSizePixel = 0
-			panel.ZIndex = 701
-			panel.Parent = overlay
-			local panelScale = Instance.new("UIScale")
-			panelScale.Scale = 0.92
-			panelScale.Parent = panel
-			TweenService:Create(overlay, TweenInfo.new(0.18, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { BackgroundTransparency = 0.28 }):Play()
-			TweenService:Create(panelScale, TweenInfo.new(0.24, Enum.EasingStyle.Back, Enum.EasingDirection.Out), { Scale = 1 }):Play()
-			local limit = Instance.new("UISizeConstraint")
-			limit.MinSize = Vector2.new(230, 190)
-			limit.MaxSize = Vector2.new(760, 640)
-			limit.Parent = panel
-			local round = Instance.new("UICorner")
-			round.CornerRadius = UDim.new(0, 10)
-			round.Parent = panel
-			local outline = Instance.new("UIStroke")
-			outline.Color = Starlight.CurrentTheme.Foregrounds.Dark
-			outline.Parent = panel
-			makeSearchLabel(panel, "Search Features", 11, 30, 18, Starlight.CurrentTheme.Foregrounds.Light)
+			panel.ZIndex = 3
+			panel.Parent = gui
+			local sizeLimit = Instance.new("UISizeConstraint")
+			sizeLimit.MinSize = Vector2.new(300, 230)
+			sizeLimit.MaxSize = Vector2.new(720, 580)
+			sizeLimit.Parent = panel
+			local corner = Instance.new("UICorner")
+			corner.CornerRadius = UDim.new(0, 10)
+			corner.Parent = panel
+			local stroke = Instance.new("UIStroke")
+			stroke.Color = Starlight.CurrentTheme.Foregrounds.Dark
+			stroke.Parent = panel
+			local scale = Instance.new("UIScale")
+			scale.Scale = 0.94
+			scale.Parent = panel
+			TweenService:Create(backdrop, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { BackgroundTransparency = 0.32 }):Play()
+			TweenService:Create(scale, TweenInfo.new(0.22, Enum.EasingStyle.Back, Enum.EasingDirection.Out), { Scale = 1 }):Play()
+			local title = makeSearchText(panel, "Search Features", UDim2.fromOffset(18, 9), UDim2.new(1, -75, 0, 34), 18, Starlight.CurrentTheme.Foregrounds.Light, 5)
+			title.Font = Enum.Font.GothamSemibold
 			local exit = Instance.new("TextButton")
 			exit.Name = "Close"
-			exit.Size = UDim2.fromOffset(35, 35)
-			exit.Position = UDim2.new(1, -41, 0, 6)
-			exit.Text = "×"
-			exit.Font = Enum.Font.GothamBold
-			exit.TextSize = 25
-			exit.TextColor3 = Starlight.CurrentTheme.Foregrounds.Light
+			exit.Size = UDim2.fromOffset(44, 42)
+			exit.Position = UDim2.new(1, -48, 0, 4)
 			exit.BackgroundTransparency = 1
-			exit.ZIndex = 705
+			exit.Text = "×"
+			exit.TextColor3 = Starlight.CurrentTheme.Foregrounds.Light
+			exit.TextSize = 27
+			exit.Font = Enum.Font.GothamBold
+			exit.ZIndex = 8
 			exit.Parent = panel
 			local field = Instance.new("TextBox")
 			field.Name = "SearchInput"
-			field.Position = UDim2.fromOffset(14, 49)
-			field.Size = UDim2.new(1, -28, 0, 39)
+			field.Position = UDim2.fromOffset(15, 52)
+			field.Size = UDim2.new(1, -30, 0, 40)
+			field.BackgroundColor3 = Starlight.CurrentTheme.Backgrounds.Dark
+			field.TextColor3 = Starlight.CurrentTheme.Foregrounds.Light
+			field.PlaceholderColor3 = Starlight.CurrentTheme.Foregrounds.Medium
 			field.Text = ""
 			field.PlaceholderText = "Search a tab, feature, or setting..."
 			field.ClearTextOnFocus = false
+			field.TextXAlignment = Enum.TextXAlignment.Left
 			field.Font = Enum.Font.Gotham
 			field.TextSize = 14
-			field.TextXAlignment = Enum.TextXAlignment.Left
-			field.TextColor3 = Starlight.CurrentTheme.Foregrounds.Light
-			field.PlaceholderColor3 = Starlight.CurrentTheme.Foregrounds.Medium
-			field.BackgroundColor3 = Starlight.CurrentTheme.Backgrounds.Dark
-			field.ZIndex = 703
+			field.ZIndex = 6
 			field.Parent = panel
 			local fieldCorner = Instance.new("UICorner")
 			fieldCorner.CornerRadius = UDim.new(0, 7)
 			fieldCorner.Parent = field
-			local focusStroke = Instance.new("UIStroke")
-			focusStroke.Color = Starlight.CurrentTheme.Accents.Main
-			focusStroke.Transparency = 0.75
-			focusStroke.Thickness = 1.5
-			focusStroke.Parent = field
-			field.Focused:Connect(function()
-				TweenService:Create(focusStroke, searchAnimation, { Transparency = 0 }):Play()
-			end)
-			field.FocusLost:Connect(function()
-				TweenService:Create(focusStroke, searchAnimation, { Transparency = 0.75 }):Play()
-			end)
 			local fieldPadding = Instance.new("UIPadding")
 			fieldPadding.PaddingLeft = UDim.new(0, 12)
-			fieldPadding.PaddingRight = UDim.new(0, 10)
 			fieldPadding.Parent = field
-			local summary = makeSearchLabel(panel, "Type to find features", 96, 22, 12, Starlight.CurrentTheme.Foregrounds.Medium)
+			local summary = makeSearchText(panel, "Loading features...", UDim2.fromOffset(17, 98), UDim2.new(1, -34, 0, 20), 12, Starlight.CurrentTheme.Foregrounds.Medium, 5)
 			local results = Instance.new("ScrollingFrame")
 			results.Name = "Results"
-			results.Position = UDim2.fromOffset(13, 123)
-			results.Size = UDim2.new(1, -26, 1, -135)
+			results.Position = UDim2.fromOffset(15, 124)
+			results.Size = UDim2.new(1, -30, 1, -138)
 			results.BackgroundTransparency = 1
 			results.BorderSizePixel = 0
 			results.ScrollBarThickness = 4
 			results.ScrollingDirection = Enum.ScrollingDirection.Y
-			results.CanvasSize = UDim2.fromOffset(0, 0)
 			results.AutomaticCanvasSize = Enum.AutomaticSize.Y
-			results.ZIndex = 703
+			results.CanvasSize = UDim2.fromOffset(0, 0)
+			results.ZIndex = 5
 			results.Parent = panel
-			local layout = Instance.new("UIListLayout")
-			layout.Padding = UDim.new(0, 6)
-			layout.SortOrder = Enum.SortOrder.LayoutOrder
-			layout.Parent = results
-			local pad = Instance.new("UIPadding")
-			pad.PaddingTop = UDim.new(0, 5)
-			pad.PaddingBottom = UDim.new(0, 8)
-			pad.PaddingRight = UDim.new(0, 6)
-			pad.Parent = results
-			local searchItemSelected = false
-			local function addSearchResult(entry, index)
-				local result = Instance.new("TextButton")
-				result.Name = "Result" .. tostring(index)
-				result.LayoutOrder = index
-				result.Size = UDim2.new(1, -7, 0, 54)
-				result.BackgroundColor3 = Starlight.CurrentTheme.Backgrounds.Light
-				result.BackgroundTransparency = index <= 14 and 1 or 0.1
-				result.AutoButtonColor = false
-				result.Text = ""
-				result.ZIndex = 704
-				result.Parent = results
-				local buttonScale = Instance.new("UIScale")
-				buttonScale.Scale = index <= 14 and 0.96 or 1
-				buttonScale.Parent = result
-				local resultCorner = Instance.new("UICorner")
-				resultCorner.CornerRadius = UDim.new(0, 7)
-				resultCorner.Parent = result
-				local heading = makeSearchLabel(result, entry.title, 6, 24, 14, Starlight.CurrentTheme.Foregrounds.Light)
-				heading.Size = UDim2.new(1, -18, 0, 24)
-				heading.Position = UDim2.fromOffset(10, 5)
-				heading.TextTruncate = Enum.TextTruncate.AtEnd
-				local path = makeSearchLabel(result, entry.path, 29, 18, 11, Starlight.CurrentTheme.Foregrounds.Medium)
-				path.Size = UDim2.new(1, -18, 0, 18)
-				path.Position = UDim2.fromOffset(10, 29)
-				path.TextTruncate = Enum.TextTruncate.AtEnd
-				if index <= 14 then
-					heading.TextTransparency = 1
-					path.TextTransparency = 1
-					task.delay((index - 1) * 0.012, function()
-						if not result.Parent or not results.Parent then return end
-						TweenService:Create(result, searchAnimation, { BackgroundTransparency = 0.1 }):Play()
-						TweenService:Create(buttonScale, searchAnimation, { Scale = 1 }):Play()
-						TweenService:Create(heading, searchAnimation, { TextTransparency = 0 }):Play()
-						TweenService:Create(path, searchAnimation, { TextTransparency = 0 }):Play()
-					end)
-				end
-				result.MouseEnter:Connect(function()
-					if searchItemSelected then return end
-					TweenService:Create(result, TweenInfo.new(0.13, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { BackgroundTransparency = 0 }):Play()
-					TweenService:Create(buttonScale, TweenInfo.new(0.13, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Scale = 1.015 }):Play()
-				end)
-				result.MouseLeave:Connect(function()
-					if searchItemSelected then return end
-					TweenService:Create(result, TweenInfo.new(0.13, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { BackgroundTransparency = 0.1 }):Play()
-					TweenService:Create(buttonScale, TweenInfo.new(0.13, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Scale = 1 }):Play()
-				end)
-				result.MouseButton1Down:Connect(function()
-					if searchItemSelected then return end
-					TweenService:Create(buttonScale, TweenInfo.new(0.07, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Scale = 0.975 }):Play()
-				end)
-				result.MouseButton1Up:Connect(function()
-					if searchItemSelected then return end
-					TweenService:Create(buttonScale, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Scale = 1.015 }):Play()
-				end)
-				result.Activated:Connect(function()
-					if searchItemSelected then return end
-					searchItemSelected = true
-					local targetTab = entry.tab
-					if not targetTab or not targetTab.Instances or not targetTab.Instances.Page then
-						searchItemSelected = false
-						return
-					end
-					TweenService:Create(buttonScale, TweenInfo.new(0.09, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Scale = 0.965 }):Play()
-					TweenService:Create(result, TweenInfo.new(0.09, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { BackgroundTransparency = 0 }):Play()
-					task.delay(0.09, function()
-						closeFeatureSearch()
-						if type(targetTab.Select) == "function" then
-							pcall(targetTab.Select)
-						end
-						task.defer(function()
-							local target = entry.element and (entry.element.Instance or (entry.element.Instances and entry.element.Instances[1]))
-							if typeof(target) ~= "Instance" then
-								target = entry.group and entry.group.Instance
-							end
-							if typeof(target) ~= "Instance" or not target:IsA("GuiObject") then return end
-							local ancestor = target.Parent
-							while ancestor and not ancestor:IsA("ScrollingFrame") do
-								ancestor = ancestor.Parent
-							end
-							if ancestor then
-								local desiredY = math.max(0, ancestor.CanvasPosition.Y + target.AbsolutePosition.Y - ancestor.AbsolutePosition.Y - 18)
-								TweenService:Create(ancestor, TweenInfo.new(0.24, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), { CanvasPosition = Vector2.new(ancestor.CanvasPosition.X, desiredY) }):Play()
-							end
-							local highlight = Instance.new("UIStroke")
-							highlight.Name = "SearchResultHighlight"
-							highlight.Color = Starlight.CurrentTheme.Accents.Main
-							highlight.Thickness = 2
-							highlight.Transparency = 0
-							highlight.Parent = target
-							TweenService:Create(highlight, TweenInfo.new(1.15, Enum.EasingStyle.Quad, Enum.EasingDirection.In), { Transparency = 1 }):Play()
-							task.delay(1.2, function()
-								if highlight.Parent then highlight:Destroy() end
-							end)
-						end)
-					end)
-				end)
+			local listLayout = Instance.new("UIListLayout")
+			listLayout.Padding = UDim.new(0, 6)
+			listLayout.SortOrder = Enum.SortOrder.LayoutOrder
+			listLayout.Parent = results
+			local listPadding = Instance.new("UIPadding")
+			listPadding.PaddingTop = UDim.new(0, 4)
+			listPadding.PaddingBottom = UDim.new(0, 7)
+			listPadding.PaddingRight = UDim.new(0, 6)
+			listPadding.Parent = results
+			local records = {}
+			local seen = {}
+			local function record(name, path, tab, target, priority, hints)
+				name = tostring(name or "")
+				path = tostring(path or "")
+				if name == "" or name == "nil" then return end
+				local key = tostring(tab) .. ":" .. name:lower() .. ":" .. path:lower()
+				if seen[key] then return end
+				seen[key] = true
+				table.insert(records, { name = name, path = path, tab = tab, target = target, priority = priority or 0, hints = tostring(hints or "") })
 			end
-			local function addRecord(matches, title, path, tab, group, element, hints)
-				local searchable = (tostring(title) .. " " .. tostring(path) .. " " .. tostring(hints or "")):lower()
-				for word in field.Text:lower():gmatch("%S+") do
-					if not searchable:find(word, 1, true) then return end
-				end
-				table.insert(matches, { title = tostring(title), path = tostring(path), tab = tab, group = group, element = element })
-			end
-			local function updateResults()
-				if not results.Parent then return end
-				for _, child in ipairs(results:GetChildren()) do
-					if child:IsA("GuiObject") then child:Destroy() end
-				end
-				results.CanvasPosition = Vector2.zero
-				local matches = {}
-				if Starlight.Window and Starlight.Window.TabSections then
-					for sectionName, section in pairs(Starlight.Window.TabSections) do
-						if type(section) == "table" and type(section.Tabs) == "table" then
-							for _, tab in pairs(section.Tabs) do
-								if type(tab) == "table" and tab.Instances and tab.Instances.Page and tab.Instances.Page.Parent then
-									local tabName = tostring(tab.Values and tab.Values.Name or tab.Index or "Tab")
-									local sectionPath = tostring(section.Name or sectionName or "")
-									addRecord(matches, tabName, sectionPath, tab, nil, nil, tab.Index)
-									for groupKey, group in pairs(tab.Groupboxes or {}) do
-										if type(group) == "table" then
-											local groupName = tostring(group.Values and group.Values.Name or groupKey)
-											local groupPath = sectionPath .. "  /  " .. tabName
-											addRecord(matches, groupName, groupPath, tab, group, nil, groupKey)
-											for elementKey, element in pairs(group.Elements or {}) do
-												if type(element) == "table" and type(element.Values) == "table" then
-												local itemName = tostring(element.Values.Name or elementKey)
-												local itemPath = groupPath .. "  /  " .. groupName
-												addRecord(matches, itemName, itemPath, tab, group, element, tostring(elementKey) .. " " .. tostring(element.Values.Tooltip or "") .. " " .. tostring(element.Class or ""))
+			local indexed, indexError = pcall(function()
+				for sectionKey, section in pairs(Starlight.Window.TabSections or {}) do
+					if type(section) == "table" and type(section.Tabs) == "table" then
+						local sectionName = tostring(section.Name or sectionKey)
+						for tabKey, tab in pairs(section.Tabs) do
+							if type(tab) == "table" and type(tab.Instances) == "table" and tab.Instances.Page then
+								local tabName = tostring(tab.Values and tab.Values.Name or tabKey)
+								record(tabName, sectionName, tab, nil, 0, tostring(tabKey))
+								for groupKey, group in pairs(tab.Groupboxes or {}) do
+									if type(group) == "table" then
+										local groupName = tostring(group.Values and group.Values.Name or groupKey)
+										local groupPath = sectionName .. " / " .. tabName
+										record(groupName, groupPath, tab, group.Instance, 1, tostring(groupKey))
+										for elementKey, element in pairs(group.Elements or {}) do
+											if type(element) == "table" then
+												local name = tostring(element.Values and element.Values.Name or elementKey)
+												local target = element.Instance or (element.Instances and element.Instances[1])
+												record(name, groupPath .. " / " .. groupName, tab, target, 2, tostring(elementKey) .. " " .. tostring(element.Values and element.Values.Tooltip or ""))
 												for nestedKey, nested in pairs(element.NestedElements or {}) do
 													if type(nested) == "table" then
 														local nestedName = tostring(nested.Values and nested.Values.Name or nested.Class or nestedKey)
-														addRecord(matches, nestedName, itemPath .. "  /  " .. itemName, tab, group, nested, nestedKey)
+														local nestedTarget = nested.Instance or (nested.Instances and nested.Instances[1])
+														record(nestedName, groupPath .. " / " .. groupName .. " / " .. name, tab, nestedTarget, 3, nestedKey)
 													end
-												end
 												end
 											end
 										end
@@ -1036,69 +941,160 @@ replaceExact([==[		mainWindow.Content.Topbar.Search["MouseLeave"]:Connect(functi
 						end
 					end
 				end
-				table.sort(matches, function(a, b)
-					local query = field.Text:lower()
-					local aExact = a.title:lower() == query
-					local bExact = b.title:lower() == query
-					if aExact ~= bExact then return aExact end
-					return a.title:lower() < b.title:lower()
-				end)
-				local shown = math.min(#matches, 90)
-				for index = 1, shown do
-					addSearchResult(matches[index], index)
+			end)
+			if not indexed then warn("[Starlight Search] " .. tostring(indexError)) end
+			local scanned, scanError = pcall(function()
+				local scannedCount = 0
+				for sectionKey, section in pairs(Starlight.Window.TabSections or {}) do
+					if type(section) == "table" then
+						for _, tab in pairs(section.Tabs or {}) do
+							if type(tab) == "table" and type(tab.Instances) == "table" and typeof(tab.Instances.Page) == "Instance" then
+								local page = tab.Instances.Page
+								local tabName = tostring(tab.Values and tab.Values.Name or tab.Index or "Tab")
+								for _, label in ipairs(page:GetDescendants()) do
+									if scannedCount >= 4000 then break end
+									scannedCount += 1
+									if (label:IsA("TextLabel") or label:IsA("TextButton")) and (label.Name == "Header" or label.Name == "header") then
+										local name = tostring(label.Text or "")
+										if #name > 1 and #name < 70 and not name:find("<", 1, true) then
+											record(name, tostring(sectionKey) .. " / " .. tabName, tab, label, 4, "")
+										end
+									end
+								end
+							end
+						end
+					end
 				end
-				summary.Text = tostring(#matches) .. " feature(s) found" .. (#matches > shown and " (showing first 90)" or "")
+			end)
+			if not scanned then warn("[Starlight Search] " .. tostring(scanError)) end
+			local function navigate(entry)
+				closeFeatureSearch()
+				local tab = entry.tab
+				if tab and type(tab.Select) == "function" then
+					pcall(tab.Select)
+				end
+				local target = entry.target
+				if typeof(target) == "Instance" and target:IsA("GuiObject") then
+					task.defer(function()
+						if not target.Parent then return end
+						local current = target.Parent
+						while current and not current:IsA("ScrollingFrame") do
+							current = current.Parent
+						end
+						if current then
+							local y = math.max(0, current.CanvasPosition.Y + target.AbsolutePosition.Y - current.AbsolutePosition.Y - 16)
+							TweenService:Create(current, TweenInfo.new(0.22, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), { CanvasPosition = Vector2.new(current.CanvasPosition.X, y) }):Play()
+						end
+						local marker = Instance.new("UIStroke")
+						marker.Color = Starlight.CurrentTheme.Accents.Main
+						marker.Thickness = 2
+						marker.Parent = target
+						TweenService:Create(marker, TweenInfo.new(0.9), { Transparency = 1 }):Play()
+						task.delay(1, function() if marker.Parent then marker:Destroy() end end)
+					end)
+				end
 			end
-			field:GetPropertyChangedSignal("Text"):Connect(updateResults)
-			updateResults()
-			local exitScale = Instance.new("UIScale")
-			exitScale.Scale = 1
-			exitScale.Parent = exit
-			exit.MouseEnter:Connect(function()
-				TweenService:Create(exitScale, searchAnimation, { Scale = 1.14 }):Play()
-			end)
-			exit.MouseLeave:Connect(function()
-				TweenService:Create(exitScale, searchAnimation, { Scale = 1 }):Play()
-			end)
-			exit.Activated:Connect(function()
-				TweenService:Create(exitScale, TweenInfo.new(0.08, Enum.EasingStyle.Quad), { Scale = 0.88 }):Play()
-				closeFeatureSearch()
-			end)
-			overlay.MouseButton1Click:Connect(function()
-				closeFeatureSearch()
-			end)
-			local thisKeyConnection
-			thisKeyConnection = UserInputService.InputBegan:Connect(function(input, processed)
+			local function createResult(entry, number)
+				local button = Instance.new("TextButton")
+				button.Name = "Result" .. tostring(number)
+				button.LayoutOrder = number
+				button.Size = UDim2.new(1, -7, 0, 55)
+				button.BackgroundColor3 = Starlight.CurrentTheme.Backgrounds.Light
+				button.BackgroundTransparency = 0.11
+				button.Text = ""
+				button.AutoButtonColor = false
+				button.ZIndex = 6
+				button.Parent = results
+				local corner = Instance.new("UICorner")
+				corner.CornerRadius = UDim.new(0, 7)
+				corner.Parent = button
+				local itemScale = Instance.new("UIScale")
+				itemScale.Scale = 0.97
+				itemScale.Parent = button
+				local nameLabel = makeSearchText(button, entry.name, UDim2.fromOffset(11, 4), UDim2.new(1, -18, 0, 26), 14, Starlight.CurrentTheme.Foregrounds.Light, 7)
+				nameLabel.Font = Enum.Font.GothamSemibold
+				local pathLabel = makeSearchText(button, entry.path, UDim2.fromOffset(11, 29), UDim2.new(1, -18, 0, 18), 11, Starlight.CurrentTheme.Foregrounds.Medium, 7)
+				TweenService:Create(itemScale, TweenInfo.new(0.17, Enum.EasingStyle.Back, Enum.EasingDirection.Out), { Scale = 1 }):Play()
+				button.MouseEnter:Connect(function()
+					TweenService:Create(button, TweenInfo.new(0.12), { BackgroundTransparency = 0 }):Play()
+					TweenService:Create(itemScale, TweenInfo.new(0.12), { Scale = 1.012 }):Play()
+				end)
+				button.MouseLeave:Connect(function()
+					TweenService:Create(button, TweenInfo.new(0.12), { BackgroundTransparency = 0.11 }):Play()
+					TweenService:Create(itemScale, TweenInfo.new(0.12), { Scale = 1 }):Play()
+				end)
+				button.Activated:Connect(function() navigate(entry) end)
+			end
+			local function renderResults()
+				for _, child in ipairs(results:GetChildren()) do
+					if child:IsA("GuiObject") then child:Destroy() end
+				end
+				results.CanvasPosition = Vector2.zero
+				local query = field.Text:lower()
+				local matched = {}
+				for _, entry in ipairs(records) do
+					local haystack = (entry.name .. " " .. entry.path .. " " .. entry.hints):lower()
+					local match = true
+					for term in query:gmatch("%S+") do
+						if not haystack:find(term, 1, true) then match = false; break end
+					end
+					if match then table.insert(matched, entry) end
+				end
+				table.sort(matched, function(a, b)
+					local aStarts = a.name:lower():sub(1, #query) == query
+					local bStarts = b.name:lower():sub(1, #query) == query
+					if aStarts ~= bStarts then return aStarts end
+					if a.priority ~= b.priority then return a.priority < b.priority end
+					return a.name:lower() < b.name:lower()
+				end)
+				local count = math.min(#matched, 100)
+				summary.Text = tostring(#matched) .. " features found" .. (#matched > count and " (showing first 100)" or "")
+				if #matched == 0 then
+					makeSearchText(results, "No matching features found", UDim2.fromOffset(10, 12), UDim2.new(1, -20, 0, 40), 13, Starlight.CurrentTheme.Foregrounds.Medium, 6)
+					return
+				end
+				for i = 1, count do
+					local ok, err = pcall(createResult, matched[i], i)
+					if not ok then warn("[Starlight Search] Result rendering: " .. tostring(err)) end
+				end
+			end
+			local function safeRender()
+					local ok, err = pcall(renderResults)
+					if not ok then
+						summary.Text = "Search error: " .. tostring(err)
+						warn("[Starlight Search] " .. tostring(err))
+					end
+				end
+			field:GetPropertyChangedSignal("Text"):Connect(safeRender)
+			safeRender()
+			outside.Activated:Connect(function() closeFeatureSearch() end)
+			exit.Activated:Connect(function() closeFeatureSearch() end)
+			searchEscape = UserInputService.InputBegan:Connect(function(input)
 				if input.KeyCode == Enum.KeyCode.Escape then closeFeatureSearch() end
 			end)
-			searchKeyConnection = thisKeyConnection
-			overlay.Destroying:Once(function()
-				thisKeyConnection:Disconnect()
-				if searchKeyConnection == thisKeyConnection then searchKeyConnection = nil end
-				if searchOverlay == overlay then searchOverlay = nil end
+			local thisEscape = searchEscape
+			gui.Destroying:Once(function()
+				if thisEscape then thisEscape:Disconnect() end
+				if searchEscape == thisEscape then searchEscape = nil end
+				if searchGui == gui then searchGui = nil end
 			end)
-			task.defer(function()
-				if field.Parent then field:CaptureFocus() end
-			end)
+			task.defer(function() if field.Parent and gui.Parent then field:CaptureFocus() end end)
 		end
 		local searchIconScale = Instance.new("UIScale")
 		searchIconScale.Scale = 1
 		searchIconScale.Parent = searchIcon
-		searchTrigger.MouseEnter:Connect(function()
-			TweenService:Create(searchIconScale, searchAnimation, { Scale = 1.13 }):Play()
-			Tween(searchIcon, { ImageColor3 = Starlight.CurrentTheme.Foregrounds.Light })
+		searchButton.MouseEnter:Connect(function()
+			TweenService:Create(searchIconScale, TweenInfo.new(0.15), { Scale = 1.13 }):Play()
 		end)
-		searchTrigger.MouseLeave:Connect(function()
-			TweenService:Create(searchIconScale, searchAnimation, { Scale = 1 }):Play()
-			Tween(searchIcon, { ImageColor3 = Starlight.CurrentTheme.Foregrounds.Dark })
+		searchButton.MouseLeave:Connect(function()
+			TweenService:Create(searchIconScale, TweenInfo.new(0.15), { Scale = 1 }):Play()
 		end)
-		searchTrigger.Activated:Connect(function()
-			searchIconScale.Scale = 0.87
-			TweenService:Create(searchIconScale, searchAnimation, { Scale = 1.13 }):Play()
-			openFeatureSearch()
-		end)
+		searchButton.Activated:Connect(openFeatureSearch)
 		mainWindow:GetPropertyChangedSignal("Visible"):Connect(function()
 			if not mainWindow.Visible then closeFeatureSearch(true) end
+		end)
+		StarlightUI.Destroying:Once(function()
+			closeFeatureSearch(true)
 		end)]==], 1)
 local dropdownMethod = source:find([==[function Element:AddDropdown(NestedSettings, NestedIndex, Parent, ParentIndex)]==], 1, true)
 if not dropdownMethod then
