@@ -1,4 +1,4 @@
-local source = game:HttpGet([==[https://raw.githubusercontent.com/Nebula-Softworks/Starlight-Interface-Suite/Gen1/Source.lua]==])
+local source = game:HttpGet([==[https://raw.githubusercontent.com/Nebula-Softworks/Starlight-Interface-Suite/1ec0fb9ce4aacd8f396a9bd493e0251a6acf450a/Source.lua]==])
 local function replaceExact(old, new, expected)
     local from = 1
     local count = 0
@@ -377,7 +377,7 @@ replaceExact([==[		if TabSettings.Changelog[1] then
 		local latestEntry = TabSettings.Changelog[1]
 		if latestEntry then
 			changelogPanel.latest.Visible = true
-			changelogPanel.latest.Header.Text = tostring(latestEntry.Version or latestEntry.Title or "Latest Update")
+			changelogPanel.latest.Header.Text = tostring(latestEntry.Version or "Update 1") .. " - " .. tostring(latestEntry.Title or "Latest Update")
 			changelogPanel.latest.date.Text = tostring(latestEntry.Date or "")
 			changelogPanel.latest.desc.Text = tostring(latestEntry.Description or "")
 		else
@@ -509,10 +509,10 @@ replaceExact([==[		if TabSettings.Changelog[1] then
 				titleText.TextSize = 16
 			titleText.TextXAlignment = Enum.TextXAlignment.Left
 			titleText.TextColor3 = Starlight.CurrentTheme.Foregrounds.Light
-			titleText.Text = tostring(entry.Version or entry.Title or ("Update " .. index))
+			titleText.Text = tostring(entry.Version or ("Update " .. index))
 			titleText.ZIndex = 604
 			titleText.Parent = item
-				if entry.Version and entry.Title and entry.Version ~= entry.Title then
+				if entry.Title and entry.Version ~= entry.Title then
 					local subtitle = Instance.new("TextLabel")
 					subtitle.Name = "UpdateName"
 					subtitle.LayoutOrder = 2
@@ -591,6 +591,393 @@ replaceExact([==[		if TabSettings.Changelog[1] then
 			changelogPanel.Interact.MouseButton1Click:Connect(openChangelogHistory)
 		end
 ]==], 1)
+replaceExact([==[if not getgenv().SecureMode then
+	InputManager = GetService("VirtualInputManager")
+end]==], [==[if not (type(getgenv) == "function" and getgenv().SecureMode) then
+	local managerOk, manager = pcall(GetService, "VirtualInputManager")
+	if managerOk then
+		InputManager = manager
+	end
+end]==], 1)
+replaceExact([==[		local newNotification = Resources.Elements.NotificationTemplate:Clone()
+		newNotification.Name = data.Title]==], [==[		local newNotification = Resources.Elements.NotificationTemplate:Clone()
+		newNotification.Name = tostring(data.Title or "Notification")]==], 1)
+replaceExact([==[		notificationAcrylicEvent.Event:Connect(function()
+			if newNotification.BackgroundTransparency == 1 then]==], [==[		local notificationAcrylicConnection = notificationAcrylicEvent.Event:Connect(function()
+			if newNotification.BackgroundTransparency == 1 then]==], 1)
+replaceExact([==[		end)
+
+		-- Set Data]==], [==[		end)
+		newNotification.Destroying:Once(function()
+			notificationAcrylicConnection:Disconnect()
+		end)
+
+		-- Set Data]==], 1)
+replaceExact([==[				CollectionService:AddTag(newNotification, "__starlight_ExpiredNotification")]==], [==[				CollectionService:AddTag(newNotification, "__starlight_ExpiredNotification")
+				local history = CollectionService:GetTagged("__starlight_ExpiredNotification")
+				if #history > 75 then
+					table.sort(history, function(a, b)
+						return (a:GetAttribute("StarlightCreated") or 0) < (b:GetAttribute("StarlightCreated") or 0)
+					end)
+					for index = 1, #history - 75 do
+						history[index]:Destroy()
+					end
+				end]==], 1)
+replaceExact([==[		newNotification.LayoutOrder = #StarlightUI.Notifications:GetChildren()
+		newNotification.Visible = false]==], [==[		newNotification.LayoutOrder = #StarlightUI.Notifications:GetChildren()
+		newNotification:SetAttribute("StarlightCreated", os.clock())
+		newNotification.Visible = false]==], 1)
+replaceExact([==[							local hover = false
+							local sliders = {}]==], [==[							local hover = false
+							local sliders = {}
+							local popupInputConnection]==], 1)
+replaceExact([==[							local hover = false
+							local height = 175]==], [==[							local hover = false
+							local height = 175
+							local popupInputConnection]==], 1)
+replaceExact([==[							acrylicEvent.Event:Connect(function()
+								if mainAcrylic then]==], [==[							local popupAcrylicConnection = acrylicEvent.Event:Connect(function()
+								if mainAcrylic then]==], 2)
+replaceExact([==[							AcrylicObject.AddParent(NestedElement.Instances[2])
+							AcrylicObject.Frame.Parent = NestedElement.Instances[2]]==], [==[							AcrylicObject.AddParent(NestedElement.Instances[2])
+							AcrylicObject.Frame.Parent = NestedElement.Instances[2]
+							NestedElement.Instances[2].Destroying:Once(function()
+								popupAcrylicConnection:Disconnect()
+								if popupInputConnection then
+									popupInputConnection:Disconnect()
+									popupInputConnection = nil
+								end
+							end)]==], 2)
+replaceExact([==[							local function close()
+]==], [==[							local function close()
+								if popupInputConnection then
+									popupInputConnection:Disconnect()
+									popupInputConnection = nil
+								end
+]==], 2)
+replaceExact([==[									local connection
+									connection = UserInputService.InputBegan:Connect(function(i)]==], [==[									if popupInputConnection then
+										popupInputConnection:Disconnect()
+									end
+									popupInputConnection = UserInputService.InputBegan:Connect(function(i)]==], 2)
+replaceExact([==[											close()
+											connection:Disconnect()]==], [==[											close()]==], 2)
+replaceExact([==[				instance:CreateToggle({
+					Name = "Acrylic",
+					CurrentValue = false,
+					Tooltip = "Enables The Glass And Acrylic Style for the main UI",
+					Icon = 6031371068,
+					Callback = function(v)
+						mainAcrylic = v
+						acrylicEvent:Fire()
+					end,
+				}, "mainacrylic")
+				instance:CreateToggle({
+					Name = "Notification Acrylic",
+					CurrentValue = true,
+					Tooltip = "Enables The Glass And Acrylic Style for notifications",
+					Icon = 6031488930,
+					Callback = function(v)
+						notificationAcrylic = v
+						notificationAcrylicEvent:Fire()
+					end,
+				}, "notitficationacrylic")]==], [==[]==], 1)
+replaceExact([==[		Tab.Instances.Page.Thumbnail.ImageLabel.Image =
+			Players:GetUserThumbnailAsync(Player.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size100x100)]==], [==[		pcall(function()
+			Tab.Instances.Page.Thumbnail.ImageLabel.Image =
+				Players:GetUserThumbnailAsync(Player.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size100x100)
+		end)]==], 1)
+replaceExact([==[		Tab.Instances.Page.Holder.Left.Server.Subheader.Text = "Currently Playing "
+			.. MarketplaceService:GetProductInfo(game.PlaceId).Name
+		Tab.Instances.Page.Holder.Left.Server.Frame.serverregion.Text = '<font size="14" color="#FFF" weight="semibold">Region</font>\n'
+			.. Localization:GetCountryRegionForPlayerAsync(Player)]==], [==[		local placeName = "Unknown experience"
+		local regionName = "Unknown"
+		pcall(function()
+			placeName = MarketplaceService:GetProductInfo(game.PlaceId).Name
+		end)
+		pcall(function()
+			regionName = Localization:GetCountryRegionForPlayerAsync(Player)
+		end)
+		Tab.Instances.Page.Holder.Left.Server.Subheader.Text = "Currently Playing " .. tostring(placeName)
+		Tab.Instances.Page.Holder.Left.Server.Frame.serverregion.Text = '<font size="14" color="#FFF" weight="semibold">Region</font>\n' .. tostring(regionName)]==], 1)
+replaceExact([==[		mainWindow.Sidebar.Player.PlayerIcon.Image =
+			Players:GetUserThumbnailAsync(Player.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size48x48)]==], [==[		pcall(function()
+			mainWindow.Sidebar.Player.PlayerIcon.Image =
+				Players:GetUserThumbnailAsync(Player.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size48x48)
+		end)]==], 1)
+replaceExact([==[
+			Tab.Instances.Button.Interact["MouseButton1Click"]:Connect(Activate)]==], [==[
+			Tab.Instances.Button.Interact["MouseButton1Click"]:Connect(Activate)
+			Tab.Select = Activate]==], 2)
+replaceExact([==[
+		Tab.Instances.Button.Interact["MouseButton1Click"]:Connect(Activate)]==], [==[
+		Tab.Instances.Button.Interact["MouseButton1Click"]:Connect(Activate)
+		Tab.Select = Activate]==], 1)
+replaceExact([==[		mainWindow.Content.Topbar.Search["MouseLeave"]:Connect(function()
+			Tween(mainWindow.Content.Topbar.Search, { ImageColor3 = Starlight.CurrentTheme.Foregrounds.Dark })
+		end)]==], [==[		mainWindow.Content.Topbar.Search["MouseLeave"]:Connect(function()
+			Tween(mainWindow.Content.Topbar.Search, { ImageColor3 = Starlight.CurrentTheme.Foregrounds.Dark })
+		end)
+
+		local searchIcon = mainWindow.Content.Topbar.Search
+		local searchTrigger = Instance.new("TextButton")
+		searchTrigger.Name = "FeatureSearchButton"
+		searchTrigger.Size = UDim2.fromScale(1, 1)
+		searchTrigger.BackgroundTransparency = 1
+		searchTrigger.Text = ""
+		searchTrigger.ZIndex = searchIcon.ZIndex + 1
+		searchTrigger.Parent = searchIcon
+		local searchOverlay = nil
+		local searchKeyConnection = nil
+		local function closeFeatureSearch()
+			if searchKeyConnection then
+				searchKeyConnection:Disconnect()
+				searchKeyConnection = nil
+			end
+			if searchOverlay then
+				local old = searchOverlay
+				searchOverlay = nil
+				old:Destroy()
+			end
+		end
+		local function makeSearchLabel(parent, text, y, height, size, color)
+			local label = Instance.new("TextLabel")
+			label.Size = UDim2.new(1, -34, 0, height)
+			label.Position = UDim2.fromOffset(17, y)
+			label.Text = text
+			label.BackgroundTransparency = 1
+			label.TextColor3 = color
+			label.TextSize = size
+			label.Font = Enum.Font.GothamSemibold
+			label.TextXAlignment = Enum.TextXAlignment.Left
+			label.ZIndex = 704
+			label.Parent = parent
+			return label
+		end
+		local function openFeatureSearch()
+			if searchOverlay then
+				closeFeatureSearch()
+				return
+			end
+			local overlay = Instance.new("TextButton")
+			overlay.Name = "StarlightFeatureSearch"
+			overlay.BackgroundColor3 = Color3.new(0, 0, 0)
+			overlay.BackgroundTransparency = 0.28
+			overlay.BorderSizePixel = 0
+			overlay.Size = UDim2.fromScale(1, 1)
+			overlay.Text = ""
+			overlay.Modal = true
+			overlay.ZIndex = 700
+			overlay.Parent = mainWindow
+			searchOverlay = overlay
+			local panel = Instance.new("Frame")
+			panel.Name = "FeatureSearchPanel"
+			panel.AnchorPoint = Vector2.new(0.5, 0.5)
+			panel.Position = UDim2.fromScale(0.5, 0.5)
+			panel.Size = UDim2.fromScale(0.84, 0.82)
+			panel.BackgroundColor3 = Starlight.CurrentTheme.Backgrounds.Medium
+			panel.BorderSizePixel = 0
+			panel.ZIndex = 701
+			panel.Parent = overlay
+			local limit = Instance.new("UISizeConstraint")
+			limit.MinSize = Vector2.new(230, 190)
+			limit.MaxSize = Vector2.new(760, 640)
+			limit.Parent = panel
+			local round = Instance.new("UICorner")
+			round.CornerRadius = UDim.new(0, 10)
+			round.Parent = panel
+			local outline = Instance.new("UIStroke")
+			outline.Color = Starlight.CurrentTheme.Foregrounds.Dark
+			outline.Parent = panel
+			makeSearchLabel(panel, "Search Features", 11, 30, 18, Starlight.CurrentTheme.Foregrounds.Light)
+			local exit = Instance.new("TextButton")
+			exit.Name = "Close"
+			exit.Size = UDim2.fromOffset(35, 35)
+			exit.Position = UDim2.new(1, -41, 0, 6)
+			exit.Text = "×"
+			exit.Font = Enum.Font.GothamBold
+			exit.TextSize = 25
+			exit.TextColor3 = Starlight.CurrentTheme.Foregrounds.Light
+			exit.BackgroundTransparency = 1
+			exit.ZIndex = 705
+			exit.Parent = panel
+			local field = Instance.new("TextBox")
+			field.Name = "SearchInput"
+			field.Position = UDim2.fromOffset(14, 49)
+			field.Size = UDim2.new(1, -28, 0, 39)
+			field.Text = ""
+			field.PlaceholderText = "Search a tab, feature, or setting..."
+			field.ClearTextOnFocus = false
+			field.Font = Enum.Font.Gotham
+			field.TextSize = 14
+			field.TextXAlignment = Enum.TextXAlignment.Left
+			field.TextColor3 = Starlight.CurrentTheme.Foregrounds.Light
+			field.PlaceholderColor3 = Starlight.CurrentTheme.Foregrounds.Medium
+			field.BackgroundColor3 = Starlight.CurrentTheme.Backgrounds.Dark
+			field.ZIndex = 703
+			field.Parent = panel
+			local fieldCorner = Instance.new("UICorner")
+			fieldCorner.CornerRadius = UDim.new(0, 7)
+			fieldCorner.Parent = field
+			local fieldPadding = Instance.new("UIPadding")
+			fieldPadding.PaddingLeft = UDim.new(0, 12)
+			fieldPadding.PaddingRight = UDim.new(0, 10)
+			fieldPadding.Parent = field
+			local summary = makeSearchLabel(panel, "Type to find features", 96, 22, 12, Starlight.CurrentTheme.Foregrounds.Medium)
+			local results = Instance.new("ScrollingFrame")
+			results.Name = "Results"
+			results.Position = UDim2.fromOffset(13, 123)
+			results.Size = UDim2.new(1, -26, 1, -135)
+			results.BackgroundTransparency = 1
+			results.BorderSizePixel = 0
+			results.ScrollBarThickness = 4
+			results.ScrollingDirection = Enum.ScrollingDirection.Y
+			results.CanvasSize = UDim2.fromOffset(0, 0)
+			results.AutomaticCanvasSize = Enum.AutomaticSize.Y
+			results.ZIndex = 703
+			results.Parent = panel
+			local layout = Instance.new("UIListLayout")
+			layout.Padding = UDim.new(0, 6)
+			layout.SortOrder = Enum.SortOrder.LayoutOrder
+			layout.Parent = results
+			local pad = Instance.new("UIPadding")
+			pad.PaddingTop = UDim.new(0, 5)
+			pad.PaddingBottom = UDim.new(0, 8)
+			pad.PaddingRight = UDim.new(0, 6)
+			pad.Parent = results
+			local function addSearchResult(entry, index)
+				local result = Instance.new("TextButton")
+				result.Name = "Result" .. tostring(index)
+				result.LayoutOrder = index
+				result.Size = UDim2.new(1, -7, 0, 54)
+				result.BackgroundColor3 = Starlight.CurrentTheme.Backgrounds.Light
+				result.BackgroundTransparency = 0.1
+				result.Text = ""
+				result.ZIndex = 704
+				result.Parent = results
+				local resultCorner = Instance.new("UICorner")
+				resultCorner.CornerRadius = UDim.new(0, 7)
+				resultCorner.Parent = result
+				local heading = makeSearchLabel(result, entry.title, 6, 24, 14, Starlight.CurrentTheme.Foregrounds.Light)
+				heading.Size = UDim2.new(1, -18, 0, 24)
+				heading.Position = UDim2.fromOffset(10, 5)
+				heading.TextTruncate = Enum.TextTruncate.AtEnd
+				local path = makeSearchLabel(result, entry.path, 29, 18, 11, Starlight.CurrentTheme.Foregrounds.Medium)
+				path.Size = UDim2.new(1, -18, 0, 18)
+				path.Position = UDim2.fromOffset(10, 29)
+				path.TextTruncate = Enum.TextTruncate.AtEnd
+				result.MouseButton1Click:Connect(function()
+					local targetTab = entry.tab
+					if not targetTab or not targetTab.Instances or not targetTab.Instances.Page then
+						return
+					end
+					closeFeatureSearch()
+					if type(targetTab.Select) == "function" then
+						pcall(targetTab.Select)
+					end
+					task.defer(function()
+						local target = entry.element and (entry.element.Instance or (entry.element.Instances and entry.element.Instances[1]))
+						if typeof(target) ~= "Instance" then
+							target = entry.group and entry.group.Instance
+						end
+						if typeof(target) ~= "Instance" or not target:IsA("GuiObject") then return end
+						local ancestor = target.Parent
+						while ancestor and not ancestor:IsA("ScrollingFrame") do
+							ancestor = ancestor.Parent
+						end
+						if ancestor then
+							ancestor.CanvasPosition = Vector2.new(ancestor.CanvasPosition.X, math.max(0, ancestor.CanvasPosition.Y + target.AbsolutePosition.Y - ancestor.AbsolutePosition.Y - 18))
+						end
+						local highlight = Instance.new("UIStroke")
+						highlight.Name = "SearchResultHighlight"
+						highlight.Color = Starlight.CurrentTheme.Accents.Main
+						highlight.Thickness = 2
+						highlight.Parent = target
+						task.delay(1.5, function()
+							if highlight.Parent then highlight:Destroy() end
+						end)
+					end)
+				end)
+			end
+			local function addRecord(matches, title, path, tab, group, element, hints)
+				local searchable = (tostring(title) .. " " .. tostring(path) .. " " .. tostring(hints or "")):lower()
+				for word in field.Text:lower():gmatch("%S+") do
+					if not searchable:find(word, 1, true) then return end
+				end
+				table.insert(matches, { title = tostring(title), path = tostring(path), tab = tab, group = group, element = element })
+			end
+			local function updateResults()
+				if not results.Parent then return end
+				for _, child in ipairs(results:GetChildren()) do
+					if child:IsA("GuiObject") then child:Destroy() end
+				end
+				results.CanvasPosition = Vector2.zero
+				local matches = {}
+				if Starlight.Window and Starlight.Window.TabSections then
+					for sectionName, section in pairs(Starlight.Window.TabSections) do
+						if type(section) == "table" and type(section.Tabs) == "table" then
+							for _, tab in pairs(section.Tabs) do
+								if type(tab) == "table" and tab.Instances and tab.Instances.Page and tab.Instances.Page.Parent then
+									local tabName = tostring(tab.Values and tab.Values.Name or tab.Index or "Tab")
+									local sectionPath = tostring(section.Name or sectionName or "")
+									addRecord(matches, tabName, sectionPath, tab, nil, nil, tab.Index)
+									for groupKey, group in pairs(tab.Groupboxes or {}) do
+										if type(group) == "table" then
+											local groupName = tostring(group.Values and group.Values.Name or groupKey)
+											local groupPath = sectionPath .. "  /  " .. tabName
+											addRecord(matches, groupName, groupPath, tab, group, nil, groupKey)
+											for elementKey, element in pairs(group.Elements or {}) do
+												if type(element) == "table" and type(element.Values) == "table" then
+												local itemName = tostring(element.Values.Name or elementKey)
+												local itemPath = groupPath .. "  /  " .. groupName
+												addRecord(matches, itemName, itemPath, tab, group, element, tostring(elementKey) .. " " .. tostring(element.Values.Tooltip or "") .. " " .. tostring(element.Class or ""))
+												for nestedKey, nested in pairs(element.NestedElements or {}) do
+													if type(nested) == "table" then
+														local nestedName = tostring(nested.Values and nested.Values.Name or nested.Class or nestedKey)
+														addRecord(matches, nestedName, itemPath .. "  /  " .. itemName, tab, group, nested, nestedKey)
+													end
+												end
+												end
+											end
+										end
+									end
+								end
+							end
+						end
+					end
+				end
+				table.sort(matches, function(a, b)
+					local query = field.Text:lower()
+					local aExact = a.title:lower() == query
+					local bExact = b.title:lower() == query
+					if aExact ~= bExact then return aExact end
+					return a.title:lower() < b.title:lower()
+				end)
+				local shown = math.min(#matches, 90)
+				for index = 1, shown do
+					addSearchResult(matches[index], index)
+				end
+				summary.Text = tostring(#matches) .. " feature(s) found" .. (#matches > shown and " (showing first 90)" or "")
+			end
+			field:GetPropertyChangedSignal("Text"):Connect(updateResults)
+			updateResults()
+			exit.MouseButton1Click:Connect(closeFeatureSearch)
+			overlay.MouseButton1Click:Connect(closeFeatureSearch)
+			searchKeyConnection = UserInputService.InputBegan:Connect(function(input, processed)
+				if input.KeyCode == Enum.KeyCode.Escape then closeFeatureSearch() end
+			end)
+			overlay.Destroying:Once(function()
+				if searchKeyConnection then searchKeyConnection:Disconnect(); searchKeyConnection = nil end
+				if searchOverlay == overlay then searchOverlay = nil end
+			end)
+			task.defer(function()
+				if field.Parent then field:CaptureFocus() end
+			end)
+		end
+		searchTrigger.MouseButton1Click:Connect(openFeatureSearch)
+		mainWindow:GetPropertyChangedSignal("Visible"):Connect(function()
+			if not mainWindow.Visible then closeFeatureSearch() end
+		end)]==], 1)
 local startPos = source:find([==[				function Groupbox:Set(NewGroupboxSettings)]==], 1, true)
 local endPos = startPos and source:find([==[				function Groupbox:Destroy()]==], startPos, true)
 if not startPos or not endPos then error("Groupbox patch mismatch") end
@@ -666,5 +1053,5 @@ cursor = source:find([==[Name = "Clear Autoload"]==], 1, true)
 target = cursor and source:find([==["__prebuiltConfigDeleter"]==], cursor, true)
 if not target then error("Clear Autoload index mismatch") end
 source = source:sub(1, target - 1) .. [==["__prebuiltConfigClearAutoload"]==] .. source:sub(target + 25)
-if type(writefile) == "function" then pcall(writefile, "Starlight_NoBlur_Source.lua", source) end
+if type(writefile) == "function" then pcall(writefile, "Starlight_FullFix_Source.lua", source) end
 return loadstring(source)()
