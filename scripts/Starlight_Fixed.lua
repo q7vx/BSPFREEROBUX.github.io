@@ -417,6 +417,12 @@ replaceExact([==[		if TabSettings.Changelog[1] then
 			dialog.BorderSizePixel = 0
 			dialog.ZIndex = 601
 			dialog.Parent = overlay
+			local popupScale = Instance.new("UIScale")
+			popupScale.Scale = 0.93
+			popupScale.Parent = dialog
+			overlay.BackgroundTransparency = 1
+			TweenService:Create(overlay, TweenInfo.new(0.18, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { BackgroundTransparency = 0.35 }):Play()
+			TweenService:Create(popupScale, TweenInfo.new(0.22, Enum.EasingStyle.Back, Enum.EasingDirection.Out), { Scale = 1 }):Play()
 			local constraint = Instance.new("UISizeConstraint")
 			constraint.MinSize = Vector2.new(260, 200)
 			constraint.MaxSize = Vector2.new(820, 720)
