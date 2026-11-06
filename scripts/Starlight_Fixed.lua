@@ -741,6 +741,7 @@ replaceExact([==[		mainWindow.Content.Topbar.Search["MouseLeave"]:Connect(functi
 		searchButton.ZIndex = searchIcon.ZIndex + 1
 		searchButton.Parent = searchIcon
 		local searchGui
+		local searchLayer = 1000
 		local searchEscape
 		local function closeFeatureSearch(immediate)
 			if searchEscape then
@@ -783,7 +784,7 @@ replaceExact([==[		mainWindow.Content.Topbar.Search["MouseLeave"]:Connect(functi
 			label.Font = Enum.Font.Gotham
 			label.TextXAlignment = Enum.TextXAlignment.Left
 			label.TextTruncate = Enum.TextTruncate.AtEnd
-			label.ZIndex = zIndex or 4
+			label.ZIndex = searchLayer + (zIndex or 4)
 			label.Parent = parent
 			return label
 		end
@@ -792,15 +793,21 @@ replaceExact([==[		mainWindow.Content.Topbar.Search["MouseLeave"]:Connect(functi
 				closeFeatureSearch()
 				return
 			end
-			local gui = Instance.new("ScreenGui")
+			if not StarlightUI.Parent then return end
+			searchLayer = 1000
+			for _, descendant in ipairs(StarlightUI:GetDescendants()) do
+				if descendant:IsA("GuiObject") and descendant.Name ~= "StarlightFeatureSearch" and not descendant:FindFirstAncestor("StarlightFeatureSearch") then
+					searchLayer = math.max(searchLayer, descendant.ZIndex + 50)
+				end
+			end
+			local gui = Instance.new("Frame")
 			gui.Name = "StarlightFeatureSearch"
-			gui.ResetOnSpawn = false
-			gui.IgnoreGuiInset = true
-			gui.ZIndexBehavior = Enum.ZIndexBehavior.Global
-			gui.DisplayOrder = math.max(100, StarlightUI.DisplayOrder + 20)
-			local parent = StarlightUI.Parent
-			if not parent then return end
-			gui.Parent = parent
+			gui.Size = UDim2.fromScale(1, 1)
+			gui.BackgroundTransparency = 1
+			gui.BorderSizePixel = 0
+			gui.Active = true
+			gui.ZIndex = searchLayer
+			gui.Parent = StarlightUI
 			searchGui = gui
 			local backdrop = Instance.new("Frame")
 			backdrop.Name = "Backdrop"
@@ -808,14 +815,14 @@ replaceExact([==[		mainWindow.Content.Topbar.Search["MouseLeave"]:Connect(functi
 			backdrop.BackgroundTransparency = 1
 			backdrop.BorderSizePixel = 0
 			backdrop.Size = UDim2.fromScale(1, 1)
-			backdrop.ZIndex = 1
+			backdrop.ZIndex = searchLayer + 1
 			backdrop.Parent = gui
 			local outside = Instance.new("TextButton")
 			outside.Name = "Outside"
 			outside.BackgroundTransparency = 1
 			outside.Text = ""
 			outside.Size = UDim2.fromScale(1, 1)
-			outside.ZIndex = 2
+			outside.ZIndex = searchLayer + 2
 			outside.Parent = gui
 			local panel = Instance.new("Frame")
 			panel.Name = "FeatureSearchPanel"
@@ -824,7 +831,7 @@ replaceExact([==[		mainWindow.Content.Topbar.Search["MouseLeave"]:Connect(functi
 			panel.Position = UDim2.fromScale(0.5, 0.5)
 			panel.BackgroundColor3 = Starlight.CurrentTheme.Backgrounds.Medium
 			panel.BorderSizePixel = 0
-			panel.ZIndex = 3
+			panel.ZIndex = searchLayer + 3
 			panel.Parent = gui
 			local sizeLimit = Instance.new("UISizeConstraint")
 			sizeLimit.MinSize = Vector2.new(300, 230)
@@ -852,7 +859,7 @@ replaceExact([==[		mainWindow.Content.Topbar.Search["MouseLeave"]:Connect(functi
 			exit.TextColor3 = Starlight.CurrentTheme.Foregrounds.Light
 			exit.TextSize = 27
 			exit.Font = Enum.Font.GothamBold
-			exit.ZIndex = 8
+			exit.ZIndex = searchLayer + 8
 			exit.Parent = panel
 			local field = Instance.new("TextBox")
 			field.Name = "SearchInput"
@@ -867,7 +874,7 @@ replaceExact([==[		mainWindow.Content.Topbar.Search["MouseLeave"]:Connect(functi
 			field.TextXAlignment = Enum.TextXAlignment.Left
 			field.Font = Enum.Font.Gotham
 			field.TextSize = 14
-			field.ZIndex = 6
+			field.ZIndex = searchLayer + 6
 			field.Parent = panel
 			local fieldCorner = Instance.new("UICorner")
 			fieldCorner.CornerRadius = UDim.new(0, 7)
@@ -886,7 +893,7 @@ replaceExact([==[		mainWindow.Content.Topbar.Search["MouseLeave"]:Connect(functi
 			results.ScrollingDirection = Enum.ScrollingDirection.Y
 			results.AutomaticCanvasSize = Enum.AutomaticSize.Y
 			results.CanvasSize = UDim2.fromOffset(0, 0)
-			results.ZIndex = 5
+			results.ZIndex = searchLayer + 5
 			results.Parent = panel
 			local listLayout = Instance.new("UIListLayout")
 			listLayout.Padding = UDim.new(0, 6)
@@ -1003,7 +1010,7 @@ replaceExact([==[		mainWindow.Content.Topbar.Search["MouseLeave"]:Connect(functi
 				button.BackgroundTransparency = 0.11
 				button.Text = ""
 				button.AutoButtonColor = false
-				button.ZIndex = 6
+				button.ZIndex = searchLayer + 6
 				button.Parent = results
 				local corner = Instance.new("UICorner")
 				corner.CornerRadius = UDim.new(0, 7)
