@@ -22,6 +22,63 @@ local function replaceExact(old, new, expected)
     table.insert(pieces, source:sub(cursor))
     source = table.concat(pieces)
 end
+replaceExact([==[local Acrylic = isStudio and require(ReplicatedStorage.AcrylicBundled)
+	or loadstring(game:HttpGet("https://raw." .. website .. "/AcrylicModule.luau"))()
+Acrylic.Init()]==], [==[local previousBlur = Lighting:FindFirstChild("starlightBlur")
+if previousBlur and previousBlur:IsA("DepthOfFieldEffect") then
+	previousBlur:Destroy()
+end
+local cameraBlurFolder = Camera and Camera:FindFirstChild("Starlight Blur Elements")
+if cameraBlurFolder and cameraBlurFolder:IsA("Folder") then
+	cameraBlurFolder:Destroy()
+end
+local function AcrylicPaintFlat()
+	local frame = Instance.new("Frame")
+	frame.Name = "Acrylic"
+	frame.Size = UDim2.fromScale(1, 1)
+	frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	frame.BackgroundTransparency = 0.9
+	frame.BorderSizePixel = 0
+	frame.ZIndex = 0
+	local corner = Instance.new("UICorner")
+	corner.CornerRadius = UDim.new(0, 8)
+	corner.Parent = frame
+	local shadow = Instance.new("ImageLabel")
+	shadow.Name = "shadow"
+	shadow.Image = "rbxassetid://8992230677"
+	shadow.ScaleType = Enum.ScaleType.Slice
+	shadow.SliceCenter = Rect.new(Vector2.new(99, 99), Vector2.new(99, 99))
+	shadow.AnchorPoint = Vector2.new(0.5, 0.5)
+	shadow.Size = UDim2.new(1, 120, 1, 116)
+	shadow.Position = UDim2.fromScale(0.5, 0.5)
+	shadow.BackgroundTransparency = 1
+	shadow.ImageColor3 = Color3.new(0, 0, 0)
+	shadow.ImageTransparency = 0.7
+	shadow.Parent = frame
+	for _, name in ipairs({ "tint", "Noise" }) do
+		local layer = Instance.new("ImageLabel")
+		layer.Name = name
+		layer.Image = name == "tint" and "rbxassetid://9968344105" or "rbxassetid://9968344227"
+		layer.ImageTransparency = name == "tint" and 0.98 or 0.9
+		layer.ScaleType = Enum.ScaleType.Tile
+		layer.TileSize = UDim2.fromOffset(128, 128)
+		layer.Size = UDim2.fromScale(1, 1)
+		layer.BackgroundTransparency = 1
+		layer.Parent = frame
+		local round = Instance.new("UICorner")
+		round.CornerRadius = UDim.new(0, 8)
+		round.Parent = layer
+	end
+	local model = { Transparency = 1, Size = Vector3.new(1, 1, 0) }
+	return {
+		Frame = frame,
+		Model = model,
+		AddParent = function() end,
+		SetVisibility = function() end,
+	}
+end
+local Acrylic = { Init = function() end, AcrylicPaint = AcrylicPaintFlat }
+Acrylic.Init()]==], 1)
 replaceExact([==[themeEvent.Event:Connect(set)
 		set()]==], [==[local themeConnection = themeEvent.Event:Connect(set)
 		object.Destroying:Once(function()
@@ -609,5 +666,5 @@ cursor = source:find([==[Name = "Clear Autoload"]==], 1, true)
 target = cursor and source:find([==["__prebuiltConfigDeleter"]==], cursor, true)
 if not target then error("Clear Autoload index mismatch") end
 source = source:sub(1, target - 1) .. [==["__prebuiltConfigClearAutoload"]==] .. source:sub(target + 25)
-if type(writefile) == "function" then pcall(writefile, "Starlight_Source_RevertedControls.lua", source) end
+if type(writefile) == "function" then pcall(writefile, "Starlight_NoBlur_Source.lua", source) end
 return loadstring(source)()
