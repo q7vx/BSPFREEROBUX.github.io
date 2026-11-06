@@ -1,25 +1,33 @@
-local source = game:HttpGet([==[https://raw.githubusercontent.com/Nebula-Softworks/Starlight-Interface-Suite/1ec0fb9ce4aacd8f396a9bd493e0251a6acf450a/Source.lua]==])
+local source = game:HttpGet([==[https://raw.githubusercontent.com/Nebula-Softworks/Starlight-Interface-Suite/1ec0fb9ce4aacd8f396a9bd493e0251a6acf450a/Source.lua?starlight_revision=1ec0fb9c]==])
+local patchIndex = 0
+local patchWarnings = {}
 local function replaceExact(old, new, expected)
-    local from = 1
-    local count = 0
-    while true do
-        local position = source:find(old, from, true)
-        if not position then break end
-        count += 1
-        from = position + #old
-    end
-    if expected > 0 and count ~= expected then error("Patch mismatch: " .. tostring(expected) .. " / " .. tostring(count)) end
-    if expected == -1 and count < 1 then error("Missing patch anchor") end
-    local pieces = {}
+    patchIndex += 1
     local cursor = 1
+    local count = 0
     while true do
         local position = source:find(old, cursor, true)
         if not position then break end
-        table.insert(pieces, source:sub(cursor, position - 1))
-        table.insert(pieces, new)
+        count += 1
         cursor = position + #old
     end
-    table.insert(pieces, source:sub(cursor))
+    if expected > 0 and count ~= expected then
+        table.insert(patchWarnings, string.format("Patch %d: expected %d, found %d", patchIndex, expected, count))
+    elseif expected == -1 and count == 0 then
+        table.insert(patchWarnings, string.format("Patch %d: anchor missing", patchIndex))
+    end
+    if count == 0 then return end
+    local maxReplacements = expected == -1 and count or math.min(expected, count)
+    local pieces = {}
+    local from = 1
+    for _ = 1, maxReplacements do
+        local position = source:find(old, from, true)
+        if not position then break end
+        table.insert(pieces, source:sub(from, position - 1))
+        table.insert(pieces, new)
+        from = position + #old
+    end
+    table.insert(pieces, source:sub(from))
     source = table.concat(pieces)
 end
 replaceExact([==[local Acrylic = isStudio and require(ReplicatedStorage.AcrylicBundled)
@@ -1053,5 +1061,12 @@ cursor = source:find([==[Name = "Clear Autoload"]==], 1, true)
 target = cursor and source:find([==["__prebuiltConfigDeleter"]==], cursor, true)
 if not target then error("Clear Autoload index mismatch") end
 source = source:sub(1, target - 1) .. [==["__prebuiltConfigClearAutoload"]==] .. source:sub(target + 25)
+if #patchWarnings > 0 then
+    warn("[Starlight] " .. table.concat(patchWarnings, "; "))
+end
 if type(writefile) == "function" then pcall(writefile, "Starlight_FullFix_Source.lua", source) end
-return loadstring(source)()
+local compiled, compilationError = loadstring(source)
+if not compiled then
+    error("[Starlight] Source failed to compile: " .. tostring(compilationError))
+end
+return compiled()
