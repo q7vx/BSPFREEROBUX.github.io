@@ -890,27 +890,47 @@ replaceExact([==[		mainWindow.Content.Topbar.Search["MouseLeave"]:Connect(functi
 			results.BackgroundTransparency = 1
 			results.BorderSizePixel = 0
 			results.ScrollBarThickness = 4
+			results.ScrollBarImageTransparency = 0.2
+			results.ScrollBarInset = Enum.ScrollBarInset.ScrollBar
 			results.ScrollingDirection = Enum.ScrollingDirection.Y
+			results.ScrollingEnabled = true
+			results.ClipsDescendants = true
 			results.AutomaticCanvasSize = Enum.AutomaticSize.Y
 			results.CanvasSize = UDim2.fromOffset(0, 0)
 			results.ZIndex = searchLayer + 5
 			results.Parent = panel
 			local listLayout = Instance.new("UIListLayout")
-			listLayout.Padding = UDim.new(0, 6)
+			listLayout.Padding = UDim.new(0, 7)
 			listLayout.SortOrder = Enum.SortOrder.LayoutOrder
 			listLayout.Parent = results
 			local listPadding = Instance.new("UIPadding")
 			listPadding.PaddingTop = UDim.new(0, 4)
 			listPadding.PaddingBottom = UDim.new(0, 7)
-			listPadding.PaddingRight = UDim.new(0, 6)
+			listPadding.PaddingRight = UDim.new(0, 8)
 			listPadding.Parent = results
+			local emptyState = makeSearchText(panel, "Start typing to search features", UDim2.fromOffset(22, 160), UDim2.new(1, -44, 0, 55), 14, Starlight.CurrentTheme.Foregrounds.Medium, 6)
+			emptyState.TextXAlignment = Enum.TextXAlignment.Center
+			emptyState.TextWrapped = true
+			results.Visible = false
+			local function sizeResults()
+				if not panel.Parent then return end
+				local available = math.max(70, panel.AbsoluteSize.Y - 138)
+				local rowCount = math.max(1, math.floor((available - 11 + 7) / 59))
+				local fittedHeight = rowCount * 52 + math.max(0, rowCount - 1) * 7 + 11
+				results.Size = UDim2.new(1, -30, 0, fittedHeight)
+				emptyState.Size = UDim2.new(1, -44, 0, math.max(55, panel.AbsoluteSize.Y - 195))
+			end
+			panel:GetPropertyChangedSignal("AbsoluteSize"):Connect(sizeResults)
+			task.defer(sizeResults)
 			local records = {}
 			local seen = {}
 			local function record(name, path, tab, target, priority, hints)
 				name = tostring(name or "")
 				path = tostring(path or "")
 				if name == "" or name == "nil" then return end
-				local key = tostring(tab) .. ":" .. name:lower() .. ":" .. path:lower()
+				local normalizedName = name:lower()
+				if normalizedName:find("prebuilt", 1, true) == 1 or normalizedName:find("template", 1, true) == 1 or normalizedName:find("__", 1, true) == 1 then return end
+				local key = tostring(tab) .. ":" .. normalizedName .. ":" .. path:lower()
 				if seen[key] then return end
 				seen[key] = true
 				table.insert(records, { name = name, path = path, tab = tab, target = target, priority = priority or 0, hints = tostring(hints or "") })
@@ -1005,39 +1025,65 @@ replaceExact([==[		mainWindow.Content.Topbar.Search["MouseLeave"]:Connect(functi
 				local button = Instance.new("TextButton")
 				button.Name = "Result" .. tostring(number)
 				button.LayoutOrder = number
-				button.Size = UDim2.new(1, -7, 0, 55)
+				button.Size = UDim2.new(1, -4, 0, 52)
 				button.BackgroundColor3 = Starlight.CurrentTheme.Backgrounds.Light
-				button.BackgroundTransparency = 0.11
+				button.BackgroundTransparency = 0.12
 				button.Text = ""
 				button.AutoButtonColor = false
+				button.ClipsDescendants = true
 				button.ZIndex = searchLayer + 6
 				button.Parent = results
 				local corner = Instance.new("UICorner")
 				corner.CornerRadius = UDim.new(0, 7)
 				corner.Parent = button
-				local itemScale = Instance.new("UIScale")
-				itemScale.Scale = 0.97
-				itemScale.Parent = button
-				local nameLabel = makeSearchText(button, entry.name, UDim2.fromOffset(11, 4), UDim2.new(1, -18, 0, 26), 14, Starlight.CurrentTheme.Foregrounds.Light, 7)
+				local outline = Instance.new("UIStroke")
+				outline.Color = Starlight.CurrentTheme.Accents.Main
+				outline.Transparency = 1
+				outline.Thickness = 1
+				outline.Parent = button
+				local accent = Instance.new("Frame")
+				accent.Name = "Accent"
+				accent.Size = UDim2.fromOffset(3, 22)
+				accent.Position = UDim2.fromOffset(0, 15)
+				accent.BackgroundColor3 = Starlight.CurrentTheme.Accents.Main
+				accent.BackgroundTransparency = 1
+				accent.BorderSizePixel = 0
+				accent.ZIndex = searchLayer + 7
+				accent.Parent = button
+				local nameLabel = makeSearchText(button, entry.name, UDim2.fromOffset(13, 4), UDim2.new(1, -40, 0, 24), 14, Starlight.CurrentTheme.Foregrounds.Light, 7)
 				nameLabel.Font = Enum.Font.GothamSemibold
-				local pathLabel = makeSearchText(button, entry.path, UDim2.fromOffset(11, 29), UDim2.new(1, -18, 0, 18), 11, Starlight.CurrentTheme.Foregrounds.Medium, 7)
-				TweenService:Create(itemScale, TweenInfo.new(0.17, Enum.EasingStyle.Back, Enum.EasingDirection.Out), { Scale = 1 }):Play()
-				button.MouseEnter:Connect(function()
-					TweenService:Create(button, TweenInfo.new(0.12), { BackgroundTransparency = 0 }):Play()
-					TweenService:Create(itemScale, TweenInfo.new(0.12), { Scale = 1.012 }):Play()
+				local pathLabel = makeSearchText(button, entry.path, UDim2.fromOffset(13, 28), UDim2.new(1, -30, 0, 18), 11, Starlight.CurrentTheme.Foregrounds.Medium, 7)
+				local arrow = makeSearchText(button, "›", UDim2.new(1, -26, 0, 12), UDim2.fromOffset(20, 24), 21, Starlight.CurrentTheme.Foregrounds.Light, 7)
+				arrow.TextTransparency = 1
+				local hovering = false
+				local function animateHover(hovered)
+					hovering = hovered
+					local info = TweenInfo.new(0.14, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+					TweenService:Create(button, info, { BackgroundTransparency = hovered and 0.025 or 0.12 }):Play()
+					TweenService:Create(outline, info, { Transparency = hovered and 0.68 or 1 }):Play()
+					TweenService:Create(accent, info, { BackgroundTransparency = hovered and 0 or 1 }):Play()
+					TweenService:Create(arrow, info, { TextTransparency = hovered and 0 or 1 }):Play()
+				end
+				button.MouseEnter:Connect(function() animateHover(true) end)
+				button.MouseLeave:Connect(function() animateHover(false) end)
+				button.Activated:Connect(function()
+					TweenService:Create(button, TweenInfo.new(0.08), { BackgroundTransparency = 0.28 }):Play()
+					navigate(entry)
 				end)
-				button.MouseLeave:Connect(function()
-					TweenService:Create(button, TweenInfo.new(0.12), { BackgroundTransparency = 0.11 }):Play()
-					TweenService:Create(itemScale, TweenInfo.new(0.12), { Scale = 1 }):Play()
-				end)
-				button.Activated:Connect(function() navigate(entry) end)
 			end
 			local function renderResults()
 				for _, child in ipairs(results:GetChildren()) do
 					if child:IsA("GuiObject") then child:Destroy() end
 				end
 				results.CanvasPosition = Vector2.zero
-				local query = field.Text:lower()
+				local query = field.Text:lower():match("^%s*(.-)%s*$")
+				if query == "" then
+					results.Visible = false
+					emptyState.Visible = true
+					emptyState.Text = "Type a feature name, tab, or setting to search."
+					summary.Text = tostring(#records) .. " searchable features"
+					return
+				end
 				local matched = {}
 				for _, entry in ipairs(records) do
 					local haystack = (entry.name .. " " .. entry.path .. " " .. entry.hints):lower()
@@ -1057,9 +1103,13 @@ replaceExact([==[		mainWindow.Content.Topbar.Search["MouseLeave"]:Connect(functi
 				local count = math.min(#matched, 100)
 				summary.Text = tostring(#matched) .. " features found" .. (#matched > count and " (showing first 100)" or "")
 				if #matched == 0 then
-					makeSearchText(results, "No matching features found", UDim2.fromOffset(10, 12), UDim2.new(1, -20, 0, 40), 13, Starlight.CurrentTheme.Foregrounds.Medium, 6)
+					results.Visible = false
+					emptyState.Visible = true
+					emptyState.Text = "No matching features found."
 					return
 				end
+				results.Visible = true
+				emptyState.Visible = false
 				for i = 1, count do
 					local ok, err = pcall(createResult, matched[i], i)
 					if not ok then warn("[Starlight Search] Result rendering: " .. tostring(err)) end
