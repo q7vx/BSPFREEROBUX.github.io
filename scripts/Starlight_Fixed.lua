@@ -992,6 +992,110 @@ replaceExact([==[		mainWindow.Content.Topbar.Search["MouseLeave"]:Connect(functi
 		mainWindow:GetPropertyChangedSignal("Visible"):Connect(function()
 			if not mainWindow.Visible then closeFeatureSearch() end
 		end)]==], 1)
+local dropdownMethod = source:find([==[function Element:AddDropdown(NestedSettings, NestedIndex, Parent, ParentIndex)]==], 1, true)
+if not dropdownMethod then
+    error("[Starlight] Dropdown method not found")
+end
+local dropdownCloseStart = source:find([==[							local function close()]==], dropdownMethod, true)
+local dropdownHoverStart = dropdownCloseStart and source:find([==[							local function hover()]==], dropdownCloseStart, true)
+if not dropdownCloseStart or not dropdownHoverStart then
+    error("[Starlight] Dropdown popup section not found")
+end
+source = source:sub(1, dropdownCloseStart - 1) .. [==[							local function close()
+								if popupInputConnection then
+									popupInputConnection:Disconnect()
+									popupInputConnection = nil
+								end
+								if Starlight.ActiveDropdownClose == close then
+									Starlight.ActiveDropdownClose = nil
+								end
+								local popup = NestedElement and NestedElement.Instances and NestedElement.Instances[2]
+								if not popup or not popup.Parent then
+									return
+								end
+								popup.Visible = false
+								popup.Size = UDim2.fromOffset(math.max(0, popup.Size.X.Offset), 0)
+								popup.List.Size = UDim2.new(1, 0, 0, 0)
+								popup.List.ScrollBarImageTransparency = 1
+								if acrylicFlag then
+									AcrylicObject.Model.Transparency = 1
+								end
+							end
+							NestedElement.Instances[1]:GetPropertyChangedSignal("AbsolutePosition"):Connect(function()
+								if NestedElement.Instances[2].Visible then
+									updPos()
+								end
+							end)
+							updPos()
+							close()
+
+							NestedElement.Instances[1]:GetPropertyChangedSignal("AbsoluteSize"):Connect(function()
+								local popup = NestedElement.Instances[2]
+								popup.Size = UDim2.fromOffset(
+									math.max(1, math.ceil(NestedElement.Instances[1].AbsoluteSize.X)),
+									popup.Size.Y.Offset
+								)
+								NestedElement:truncate()
+							end)
+
+							NestedElement.Instances[2].Destroying:Once(function()
+								if Starlight.ActiveDropdownClose == close then
+									Starlight.ActiveDropdownClose = nil
+								end
+							end)
+
+							NestedElement.Instances[1].Interact.MouseButton1Click:Connect(function()
+								local popup = NestedElement.Instances[2]
+								if popup.Visible then
+									close()
+									return
+								end
+								if type(Starlight.ActiveDropdownClose) == "function" and Starlight.ActiveDropdownClose ~= close then
+									pcall(Starlight.ActiveDropdownClose)
+								end
+								Starlight.ActiveDropdownClose = close
+								local canvasHeight = tonumber(popup.List.AbsoluteCanvasSize.Y) or 0
+								height = math.clamp(canvasHeight, 32, 175)
+								updPos()
+								popup.Size = UDim2.fromOffset(
+									math.max(1, math.ceil(NestedElement.Instances[1].AbsoluteSize.X)),
+									height
+								)
+								popup.List.Size = UDim2.new(1, 0, 0, height)
+								popup.List.ScrollBarImageTransparency = 0
+								popup.Visible = true
+								if acrylicFlag then
+									AcrylicObject.Model.Transparency = 0.98
+								end
+								if popupInputConnection then
+									popupInputConnection:Disconnect()
+								end
+								popupInputConnection = UserInputService.InputBegan:Connect(function(input)
+									if input.UserInputType ~= Enum.UserInputType.MouseButton1
+										and input.UserInputType ~= Enum.UserInputType.Touch then
+										return
+									end
+									if not popup.Parent or not popup.Visible then
+										close()
+										return
+									end
+									local point = Vector2.new(input.Position.X, input.Position.Y)
+									local function contains(gui)
+										if not gui or not gui.Parent then
+											return false
+										end
+										local pos = gui.AbsolutePosition
+										local size = gui.AbsoluteSize
+										return point.X >= pos.X and point.X <= pos.X + size.X
+											and point.Y >= pos.Y and point.Y <= pos.Y + size.Y
+									end
+									if not contains(popup) and not contains(NestedElement.Instances[1]) then
+										close()
+									end
+								end)
+							end)
+
+]==] .. source:sub(dropdownHoverStart)
 local startPos = source:find([==[				function Groupbox:Set(NewGroupboxSettings)]==], 1, true)
 local endPos = startPos and source:find([==[				function Groupbox:Destroy()]==], startPos, true)
 if not startPos or not endPos then error("Groupbox patch mismatch") end
