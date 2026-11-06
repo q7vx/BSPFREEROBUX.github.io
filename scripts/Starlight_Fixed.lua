@@ -743,16 +743,32 @@ replaceExact([==[		mainWindow.Content.Topbar.Search["MouseLeave"]:Connect(functi
 		searchTrigger.Parent = searchIcon
 		local searchOverlay = nil
 		local searchKeyConnection = nil
-		local function closeFeatureSearch()
+		local searchAnimation = TweenInfo.new(0.22, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
+		local function closeFeatureSearch(immediate)
 			if searchKeyConnection then
 				searchKeyConnection:Disconnect()
 				searchKeyConnection = nil
 			end
-			if searchOverlay then
-				local old = searchOverlay
-				searchOverlay = nil
+			if not searchOverlay then return end
+			local old = searchOverlay
+			searchOverlay = nil
+			if immediate == true then
 				old:Destroy()
+				return
 			end
+			old.Active = false
+			local oldPanel = old:FindFirstChild("FeatureSearchPanel")
+			if oldPanel then
+				local scale = oldPanel:FindFirstChildOfClass("UIScale")
+				if scale then
+					TweenService:Create(scale, TweenInfo.new(0.14, Enum.EasingStyle.Quad, Enum.EasingDirection.In), { Scale = 0.96 }):Play()
+				end
+			end
+			local fade = TweenService:Create(old, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.In), { BackgroundTransparency = 1 })
+			fade.Completed:Once(function()
+				if old.Parent then old:Destroy() end
+			end)
+			fade:Play()
 		end
 		local function makeSearchLabel(parent, text, y, height, size, color)
 			local label = Instance.new("TextLabel")
@@ -776,7 +792,7 @@ replaceExact([==[		mainWindow.Content.Topbar.Search["MouseLeave"]:Connect(functi
 			local overlay = Instance.new("TextButton")
 			overlay.Name = "StarlightFeatureSearch"
 			overlay.BackgroundColor3 = Color3.new(0, 0, 0)
-			overlay.BackgroundTransparency = 0.28
+			overlay.BackgroundTransparency = 1
 			overlay.BorderSizePixel = 0
 			overlay.Size = UDim2.fromScale(1, 1)
 			overlay.Text = ""
@@ -793,6 +809,11 @@ replaceExact([==[		mainWindow.Content.Topbar.Search["MouseLeave"]:Connect(functi
 			panel.BorderSizePixel = 0
 			panel.ZIndex = 701
 			panel.Parent = overlay
+			local panelScale = Instance.new("UIScale")
+			panelScale.Scale = 0.92
+			panelScale.Parent = panel
+			TweenService:Create(overlay, TweenInfo.new(0.18, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { BackgroundTransparency = 0.28 }):Play()
+			TweenService:Create(panelScale, TweenInfo.new(0.24, Enum.EasingStyle.Back, Enum.EasingDirection.Out), { Scale = 1 }):Play()
 			local limit = Instance.new("UISizeConstraint")
 			limit.MinSize = Vector2.new(230, 190)
 			limit.MaxSize = Vector2.new(760, 640)
@@ -833,6 +854,17 @@ replaceExact([==[		mainWindow.Content.Topbar.Search["MouseLeave"]:Connect(functi
 			local fieldCorner = Instance.new("UICorner")
 			fieldCorner.CornerRadius = UDim.new(0, 7)
 			fieldCorner.Parent = field
+			local focusStroke = Instance.new("UIStroke")
+			focusStroke.Color = Starlight.CurrentTheme.Accents.Main
+			focusStroke.Transparency = 0.75
+			focusStroke.Thickness = 1.5
+			focusStroke.Parent = field
+			field.Focused:Connect(function()
+				TweenService:Create(focusStroke, searchAnimation, { Transparency = 0 }):Play()
+			end)
+			field.FocusLost:Connect(function()
+				TweenService:Create(focusStroke, searchAnimation, { Transparency = 0.75 }):Play()
+			end)
 			local fieldPadding = Instance.new("UIPadding")
 			fieldPadding.PaddingLeft = UDim.new(0, 12)
 			fieldPadding.PaddingRight = UDim.new(0, 10)
@@ -859,16 +891,21 @@ replaceExact([==[		mainWindow.Content.Topbar.Search["MouseLeave"]:Connect(functi
 			pad.PaddingBottom = UDim.new(0, 8)
 			pad.PaddingRight = UDim.new(0, 6)
 			pad.Parent = results
+			local searchItemSelected = false
 			local function addSearchResult(entry, index)
 				local result = Instance.new("TextButton")
 				result.Name = "Result" .. tostring(index)
 				result.LayoutOrder = index
 				result.Size = UDim2.new(1, -7, 0, 54)
 				result.BackgroundColor3 = Starlight.CurrentTheme.Backgrounds.Light
-				result.BackgroundTransparency = 0.1
+				result.BackgroundTransparency = index <= 14 and 1 or 0.1
+				result.AutoButtonColor = false
 				result.Text = ""
 				result.ZIndex = 704
 				result.Parent = results
+				local buttonScale = Instance.new("UIScale")
+				buttonScale.Scale = index <= 14 and 0.96 or 1
+				buttonScale.Parent = result
 				local resultCorner = Instance.new("UICorner")
 				resultCorner.CornerRadius = UDim.new(0, 7)
 				resultCorner.Parent = result
@@ -880,35 +917,74 @@ replaceExact([==[		mainWindow.Content.Topbar.Search["MouseLeave"]:Connect(functi
 				path.Size = UDim2.new(1, -18, 0, 18)
 				path.Position = UDim2.fromOffset(10, 29)
 				path.TextTruncate = Enum.TextTruncate.AtEnd
-				result.MouseButton1Click:Connect(function()
+				if index <= 14 then
+					heading.TextTransparency = 1
+					path.TextTransparency = 1
+					task.delay((index - 1) * 0.012, function()
+						if not result.Parent or not results.Parent then return end
+						TweenService:Create(result, searchAnimation, { BackgroundTransparency = 0.1 }):Play()
+						TweenService:Create(buttonScale, searchAnimation, { Scale = 1 }):Play()
+						TweenService:Create(heading, searchAnimation, { TextTransparency = 0 }):Play()
+						TweenService:Create(path, searchAnimation, { TextTransparency = 0 }):Play()
+					end)
+				end
+				result.MouseEnter:Connect(function()
+					if searchItemSelected then return end
+					TweenService:Create(result, TweenInfo.new(0.13, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { BackgroundTransparency = 0 }):Play()
+					TweenService:Create(buttonScale, TweenInfo.new(0.13, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Scale = 1.015 }):Play()
+				end)
+				result.MouseLeave:Connect(function()
+					if searchItemSelected then return end
+					TweenService:Create(result, TweenInfo.new(0.13, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { BackgroundTransparency = 0.1 }):Play()
+					TweenService:Create(buttonScale, TweenInfo.new(0.13, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Scale = 1 }):Play()
+				end)
+				result.MouseButton1Down:Connect(function()
+					if searchItemSelected then return end
+					TweenService:Create(buttonScale, TweenInfo.new(0.07, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Scale = 0.975 }):Play()
+				end)
+				result.MouseButton1Up:Connect(function()
+					if searchItemSelected then return end
+					TweenService:Create(buttonScale, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Scale = 1.015 }):Play()
+				end)
+				result.Activated:Connect(function()
+					if searchItemSelected then return end
+					searchItemSelected = true
 					local targetTab = entry.tab
 					if not targetTab or not targetTab.Instances or not targetTab.Instances.Page then
+						searchItemSelected = false
 						return
 					end
-					closeFeatureSearch()
-					if type(targetTab.Select) == "function" then
-						pcall(targetTab.Select)
-					end
-					task.defer(function()
-						local target = entry.element and (entry.element.Instance or (entry.element.Instances and entry.element.Instances[1]))
-						if typeof(target) ~= "Instance" then
-							target = entry.group and entry.group.Instance
+					TweenService:Create(buttonScale, TweenInfo.new(0.09, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Scale = 0.965 }):Play()
+					TweenService:Create(result, TweenInfo.new(0.09, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { BackgroundTransparency = 0 }):Play()
+					task.delay(0.09, function()
+						closeFeatureSearch()
+						if type(targetTab.Select) == "function" then
+							pcall(targetTab.Select)
 						end
-						if typeof(target) ~= "Instance" or not target:IsA("GuiObject") then return end
-						local ancestor = target.Parent
-						while ancestor and not ancestor:IsA("ScrollingFrame") do
-							ancestor = ancestor.Parent
-						end
-						if ancestor then
-							ancestor.CanvasPosition = Vector2.new(ancestor.CanvasPosition.X, math.max(0, ancestor.CanvasPosition.Y + target.AbsolutePosition.Y - ancestor.AbsolutePosition.Y - 18))
-						end
-						local highlight = Instance.new("UIStroke")
-						highlight.Name = "SearchResultHighlight"
-						highlight.Color = Starlight.CurrentTheme.Accents.Main
-						highlight.Thickness = 2
-						highlight.Parent = target
-						task.delay(1.5, function()
-							if highlight.Parent then highlight:Destroy() end
+						task.defer(function()
+							local target = entry.element and (entry.element.Instance or (entry.element.Instances and entry.element.Instances[1]))
+							if typeof(target) ~= "Instance" then
+								target = entry.group and entry.group.Instance
+							end
+							if typeof(target) ~= "Instance" or not target:IsA("GuiObject") then return end
+							local ancestor = target.Parent
+							while ancestor and not ancestor:IsA("ScrollingFrame") do
+								ancestor = ancestor.Parent
+							end
+							if ancestor then
+								local desiredY = math.max(0, ancestor.CanvasPosition.Y + target.AbsolutePosition.Y - ancestor.AbsolutePosition.Y - 18)
+								TweenService:Create(ancestor, TweenInfo.new(0.24, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), { CanvasPosition = Vector2.new(ancestor.CanvasPosition.X, desiredY) }):Play()
+							end
+							local highlight = Instance.new("UIStroke")
+							highlight.Name = "SearchResultHighlight"
+							highlight.Color = Starlight.CurrentTheme.Accents.Main
+							highlight.Thickness = 2
+							highlight.Transparency = 0
+							highlight.Parent = target
+							TweenService:Create(highlight, TweenInfo.new(1.15, Enum.EasingStyle.Quad, Enum.EasingDirection.In), { Transparency = 1 }):Play()
+							task.delay(1.2, function()
+								if highlight.Parent then highlight:Destroy() end
+							end)
 						end)
 					end)
 				end)
@@ -975,22 +1051,54 @@ replaceExact([==[		mainWindow.Content.Topbar.Search["MouseLeave"]:Connect(functi
 			end
 			field:GetPropertyChangedSignal("Text"):Connect(updateResults)
 			updateResults()
-			exit.MouseButton1Click:Connect(closeFeatureSearch)
-			overlay.MouseButton1Click:Connect(closeFeatureSearch)
-			searchKeyConnection = UserInputService.InputBegan:Connect(function(input, processed)
+			local exitScale = Instance.new("UIScale")
+			exitScale.Scale = 1
+			exitScale.Parent = exit
+			exit.MouseEnter:Connect(function()
+				TweenService:Create(exitScale, searchAnimation, { Scale = 1.14 }):Play()
+			end)
+			exit.MouseLeave:Connect(function()
+				TweenService:Create(exitScale, searchAnimation, { Scale = 1 }):Play()
+			end)
+			exit.Activated:Connect(function()
+				TweenService:Create(exitScale, TweenInfo.new(0.08, Enum.EasingStyle.Quad), { Scale = 0.88 }):Play()
+				closeFeatureSearch()
+			end)
+			overlay.MouseButton1Click:Connect(function()
+				closeFeatureSearch()
+			end)
+			local thisKeyConnection
+			thisKeyConnection = UserInputService.InputBegan:Connect(function(input, processed)
 				if input.KeyCode == Enum.KeyCode.Escape then closeFeatureSearch() end
 			end)
+			searchKeyConnection = thisKeyConnection
 			overlay.Destroying:Once(function()
-				if searchKeyConnection then searchKeyConnection:Disconnect(); searchKeyConnection = nil end
+				thisKeyConnection:Disconnect()
+				if searchKeyConnection == thisKeyConnection then searchKeyConnection = nil end
 				if searchOverlay == overlay then searchOverlay = nil end
 			end)
 			task.defer(function()
 				if field.Parent then field:CaptureFocus() end
 			end)
 		end
-		searchTrigger.MouseButton1Click:Connect(openFeatureSearch)
+		local searchIconScale = Instance.new("UIScale")
+		searchIconScale.Scale = 1
+		searchIconScale.Parent = searchIcon
+		searchTrigger.MouseEnter:Connect(function()
+			TweenService:Create(searchIconScale, searchAnimation, { Scale = 1.13 }):Play()
+			Tween(searchIcon, { ImageColor3 = Starlight.CurrentTheme.Foregrounds.Light })
+		end)
+		searchTrigger.MouseLeave:Connect(function()
+			TweenService:Create(searchIconScale, searchAnimation, { Scale = 1 }):Play()
+			Tween(searchIcon, { ImageColor3 = Starlight.CurrentTheme.Foregrounds.Dark })
+		end)
+		searchTrigger.Activated:Connect(function()
+			searchIconScale.Scale = 0.87
+			TweenService:Create(searchIconScale, searchAnimation, { Scale = 1.13 }):Play()
+			openFeatureSearch()
+		end)
 		mainWindow:GetPropertyChangedSignal("Visible"):Connect(function()
-			if not mainWindow.Visible then closeFeatureSearch() end
+			if not mainWindow.Visible then closeFeatureSearch(true) end
 		end)]==], 1)
 local dropdownMethod = source:find([==[function Element:AddDropdown(NestedSettings, NestedIndex, Parent, ParentIndex)]==], 1, true)
 if not dropdownMethod then
@@ -1016,53 +1124,88 @@ source = source:sub(1, dropdownCloseStart - 1) .. [==[							local trigger = Nes
 									and point.X <= position.X + size.X
 									and point.Y <= position.Y + size.Y
 							end
-							local function close()
+							local popupScale = Instance.new("UIScale")
+							popupScale.Scale = 0.97
+							popupScale.Parent = popup
+							local popupTween
+							local listTween
+							local scaleTween
+							local transitionToken = 0
+							local function stopTransition()
+								if popupTween then popupTween:Cancel(); popupTween = nil end
+								if listTween then listTween:Cancel(); listTween = nil end
+								if scaleTween then scaleTween:Cancel(); scaleTween = nil end
+							end
+							local function close(immediate)
+								transitionToken += 1
+								local token = transitionToken
 								dropdownOpen = false
 								if Starlight.ActiveDropdownClose == close then
 									Starlight.ActiveDropdownClose = nil
 								end
-								if not popup.Parent then
-									return
-								end
-								popup.Visible = false
-								popup.Size = UDim2.fromOffset(math.max(1, math.ceil(trigger.AbsoluteSize.X)), 0)
-								popup.List.Size = UDim2.new(1, 0, 0, 0)
+							stopTransition()
+								if not popup.Parent then return end
+								local width = math.max(1, math.ceil(trigger.AbsoluteSize.X))
 								popup.List.ScrollBarImageTransparency = 1
 								AcrylicObject.Model.Transparency = 1
-							end
-							local function open()
-								if not trigger.Parent or not popup.Parent or not mainWindow.Visible or not StarlightUI.Enabled then
+								if immediate == true or not popup.Visible then
+									popup.Size = UDim2.fromOffset(width, 0)
+									popup.List.Size = UDim2.new(1, 0, 0, 0)
+									popupScale.Scale = 0.97
+									popup.Visible = false
 									return
 								end
+								local info = TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.In)
+								popupTween = TweenService:Create(popup, info, { Size = UDim2.fromOffset(width, 0) })
+								listTween = TweenService:Create(popup.List, info, { Size = UDim2.new(1, 0, 0, 0) })
+								scaleTween = TweenService:Create(popupScale, info, { Scale = 0.97 })
+								popupTween.Completed:Once(function(playbackState)
+									if transitionToken ~= token or dropdownOpen or not popup.Parent then return end
+									if playbackState == Enum.PlaybackState.Completed then
+										popup.Visible = false
+									end
+								end)
+								popupTween:Play()
+								listTween:Play()
+								scaleTween:Play()
+							end
+							local function open()
+								if not trigger.Parent or not popup.Parent or not mainWindow.Visible or not StarlightUI.Enabled then return end
 								if type(Starlight.ActiveDropdownClose) == "function" and Starlight.ActiveDropdownClose ~= close then
 									pcall(Starlight.ActiveDropdownClose)
 								end
-								Starlight.ActiveDropdownClose = close
+								transitionToken += 1
 								dropdownOpen = true
+								Starlight.ActiveDropdownClose = close
+								stopTransition()
 								local contentHeight = tonumber(popup.List.AbsoluteCanvasSize.Y) or 0
 								if contentHeight < 32 then
 									local itemCount = 0
 									for _, item in ipairs(popup.List:GetChildren()) do
-										if item:IsA("Frame") and item.Visible then
-											itemCount += 1
-										end
+										if item:IsA("Frame") and item.Visible then itemCount += 1 end
 									end
 									contentHeight = math.max(contentHeight, itemCount * 30 + 10)
 								end
 								height = math.clamp(contentHeight, 40, 175)
+								local width = math.max(1, math.ceil(trigger.AbsoluteSize.X))
 								updPos()
-								popup.Size = UDim2.fromOffset(math.max(1, math.ceil(trigger.AbsoluteSize.X)), height)
-								popup.List.Size = UDim2.new(1, 0, 0, height)
-								popup.List.ScrollBarImageTransparency = 0
-								AcrylicObject.Model.Transparency = 0.98
+								if not popup.Visible then
+									popup.Size = UDim2.fromOffset(width, 0)
+									popup.List.Size = UDim2.new(1, 0, 0, 0)
+									popupScale.Scale = 0.97
+								end
 								popup.Visible = true
+								AcrylicObject.Model.Transparency = 0.98
+								local info = TweenInfo.new(0.2, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
+								popupTween = TweenService:Create(popup, info, { Size = UDim2.fromOffset(width, height) })
+								listTween = TweenService:Create(popup.List, info, { Size = UDim2.new(1, 0, 0, height) })
+								scaleTween = TweenService:Create(popupScale, info, { Scale = 1 })
+								popupTween:Play()
+								listTween:Play()
+								scaleTween:Play()
 							end
 							local function toggle()
-								if dropdownOpen then
-									close()
-								else
-									open()
-								end
+								if dropdownOpen then close() else open() end
 							end
 							trigger:GetPropertyChangedSignal("AbsolutePosition"):Connect(function()
 								if dropdownOpen and popup.Parent then
@@ -1082,7 +1225,7 @@ source = source:sub(1, dropdownCloseStart - 1) .. [==[							local trigger = Nes
 								end
 							end)
 							updPos()
-							close()
+							close(true)
 							dropdownInputConnection = UserInputService.InputBegan:Connect(function(input)
 								if input.UserInputType ~= Enum.UserInputType.MouseButton1
 									and input.UserInputType ~= Enum.UserInputType.Touch then
@@ -1121,7 +1264,7 @@ source = source:sub(1, dropdownCloseStart - 1) .. [==[							local trigger = Nes
 									popupInputConnection:Disconnect()
 									popupInputConnection = nil
 								end
-								close()
+								close(true)
 							end
 							popup.Destroying:Once(cleanupDropdownInput)
 							trigger.Destroying:Once(cleanupDropdownInput)
