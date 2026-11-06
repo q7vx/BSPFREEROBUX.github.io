@@ -112,12 +112,6 @@ replaceExact([==[							"Hollywood Fluent",
 							"Catppuccin Frappe",
 							"Catppuccin Latte",
 						}]==], 2)
-replaceExact([==[					Style = 1,
-				}, "__prebuiltConfigLoader")]==], [==[					Style = 1,
-				}, "__prebuiltConfigAutoload")]==], 1)
-replaceExact([==[					Style = 2,
-				}, "__prebuiltConfigDeleter")]==], [==[					Style = 2,
-				}, "__prebuiltConfigClearAutoload")]==], 1)
 replaceExact([==[		function TabSection:Set(NewName)
 			Name = NewName
 			TabSection.Instance.Header.Text = Name]==], [==[		function TabSection:Set(NewName)
@@ -128,14 +122,14 @@ replaceExact([==[		function TabSection:Set(NewName)
 replaceExact([==[							connections[ParentIndex .. "_" .. Index] = UserInputService.InputBegan:Connect(]==], [==[							local connectionKey = table.concat({ tostring(Name), tostring(TabIndex), tostring(GroupIndex), tostring(ParentIndex), tostring(NestedIndex) }, "_")
 							connections[connectionKey] = UserInputService.InputBegan:Connect(]==], 1)
 replaceExact([==[connections[ParentIndex .. "_" .. Index]]==], [==[connections[connectionKey]]==], -1)
-replaceExact([==[							NestedElement.Instances[1]:Destroy()
-							NestedElement.Instances[2]:Destroy()
-							Parent.Instance.Size = UDim2.fromOffset(0, Parent.Instance.Size.Y.Offset - additionSize)]==], [==[							NestedElement.Instances[1]:Destroy()
-							NestedElement.Instances[2]:Destroy()
-							for _, connection in ipairs(localConnections) do
-								connection:Disconnect()
-							end
-							Parent.Instance.Size = UDim2.fromOffset(0, Parent.Instance.Size.Y.Offset - additionSize)]==], 1)
+replaceExact([==[								NestedElement.Instances[1]:Destroy()
+								NestedElement.Instances[2]:Destroy()
+								Parent.Instance.Size = UDim2.fromOffset(0, Parent.Instance.Size.Y.Offset - additionSize)]==], [==[								NestedElement.Instances[1]:Destroy()
+								NestedElement.Instances[2]:Destroy()
+								for _, connection in ipairs(localConnections) do
+									connection:Disconnect()
+								end
+								Parent.Instance.Size = UDim2.fromOffset(0, Parent.Instance.Size.Y.Offset - additionSize)]==], 1)
 replaceExact([==[								end)
 								local c
 								c = Players.ChildRemoved:Connect(function()]==], [==[								end)
