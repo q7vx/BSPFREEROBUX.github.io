@@ -222,6 +222,105 @@ end
 
 pcall(createBootScreen)
 
+local starlightTemplate
+local starlightPreloadReady = false
+local starlightPreloadProgress = 0
+local starlightPreloadCancelled = false
+local starlightPreloadKey = "__ZyphorStarlightPreloadedTemplate"
+local starlightCoreImages = {
+    "rbxassetid://116767744785553",
+    "rbxassetid://90155503712202",
+    "rbxassetid://18824089198",
+    "rbxassetid://129398364168201",
+    "rbxassetid://3926305904",
+    "rbxassetid://108613279334326",
+    "rbxassetid://6031625148",
+    "rbxassetid://4155801252",
+    "rbxassetid://16423157073",
+    "rbxassetid://123097456061373",
+    "rbxassetid://114684871091583",
+    "rbxassetid://6034304908",
+    "rbxassetid://8445471332",
+    "rbxassetid://92421933997743",
+    "rbxassetid://80990588449079",
+    "rbxassetid://8992230677",
+}
+
+task.spawn(function()
+    local success = pcall(function()
+        local models = game:GetObjects("rbxassetid://132866968194043")
+        if not models or not models[1] or not models[1]:IsA("ScreenGui") then
+            return
+        end
+        local template = models[1]
+        if starlightPreloadCancelled then
+            template:Destroy()
+            return
+        end
+        starlightTemplate = template
+        starlightPreloadProgress = 0.25
+        local images = {}
+        local existing = {}
+        local function addImage(path)
+            if type(path) ~= "string" or path == "" or existing[path] or #images >= 92 then
+                return
+            end
+            if path:sub(1, 13) ~= "rbxassetid://" and path:sub(1, 11) ~= "rbxasset://" then
+                return
+            end
+            existing[path] = true
+            images[#images + 1] = path
+        end
+        for _, path in ipairs(starlightCoreImages) do
+            addImage(path)
+        end
+        local mainWindow = template:FindFirstChild("MainWindow")
+        if mainWindow then
+            for _, root in ipairs({ mainWindow:FindFirstChild("Sidebar"), mainWindow:FindFirstChild("Content") }) do
+                if root then
+                    for _, descendant in ipairs(root:GetDescendants()) do
+                        if descendant:IsA("ImageLabel") or descendant:IsA("ImageButton") then
+                            addImage(descendant.Image)
+                        end
+                    end
+                end
+            end
+        end
+        local resources = template:FindFirstChild("Resources")
+        if resources then
+            for _, descendant in ipairs(resources:GetDescendants()) do
+                if #images >= 92 then
+                    break
+                end
+                if descendant:IsA("ImageLabel") or descendant:IsA("ImageButton") then
+                    addImage(descendant.Image)
+                end
+            end
+        end
+        local contentProvider = game:GetService("ContentProvider")
+        for offset = 1, #images, 16 do
+            if starlightPreloadCancelled then
+                return
+            end
+            local batch = {}
+            for index = offset, math.min(offset + 15, #images) do
+                batch[#batch + 1] = images[index]
+            end
+            pcall(function()
+                contentProvider:PreloadAsync(batch)
+            end)
+            starlightPreloadProgress = 0.25 + 0.75 * math.min(1, (offset + #batch - 1) / math.max(1, #images))
+            task.wait()
+        end
+    end)
+    if not success and starlightTemplate then
+        starlightTemplate:Destroy()
+        starlightTemplate = nil
+    end
+    starlightPreloadReady = true
+end)
+
+
 local function updateBootScreen(label, fraction)
     if bootStage and bootStage.Parent then
         bootStage.Text = string.upper(label)
@@ -291,6 +390,9 @@ local function replaceExact(old, new, expected)
     end
     table.insert(pieces, source:sub(from))
     source = table.concat(pieces)
+    if patchIndex % 6 == 0 then
+        task.wait()
+    end
 end
 replaceExact([==[local Acrylic = isStudio and require(ReplicatedStorage.AcrylicBundled)
 	or loadstring(game:HttpGet("https://raw." .. website .. "/AcrylicModule.luau"))()
@@ -1781,34 +1883,95 @@ cursor = source:find([==[Name = "Clear Autoload"]==], 1, true)
 target = cursor and source:find([==["__prebuiltConfigDeleter"]==], cursor, true)
 if not target then error("Clear Autoload index mismatch") end
 source = source:sub(1, target - 1) .. [==["__prebuiltConfigClearAutoload"]==] .. source:sub(target + 25)
+replaceExact([==[local StarlightUI: ScreenGui = isStudio and script.Parent:WaitForChild("Starlight V2")
+	or game:GetObjects("rbxassetid://" .. modelId)[1]]==], [==[local bootEnvironment = type(getgenv) == "function" and getgenv() or _G
+local preloadedStarlightTemplate = bootEnvironment.__ZyphorStarlightPreloadedTemplate
+local function acquireStarlightGui()
+    if typeof(preloadedStarlightTemplate) == "Instance" and preloadedStarlightTemplate:IsA("ScreenGui") then
+        local success, clone = pcall(function()
+            return preloadedStarlightTemplate:Clone()
+        end)
+        if success and clone then
+            return clone
+        end
+    end
+    return game:GetObjects("rbxassetid://" .. modelId)[1]
+end
+local StarlightUI: ScreenGui = isStudio and script.Parent:WaitForChild("Starlight V2")
+    or acquireStarlightGui()]==], 1)
+replaceExact([==[isStudio and script.Parent:FindFirstChild("Starlight V2") or game:GetObjects("rbxassetid://" .. modelId)[1]]==], [==[isStudio and script.Parent:FindFirstChild("Starlight V2") or acquireStarlightGui()]==], 1)
+replaceExact([==[		ContentProvider:PreloadAsync({
+			"rbxassetid://116767744785553", -- cursor
+			"rbxassetid://90155503712202", -- cursor shadow
+			"rbxassetid://18824089198", -- player blurred
+			"rbxassetid://129398364168201", -- warning
+			"rbxassetid://3926305904", -- dropdown arrows
+			"rbxassetid://108613279334326", -- linking colorpicker
+			"rbxassetid://6031625148", -- rainbow colorpicker
+			"rbxassetid://4155801252", -- color picker
+			"rbxassetid://16423157073", -- close
+			"rbxassetid://123097456061373", -- minimise
+			"rbxassetid://114684871091583", -- maximise
+			"rbxassetid://6034304908", -- notification
+			"rbxassetid://8445471332", -- search
+			"rbxassetid://92421933997743", -- Corner Repair
+			"rbxassetid://80990588449079", -- loading circle
+		}, function(asset)
+			if debugV then
+				print(`loaded asset {asset}`)
+			end
+		end)]==], [==[]==], 1)
 if #patchWarnings > 0 then
     warn("[Starlight] " .. table.concat(patchWarnings, "; "))
 end
-if type(writefile) == "function" then pcall(writefile, "Starlight_FullFix_Source.lua", source) end
-updateBootScreen("Finalizing interface", 0.88)
+updateBootScreen("Preloading interface assets", 0.70)
+local preloadWaitStarted = os.clock()
+local shownProgress = -1
+while not starlightPreloadReady and os.clock() - preloadWaitStarted < 12 do
+    local progress = 0.70 + 0.16 * math.clamp(starlightPreloadProgress, 0, 1)
+    if progress - shownProgress >= 0.025 then
+        updateBootScreen("Preloading interface assets", progress)
+        shownProgress = progress
+    end
+    task.wait(0.08)
+end
+if not starlightPreloadReady then
+    starlightPreloadCancelled = true
+end
+local environment = type(getgenv) == "function" and getgenv() or _G
+if starlightTemplate and not starlightPreloadCancelled then
+    environment[starlightPreloadKey] = starlightTemplate
+end
+updateBootScreen("Preparing interface", 0.89)
+task.wait()
 local compiled, compilationError = loadstring(source)
 if not compiled then
     error("[Starlight] Source failed to compile: " .. tostring(compilationError))
 end
+task.wait()
+updateBootScreen("Creating interface", 0.95)
 return compiled()
 
 end
 
 local succeeded, result = pcall(launchStarlight)
+local environment = type(getgenv) == "function" and getgenv() or _G
+if environment[starlightPreloadKey] == starlightTemplate then
+    environment[starlightPreloadKey] = nil
+end
+starlightPreloadCancelled = true
+if starlightTemplate then
+    starlightTemplate:Destroy()
+    starlightTemplate = nil
+end
 if succeeded then
     updateBootScreen("Ready", 1)
-    local remaining = 1.9 - (os.clock() - bootStarted)
-    if remaining > 0 then
-        task.wait(remaining)
-    end
+    task.wait(0.12)
     closeBootScreen()
     return result
 end
 
 updateBootScreen("Unable to load interface", 1)
-local remaining = 2.3 - (os.clock() - bootStarted)
-if remaining > 0 then
-    task.wait(remaining)
-end
+task.wait(0.15)
 closeBootScreen()
 error(result, 0)
