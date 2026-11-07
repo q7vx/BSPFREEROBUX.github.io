@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#0c0e14">
     <meta name="referrer" content="no-referrer">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src https://zyphor.cc; script-src 'sha256-fbXMMTMANzCO1C4T2Q+Hb/BpIXuK2E2rB5UtRvc/M54='; style-src 'sha256-mULa6vIZRuaTOsC5szS5ehlytfOgp5QMUPsM10igrf8='; connect-src 'self' https:; base-uri 'none'; form-action 'none'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src https://zyphor.cc; script-src 'sha256-GEf5xfta0N6tRiyJ7S7s2bwxcl9eobuDTvEUGCKjrws='; style-src 'sha256-dckV/LFYS5U20dgCLFunq/aWM8mj2moDTLSSQ/x725Y='; connect-src 'self' https:; base-uri 'none'; form-action 'none'">
     <title>Your Key | Zyphor</title>
     <link rel="icon" href="https://zyphor.cc/Logo1.png">
     <style>
@@ -18,7 +19,20 @@
         h1 { font-size: 25px; letter-spacing: -.6px; margin: 0 0 10px; }
         .subtitle { font-size: 14px; line-height: 1.7; color: #999eae; margin: 0 0 25px; }
         .label { display: block; font-size: 12px; color: #a4a9ba; text-align: left; margin-bottom: 9px; font-weight: 650; }
-        .key-box { padding: 16px; border: 1px solid #34394d; border-radius: 10px; background: #0e1119; color: #c7bcff; font: 14px/1.6 Consolas, monospace; overflow-wrap: anywhere; user-select: all; text-align: left; min-height: 56px; }
+        .key-shell { position: relative; display: flex; align-items: center; border: 1px solid #34394d; border-radius: 10px; background: #0e1119; min-height: 56px; transition: border-color .2s; }
+        .key-shell:hover, .key-shell:focus-within { border-color: #6966b9; }
+        .key-box { flex: 1; min-width: 0; padding: 16px; padding-right: 8px; color: #c7bcff; font: 14px/1.6 Consolas, monospace; overflow-wrap: anywhere; text-align: left; filter: blur(7px); user-select: none; transition: filter .2s; }
+        .key-shell.is-revealed .key-box { filter: none; user-select: all; }
+        .eye-button { flex: 0 0 auto; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; margin: 0 8px 0 0; color: #b7afd6; background: transparent; border: 0; border-radius: 9px; cursor: pointer; }
+        .eye-button:hover, .eye-button:focus-visible { color: #fff; background: #262a3a; transform: none; }
+        .eye-button svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+        .eye-button .eye-off { display: none; }
+        .eye-button[aria-pressed="true"] .eye-on { display: none; }
+        .eye-button[aria-pressed="true"] .eye-off { display: block; }
+        .timer-card { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 14px; padding: 13px 15px; border: 1px solid #292d3b; border-radius: 10px; background: #10131c; text-align: left; }
+        .timer-label { font-size: 12px; color: #a4a9ba; }
+        .timer-value { font: 600 13px/1.5 Consolas, monospace; color: #c7bcff; text-align: right; font-variant-numeric: tabular-nums; }
+        .expiry-note { margin-top: 8px; color: #858a9b; font-size: 11px; text-align: right; }
         button { display: block; margin-top: 15px; width: 100%; padding: 14px; border: 0; border-radius: 10px; background: linear-gradient(120deg, #676bff, #895cff); color: white; font-size: 14px; font-weight: 650; cursor: pointer; transition: filter .2s, transform .2s; }
         button:hover:not(:disabled) { filter: brightness(1.12); transform: translateY(-1px); }
         button:disabled { opacity: .5; cursor: not-allowed; }
@@ -40,7 +54,18 @@
             <p class="subtitle" id="subtitle">Verifying your key with Jnkie.</p>
             <div id="keySection" hidden>
                 <div class="label">YOUR ACCESS KEY</div>
-                <div class="key-box" id="key"></div>
+                <div class="key-shell" id="keyShell">
+                    <div class="key-box" id="key"></div>
+                    <button class="eye-button" id="reveal" type="button" aria-label="Show key" aria-pressed="false" title="Hover to view, click to keep visible">
+                        <svg class="eye-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.7-7 10-7 10 7 10 7-3.7 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+                        <svg class="eye-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.6 5.1A10.7 10.7 0 0 1 12 5c6.3 0 10 7 10 7a17 17 0 0 1-3.3 4.1M6.1 6.1C3.4 8 2 12 2 12s3.7 7 10 7c1.7 0 3.3-.5 4.6-1.2M2 2l20 20"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>
+                    </button>
+                </div>
+                <div class="timer-card">
+                    <span class="timer-label">Time left</span>
+                    <span class="timer-value" id="timeLeft">Checking...</span>
+                </div>
+                <div class="expiry-note" id="expiryNote" hidden></div>
                 <button id="copy" type="button">Copy Key</button>
                 <p class="notice">Keep your key private and don't share it with anyone.</p>
             </div>
@@ -63,11 +88,18 @@
         const subtitle = document.getElementById("subtitle");
         const section = document.getElementById("keySection");
         const keyElement = document.getElementById("key");
+        const keyShell = document.getElementById("keyShell");
+        const revealButton = document.getElementById("reveal");
         const copyButton = document.getElementById("copy");
+        const timeLeft = document.getElementById("timeLeft");
+        const expiryNote = document.getElementById("expiryNote");
         const url = new URL(location.href);
         const providedKeys = url.searchParams.getAll("key");
         const key = providedKeys.length === 1 ? providedKeys[0] : "";
         let resetCopyText;
+        let countdown;
+        let pinned = false;
+        let hovering = false;
 
         document.getElementById("year").textContent = new Date().getFullYear();
 
@@ -75,9 +107,43 @@
             title.textContent = heading;
             subtitle.textContent = message;
             section.hidden = true;
+            clearInterval(countdown);
         }
 
+        function updateReveal() {
+            keyShell.classList.toggle("is-revealed", pinned || hovering);
+            revealButton.setAttribute("aria-pressed", String(pinned));
+            revealButton.setAttribute("aria-label", pinned ? "Hide key" : "Show key");
+            revealButton.title = pinned ? "Click to hide key" : "Hover to view, click to keep visible";
+        }
+
+        keyShell.addEventListener("pointerenter", event => {
+            if (event.pointerType === "mouse" || event.pointerType === "pen") {
+                hovering = true;
+                updateReveal();
+            }
+        });
+
+        keyShell.addEventListener("pointerleave", () => {
+            hovering = false;
+            updateReveal();
+        });
+
+        revealButton.addEventListener("click", () => {
+            pinned = !pinned;
+            updateReveal();
+        });
+
+        document.addEventListener("pointerdown", event => {
+            if (pinned && !keyShell.contains(event.target)) {
+                pinned = false;
+                updateReveal();
+            }
+        });
+
         function selectKey() {
+            pinned = true;
+            updateReveal();
             const range = document.createRange();
             range.selectNodeContents(keyElement);
             const selection = window.getSelection();
@@ -97,6 +163,45 @@
             clearTimeout(resetCopyText);
             resetCopyText = setTimeout(() => copyButton.textContent = "Copy Key", 2500);
         });
+
+        function formatRemaining(ms) {
+            const total = Math.max(0, Math.ceil(ms / 1000));
+            const days = Math.floor(total / 86400);
+            const hours = Math.floor((total % 86400) / 3600);
+            const minutes = Math.floor((total % 3600) / 60);
+            const seconds = total % 60;
+            return (days ? days + "d " : "") + String(hours).padStart(2, "0") + ":" + String(minutes).padStart(2, "0") + ":" + String(seconds).padStart(2, "0");
+        }
+
+        function startCountdown(result) {
+            clearInterval(countdown);
+            const expiresAt = result.expiresAt ?? result.expires_at;
+            const remainingMs = typeof result.remainingMs === "number" && Number.isFinite(result.remainingMs) ? Math.max(0, result.remainingMs) : null;
+            const hasExpiryData = Object.prototype.hasOwnProperty.call(result, "expiresAt") || Object.prototype.hasOwnProperty.call(result, "expires_at") || remainingMs !== null;
+            const expiryTimestamp = expiresAt ? Date.parse(expiresAt) : NaN;
+
+            if (expiresAt && Number.isFinite(expiryTimestamp)) {
+                expiryNote.hidden = false;
+                expiryNote.textContent = "Expires: " + new Date(expiryTimestamp).toLocaleString();
+            }
+
+            if (remainingMs === null && !Number.isFinite(expiryTimestamp)) {
+                timeLeft.textContent = hasExpiryData && !expiresAt ? "No expiration" : "Unavailable";
+                return;
+            }
+
+            const remaining = remainingMs !== null ? remainingMs : Math.max(0, expiryTimestamp - Date.now());
+            const deadline = performance.now() + remaining;
+
+            function tick() {
+                const ms = Math.max(0, deadline - performance.now());
+                timeLeft.textContent = formatRemaining(ms);
+                if (ms <= 0) showError("Key expired", "This key has expired. Go complete the key system again.");
+            }
+
+            tick();
+            if (!section.hidden) countdown = setInterval(tick, 1000);
+        }
 
         async function getBackendUrl(signal) {
             const response = await fetch("/server.txt?" + Date.now(), {
@@ -145,6 +250,7 @@
                 subtitle.textContent = "Key verified. Copy it below and use it to continue.";
                 keyElement.textContent = key;
                 section.hidden = false;
+                startCountdown(result);
             } catch {
                 showError("Couldn't check your key", "Jnkie verification isn't available right now. Try again later.");
             } finally {
