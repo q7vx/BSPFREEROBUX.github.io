@@ -732,42 +732,56 @@ replaceExact([==[--// ENDSUBSECTION
 if UserInputService.TouchEnabled then]==], [==[--// ENDSUBSECTION
 
 do
-	local content = mainWindow.Content
-	local topbar = content.Topbar
-	local contentMain = content.ContentMain
-	local seamRepair = Instance.new("Frame")
-	seamRepair.Name = "TopbarSeamRepair"
-	seamRepair.BorderSizePixel = 0
-	seamRepair.Active = false
-	seamRepair.Selectable = false
-	seamRepair.BackgroundColor3 = topbar.BackgroundColor3
-	seamRepair.BackgroundTransparency = topbar.BackgroundTransparency
-	seamRepair.ZIndex = math.max(topbar.ZIndex, contentMain.ZIndex) + 3
-	seamRepair.Parent = content
-	local function updateTopbarSeam()
-		if not seamRepair.Parent or not topbar.Parent then
-			return
-		end
-		local parentPosition = content.AbsolutePosition
-		local barPosition = topbar.AbsolutePosition
-		local barSize = topbar.AbsoluteSize
-		seamRepair.Position = UDim2.fromOffset(
-			math.floor(barPosition.X - parentPosition.X + 0.5),
-			math.floor(barPosition.Y - parentPosition.Y + barSize.Y + 0.5) - 1
-		)
-		seamRepair.Size = UDim2.fromOffset(math.ceil(barSize.X), 12)
-		seamRepair.BackgroundColor3 = topbar.BackgroundColor3
-		seamRepair.BackgroundTransparency = topbar.BackgroundTransparency
-	end
-	topbar:GetPropertyChangedSignal("BackgroundColor3"):Connect(updateTopbarSeam)
-	topbar:GetPropertyChangedSignal("BackgroundTransparency"):Connect(updateTopbarSeam)
-	topbar:GetPropertyChangedSignal("AbsolutePosition"):Connect(updateTopbarSeam)
-	topbar:GetPropertyChangedSignal("AbsoluteSize"):Connect(updateTopbarSeam)
-	content:GetPropertyChangedSignal("AbsolutePosition"):Connect(updateTopbarSeam)
-	content:GetPropertyChangedSignal("AbsoluteSize"):Connect(updateTopbarSeam)
-	content.ClipsDescendants = false
-	updateTopbarSeam()
-	task.defer(updateTopbarSeam)
+    local sidebar = mainWindow.Sidebar
+    local topbar = mainWindow.Content.Topbar
+    local sidebarShadow = sidebar:FindFirstChild("DropShadowHolder")
+    if sidebarShadow then
+        if sidebarShadow:IsA("GuiObject") then
+            sidebarShadow.Visible = false
+        end
+        for _, layer in ipairs(sidebarShadow:GetDescendants()) do
+            if layer:IsA("GuiObject") then
+                layer.Visible = false
+                if layer:IsA("ImageLabel") or layer:IsA("ImageButton") then
+                    layer.ImageTransparency = 1
+                end
+            end
+        end
+    end
+    local function flattenJoinCorner(panel, name, atLeft)
+        local cover = Instance.new("Frame")
+        cover.Name = name
+        cover.BorderSizePixel = 0
+        cover.Active = false
+        cover.Selectable = false
+        cover.Size = UDim2.fromOffset(13, 13)
+        cover.ZIndex = 450
+        cover.Parent = mainWindow
+        local function sync()
+            if not cover.Parent or not panel.Parent then return end
+            local offset = panel.AbsolutePosition - mainWindow.AbsolutePosition
+            local x = offset.X + (atLeft and 0 or (panel.AbsoluteSize.X - 13))
+            cover.Position = UDim2.fromOffset(math.floor(x + 0.5), math.floor(offset.Y + 0.5))
+            cover.BackgroundColor3 = panel.BackgroundColor3
+            cover.BackgroundTransparency = panel.BackgroundTransparency
+        end
+        local events = {
+            panel:GetPropertyChangedSignal("AbsolutePosition"):Connect(sync),
+            panel:GetPropertyChangedSignal("AbsoluteSize"):Connect(sync),
+            panel:GetPropertyChangedSignal("BackgroundColor3"):Connect(sync),
+            panel:GetPropertyChangedSignal("BackgroundTransparency"):Connect(sync),
+            mainWindow:GetPropertyChangedSignal("AbsolutePosition"):Connect(sync),
+        }
+        cover.Destroying:Once(function()
+            for _, connection in ipairs(events) do
+                connection:Disconnect()
+            end
+        end)
+        sync()
+        task.defer(sync)
+    end
+    flattenJoinCorner(sidebar, "SidebarJoinCornerRepair", false)
+    flattenJoinCorner(topbar, "TopbarJoinCornerRepair", true)
 end
 
 if UserInputService.TouchEnabled then]==], 1)
