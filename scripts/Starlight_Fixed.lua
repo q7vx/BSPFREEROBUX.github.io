@@ -61,8 +61,7 @@ local function AcrylicPaintFlat()
 	shadow.Position = UDim2.fromScale(0.5, 0.5)
 	shadow.BackgroundTransparency = 1
 	shadow.ImageColor3 = Color3.new(0, 0, 0)
-	shadow.ImageTransparency = 1
-	shadow.Visible = false
+	shadow.ImageTransparency = 0.7
 	shadow.Parent = frame
 	for _, name in ipairs({ "tint", "Noise" }) do
 		local layer = Instance.new("ImageLabel")
@@ -733,30 +732,45 @@ replaceExact([==[--// ENDSUBSECTION
 if UserInputService.TouchEnabled then]==], [==[--// ENDSUBSECTION
 
 do
-	local sidebar = mainWindow.Sidebar
-	local topbar = mainWindow.Content.Topbar
-	for _, pane in ipairs({ sidebar, topbar }) do
-		pane.BorderSizePixel = 0
-		local holder = pane:FindFirstChild("DropShadowHolder")
-		if holder then
-			if holder:IsA("GuiObject") then
-				holder.Visible = false
-			end
-			for _, descendant in ipairs(holder:GetDescendants()) do
-				if descendant:IsA("GuiObject") then
-					descendant.Visible = false
-				end
-			end
+	local content = mainWindow.Content
+	local topbar = content.Topbar
+	local contentMain = content.ContentMain
+	local seamRepair = Instance.new("Frame")
+	seamRepair.Name = "TopbarSeamRepair"
+	seamRepair.BorderSizePixel = 0
+	seamRepair.Active = false
+	seamRepair.Selectable = false
+	seamRepair.BackgroundColor3 = topbar.BackgroundColor3
+	seamRepair.BackgroundTransparency = topbar.BackgroundTransparency
+	seamRepair.ZIndex = math.max(topbar.ZIndex, contentMain.ZIndex) + 3
+	seamRepair.Parent = content
+	local function updateTopbarSeam()
+		if not seamRepair.Parent or not topbar.Parent then
+			return
 		end
+		local parentPosition = content.AbsolutePosition
+		local barPosition = topbar.AbsolutePosition
+		local barSize = topbar.AbsoluteSize
+		seamRepair.Position = UDim2.fromOffset(
+			math.floor(barPosition.X - parentPosition.X + 0.5),
+			math.floor(barPosition.Y - parentPosition.Y + barSize.Y + 0.5) - 1
+		)
+		seamRepair.Size = UDim2.fromOffset(math.ceil(barSize.X), 12)
+		seamRepair.BackgroundColor3 = topbar.BackgroundColor3
+		seamRepair.BackgroundTransparency = topbar.BackgroundTransparency
 	end
-	local border = topbar:FindFirstChildOfClass("UIStroke")
-	if border then
-		border.Enabled = false
-	end
+	topbar:GetPropertyChangedSignal("BackgroundColor3"):Connect(updateTopbarSeam)
+	topbar:GetPropertyChangedSignal("BackgroundTransparency"):Connect(updateTopbarSeam)
+	topbar:GetPropertyChangedSignal("AbsolutePosition"):Connect(updateTopbarSeam)
+	topbar:GetPropertyChangedSignal("AbsoluteSize"):Connect(updateTopbarSeam)
+	content:GetPropertyChangedSignal("AbsolutePosition"):Connect(updateTopbarSeam)
+	content:GetPropertyChangedSignal("AbsoluteSize"):Connect(updateTopbarSeam)
+	content.ClipsDescendants = false
+	updateTopbarSeam()
+	task.defer(updateTopbarSeam)
 end
 
 if UserInputService.TouchEnabled then]==], 1)
-replaceExact([==[				AcrylicObject.Frame.shadow.Visible = true]==], [==[				AcrylicObject.Frame.shadow.Visible = false]==], 1)
 replaceExact([==[		mainWindow.Content.Topbar.Search["MouseLeave"]:Connect(function()
 			Tween(mainWindow.Content.Topbar.Search, { ImageColor3 = Starlight.CurrentTheme.Foregrounds.Dark })
 		end)]==], [==[		mainWindow.Content.Topbar.Search["MouseLeave"]:Connect(function()
