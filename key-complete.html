@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#0c0e14">
     <meta name="referrer" content="no-referrer">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src https://zyphor.cc; script-src 'sha256-xbS/c7IFj5YyE6vbo3di/v7IU2gLFGDtBMfA3MbGkNw='; style-src 'sha256-mULa6vIZRuaTOsC5szS5ehlytfOgp5QMUPsM10igrf8='; connect-src 'self'; base-uri 'none'; form-action 'none'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src https://zyphor.cc; script-src 'sha256-fbXMMTMANzCO1C4T2Q+Hb/BpIXuK2E2rB5UtRvc/M54='; style-src 'sha256-mULa6vIZRuaTOsC5szS5ehlytfOgp5QMUPsM10igrf8='; connect-src 'self' https:; base-uri 'none'; form-action 'none'">
     <title>Your Key | Zyphor</title>
     <link rel="icon" href="https://zyphor.cc/Logo1.png">
     <style>
@@ -98,6 +98,22 @@
             resetCopyText = setTimeout(() => copyButton.textContent = "Copy Key", 2500);
         });
 
+        async function getBackendUrl(signal) {
+            const response = await fetch("/server.txt?" + Date.now(), {
+                cache: "no-store",
+                credentials: "omit",
+                referrerPolicy: "no-referrer",
+                signal
+            });
+            if (!response.ok) throw new Error("Server configuration unavailable");
+            const address = (await response.text()).trim();
+            const backend = new URL(address);
+            if (backend.protocol !== "https:" && !(backend.protocol === "http:" && ["localhost", "127.0.0.1", "[::1]"].includes(backend.hostname))) {
+                throw new Error("Invalid backend URL");
+            }
+            return backend.origin;
+        }
+
         async function verifyKey() {
             if (!key || key.length > 256 || key.trim() !== key || providedKeys.length !== 1) {
                 showError("No key? 💀", "bro you ain't getting a key by just opening this page 😭 go do the key system (editing the url ofc won't give you shit) 🧠");
@@ -108,11 +124,12 @@
             const timeout = setTimeout(() => controller.abort(), 12000);
 
             try {
-                const response = await fetch("/api/jnkie/key-check", {
+                const backendUrl = await getBackendUrl(controller.signal);
+                const response = await fetch(backendUrl + "/api/jnkie/key-check", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ key }),
-                    credentials: "same-origin",
+                    credentials: "omit",
                     cache: "no-store",
                     referrerPolicy: "no-referrer",
                     signal: controller.signal
