@@ -1,4 +1,266 @@
+local bootStarted = os.clock()
+local bootGui
+local bootStage
+local bootFill
+local bootOverlay
+local bootPanel
+local bootTweenService = game:GetService("TweenService")
+
+local function makeBootLabel(parent, name, value, size, color, position, dimensions, font, alignment)
+    local label = Instance.new("TextLabel")
+    label.Name = name
+    label.BackgroundTransparency = 1
+    label.BorderSizePixel = 0
+    label.Text = value
+    label.Font = font or Enum.Font.Gotham
+    label.TextSize = size
+    label.TextColor3 = color
+    label.TextXAlignment = alignment or Enum.TextXAlignment.Left
+    label.TextYAlignment = Enum.TextYAlignment.Center
+    label.TextTruncate = Enum.TextTruncate.AtEnd
+    label.Position = position
+    label.Size = dimensions
+    label.ZIndex = 105
+    label.Parent = parent
+    return label
+end
+
+local function makeBootRounded(parent, radius)
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, radius)
+    corner.Parent = parent
+    return corner
+end
+
+local function makeBootCredit(parent, order, service, handle)
+    local row = Instance.new("Frame")
+    row.Name = service
+    row.LayoutOrder = order
+    row.Size = UDim2.new(1, 0, 0, 33)
+    row.BackgroundColor3 = Color3.fromRGB(56, 62, 82)
+    row.BackgroundTransparency = 0.24
+    row.BorderSizePixel = 0
+    row.ZIndex = 104
+    row.Parent = parent
+    makeBootRounded(row, 6)
+    makeBootLabel(row, "Platform", service, 12, Color3.fromRGB(164, 175, 205), UDim2.fromOffset(12, 0), UDim2.new(0, 90, 1, 0), Enum.Font.GothamMedium)
+    makeBootLabel(row, "Handle", handle, 13, Color3.fromRGB(231, 234, 248), UDim2.fromOffset(101, 0), UDim2.new(1, -111, 1, 0), Enum.Font.GothamMedium)
+    return row
+end
+
+local function createBootScreen()
+    local parent
+    if type(gethui) == "function" then
+        local ok, candidate = pcall(gethui)
+        if ok and typeof(candidate) == "Instance" then
+            parent = candidate
+        end
+    end
+    if not parent then
+        local ok, candidate = pcall(function()
+            return game:GetService("CoreGui")
+        end)
+        if ok then
+            parent = candidate
+        end
+    end
+    if not parent then
+        parent = game:GetService("Players").LocalPlayer:FindFirstChildOfClass("PlayerGui")
+    end
+    if not parent then
+        return
+    end
+
+    local oldScreen = parent:FindFirstChild("StarlightReworkedSplash")
+    if oldScreen then
+        oldScreen:Destroy()
+    end
+
+    local screen = Instance.new("ScreenGui")
+    screen.Name = "StarlightReworkedSplash"
+    screen.IgnoreGuiInset = true
+    screen.ResetOnSpawn = false
+    screen.DisplayOrder = 99999
+    screen.ZIndexBehavior = Enum.ZIndexBehavior.Global
+
+    local overlay = Instance.new("Frame")
+    overlay.Name = "Dim"
+    overlay.Size = UDim2.fromScale(1, 1)
+    overlay.Position = UDim2.fromScale(0, 0)
+    overlay.BackgroundColor3 = Color3.fromRGB(10, 12, 20)
+    overlay.BackgroundTransparency = 1
+    overlay.BorderSizePixel = 0
+    overlay.ZIndex = 100
+    overlay.Parent = screen
+
+    local panel = Instance.new("Frame")
+    panel.Name = "StarlightLoading"
+    panel.AnchorPoint = Vector2.new(0.5, 0.5)
+    panel.Position = UDim2.fromScale(0.5, 0.5)
+    panel.Size = UDim2.new(0.88, 0, 0, 330)
+    panel.BackgroundColor3 = Color3.fromRGB(48, 53, 72)
+    panel.BorderSizePixel = 0
+    panel.ZIndex = 102
+    panel.Parent = screen
+    makeBootRounded(panel, 10)
+
+    local size = Instance.new("UISizeConstraint")
+    size.MinSize = Vector2.new(276, 320)
+    size.MaxSize = Vector2.new(450, 330)
+    size.Parent = panel
+
+    local shadow = Instance.new("ImageLabel")
+    shadow.Name = "SoftShadow"
+    shadow.AnchorPoint = Vector2.new(0.5, 0.5)
+    shadow.Position = UDim2.fromScale(0.5, 0.5)
+    shadow.Size = UDim2.new(1, 62, 1, 60)
+    shadow.Image = "rbxassetid://8992230677"
+    shadow.ScaleType = Enum.ScaleType.Slice
+    shadow.SliceCenter = Rect.new(99, 99, 99, 99)
+    shadow.ImageColor3 = Color3.fromRGB(0, 0, 0)
+    shadow.ImageTransparency = 0.55
+    shadow.BackgroundTransparency = 1
+    shadow.ZIndex = 101
+    shadow.Parent = panel
+
+    local stroke = Instance.new("UIStroke")
+    stroke.Color = Color3.fromRGB(118, 128, 167)
+    stroke.Transparency = 0.38
+    stroke.Thickness = 1
+    stroke.Parent = panel
+
+    local headerBg = Instance.new("Frame")
+    headerBg.Name = "Header"
+    headerBg.Size = UDim2.new(1, 0, 0, 78)
+    headerBg.BackgroundColor3 = Color3.fromRGB(65, 72, 95)
+    headerBg.BorderSizePixel = 0
+    headerBg.ZIndex = 103
+    headerBg.Parent = panel
+    makeBootRounded(headerBg, 10)
+
+    local headerRepair = Instance.new("Frame")
+    headerRepair.Name = "FlatHeaderBottom"
+    headerRepair.Position = UDim2.new(0, 0, 1, -10)
+    headerRepair.Size = UDim2.new(1, 0, 0, 10)
+    headerRepair.BorderSizePixel = 0
+    headerRepair.BackgroundColor3 = headerBg.BackgroundColor3
+    headerRepair.ZIndex = 103
+    headerRepair.Parent = headerBg
+
+    local iconBack = Instance.new("Frame")
+    iconBack.Name = "Icon"
+    iconBack.Position = UDim2.fromOffset(18, 17)
+    iconBack.Size = UDim2.fromOffset(43, 43)
+    iconBack.BackgroundColor3 = Color3.fromRGB(116, 128, 175)
+    iconBack.BorderSizePixel = 0
+    iconBack.ZIndex = 104
+    iconBack.Parent = headerBg
+    makeBootRounded(iconBack, 9)
+
+    makeBootLabel(iconBack, "Symbol", "S", 24, Color3.fromRGB(240, 242, 255), UDim2.fromScale(0, 0), UDim2.fromScale(1, 1), Enum.Font.GothamBold, Enum.TextXAlignment.Center)
+    makeBootLabel(headerBg, "Title", "STARLIGHT", 20, Color3.fromRGB(240, 242, 255), UDim2.fromOffset(73, 12), UDim2.new(1, -92, 0, 31), Enum.Font.GothamBold)
+    makeBootLabel(headerBg, "Subtitle", "INTERFACE SUITE  •  REWORKED", 10, Color3.fromRGB(179, 190, 218), UDim2.fromOffset(75, 41), UDim2.new(1, -95, 0, 20), Enum.Font.GothamMedium)
+
+    makeBootLabel(panel, "CreditTitle", "Reworked by", 15, Color3.fromRGB(239, 241, 253), UDim2.fromOffset(20, 94), UDim2.new(1, -40, 0, 24), Enum.Font.GothamBold)
+
+    local credits = Instance.new("Frame")
+    credits.Name = "Credits"
+    credits.Position = UDim2.fromOffset(20, 124)
+    credits.Size = UDim2.new(1, -40, 0, 109)
+    credits.BackgroundTransparency = 1
+    credits.ZIndex = 103
+    credits.Parent = panel
+
+    local list = Instance.new("UIListLayout")
+    list.SortOrder = Enum.SortOrder.LayoutOrder
+    list.Padding = UDim.new(0, 5)
+    list.Parent = credits
+
+    makeBootCredit(credits, 1, "Discord", "@BossSquirtle")
+    makeBootCredit(credits, 2, "GitHub", "q7vx")
+    makeBootCredit(credits, 3, "Zyphor.cc", "BossSquirtle")
+
+    makeBootLabel(panel, "LoadingLabel", "INITIALIZING", 10, Color3.fromRGB(165, 175, 205), UDim2.fromOffset(20, 249), UDim2.new(1, -40, 0, 16), Enum.Font.GothamBold)
+
+    local track = Instance.new("Frame")
+    track.Name = "Track"
+    track.Position = UDim2.fromOffset(20, 273)
+    track.Size = UDim2.new(1, -40, 0, 5)
+    track.BackgroundColor3 = Color3.fromRGB(75, 81, 105)
+    track.BorderSizePixel = 0
+    track.ZIndex = 104
+    track.Parent = panel
+    makeBootRounded(track, 5)
+
+    local fill = Instance.new("Frame")
+    fill.Name = "Fill"
+    fill.Size = UDim2.fromScale(0.05, 1)
+    fill.BackgroundColor3 = Color3.fromRGB(181, 190, 243)
+    fill.BorderSizePixel = 0
+    fill.ZIndex = 105
+    fill.Parent = track
+    makeBootRounded(fill, 5)
+
+    local gradient = Instance.new("UIGradient")
+    gradient.Color = ColorSequence.new({
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(234, 163, 156)),
+        ColorSequenceKeypoint.new(0.52, Color3.fromRGB(218, 207, 166)),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(175, 188, 255))
+    })
+    gradient.Parent = fill
+
+    makeBootLabel(panel, "Tagline", "Loading the reworked Starlight interface", 11, Color3.fromRGB(157, 169, 198), UDim2.fromOffset(20, 285), UDim2.new(1, -40, 0, 23), Enum.Font.Gotham)
+
+    bootGui = screen
+    bootOverlay = overlay
+    bootPanel = panel
+    bootStage = panel.LoadingLabel
+    bootFill = fill
+    screen.Parent = parent
+    bootTweenService:Create(overlay, TweenInfo.new(0.22, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { BackgroundTransparency = 0.34 }):Play()
+end
+
+pcall(createBootScreen)
+
+local function updateBootScreen(label, fraction)
+    if bootStage and bootStage.Parent then
+        bootStage.Text = string.upper(label)
+    end
+    if bootFill and bootFill.Parent then
+        bootTweenService:Create(bootFill, TweenInfo.new(0.23, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+            Size = UDim2.fromScale(math.clamp(fraction, 0.05, 1), 1)
+        }):Play()
+    end
+end
+
+local function closeBootScreen()
+    if not bootGui then
+        return
+    end
+    local gui = bootGui
+    bootGui = nil
+    local duration = 0.22
+    if gui.Parent then
+        for _, descendant in ipairs(gui:GetDescendants()) do
+            if descendant:IsA("TextLabel") then
+                bootTweenService:Create(descendant, TweenInfo.new(duration), { TextTransparency = 1 }):Play()
+            elseif descendant:IsA("Frame") then
+                bootTweenService:Create(descendant, TweenInfo.new(duration), { BackgroundTransparency = 1 }):Play()
+            elseif descendant:IsA("ImageLabel") then
+                bootTweenService:Create(descendant, TweenInfo.new(duration), { ImageTransparency = 1 }):Play()
+            elseif descendant:IsA("UIStroke") then
+                bootTweenService:Create(descendant, TweenInfo.new(duration), { Transparency = 1 }):Play()
+            end
+        end
+        task.wait(duration + 0.02)
+    end
+    gui:Destroy()
+end
+
+local function launchStarlight()
+    updateBootScreen("Downloading interface", 0.18)
 local source = game:HttpGet([==[https://raw.githubusercontent.com/Nebula-Softworks/Starlight-Interface-Suite/1ec0fb9ce4aacd8f396a9bd493e0251a6acf450a/Source.lua?starlight_revision=1ec0fb9c]==])
+updateBootScreen("Applying rework", 0.49)
 local patchIndex = 0
 local patchWarnings = {}
 local function replaceExact(old, new, expected)
@@ -1523,8 +1785,30 @@ if #patchWarnings > 0 then
     warn("[Starlight] " .. table.concat(patchWarnings, "; "))
 end
 if type(writefile) == "function" then pcall(writefile, "Starlight_FullFix_Source.lua", source) end
+updateBootScreen("Finalizing interface", 0.88)
 local compiled, compilationError = loadstring(source)
 if not compiled then
     error("[Starlight] Source failed to compile: " .. tostring(compilationError))
 end
 return compiled()
+
+end
+
+local succeeded, result = pcall(launchStarlight)
+if succeeded then
+    updateBootScreen("Ready", 1)
+    local remaining = 1.9 - (os.clock() - bootStarted)
+    if remaining > 0 then
+        task.wait(remaining)
+    end
+    closeBootScreen()
+    return result
+end
+
+updateBootScreen("Unable to load interface", 1)
+local remaining = 2.3 - (os.clock() - bootStarted)
+if remaining > 0 then
+    task.wait(remaining)
+end
+closeBootScreen()
+error(result, 0)
