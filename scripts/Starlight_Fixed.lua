@@ -1250,6 +1250,32 @@ source = source:sub(1, dropdownCloseStart - 1) .. [==[							local trigger = Nes
 								end)
 								popupTween:Play()
 							end
+							local function measureDropdownHeight()
+								local layout = list:FindFirstChildOfClass("UIListLayout")
+								local padding = list:FindFirstChildOfClass("UIPadding")
+								local count = 0
+								local rowHeight = 0
+								for _, item in ipairs(list:GetChildren()) do
+									if item:IsA("GuiObject") and item.Visible and item.Name ~= "Option_TEMPLATE" then
+										count += 1
+										local size = item.AbsoluteSize.Y
+										if size <= 0 then size = item.Size.Y.Offset end
+										rowHeight += size > 0 and size or 30
+									end
+								end
+								local spacing = layout and (layout.Padding.Offset + layout.Padding.Scale * list.AbsoluteSize.Y) or 0
+								local calculated = rowHeight + math.max(0, count - 1) * spacing
+								local measured = layout and layout.AbsoluteContentSize.Y or 0
+								if measured <= 0 or (calculated > 0 and measured > calculated * 1.35) then
+									measured = calculated
+								end
+								local margins = 0
+								if padding then
+									margins = padding.PaddingTop.Offset + padding.PaddingBottom.Offset
+										+ (padding.PaddingTop.Scale + padding.PaddingBottom.Scale) * list.AbsoluteSize.Y
+								end
+								return math.max(34, math.ceil(measured + margins + 6))
+							end
 							local function open()
 								if not trigger.Parent or not popup.Parent or not mainWindow.Visible or not StarlightUI.Enabled then return end
 								if type(Starlight.ActiveDropdownClose) == "function" and Starlight.ActiveDropdownClose ~= close then
@@ -1260,15 +1286,13 @@ source = source:sub(1, dropdownCloseStart - 1) .. [==[							local trigger = Nes
 								dropdownOpen = true
 								Starlight.ActiveDropdownClose = close
 								stopTransition()
-								local contentHeight = tonumber(list.AbsoluteCanvasSize.Y) or 0
-								if contentHeight < 32 then
-									local itemCount = 0
-									for _, item in ipairs(list:GetChildren()) do
-										if item:IsA("Frame") and item.Visible then itemCount += 1 end
-									end
-									contentHeight = math.max(contentHeight, itemCount * 30 + 10)
+								local contentHeight = measureDropdownHeight()
+								height = math.min(contentHeight, 175)
+								list.AutomaticCanvasSize = Enum.AutomaticSize.None
+								list.CanvasSize = UDim2.fromOffset(0, contentHeight)
+								if contentHeight <= height then
+									list.CanvasPosition = Vector2.zero
 								end
-								height = math.clamp(contentHeight, 40, 175)
 								local width = math.max(1, math.ceil(trigger.AbsoluteSize.X))
 								updPos()
 								list.Size = UDim2.new(1, 0, 0, height)
@@ -1287,8 +1311,9 @@ source = source:sub(1, dropdownCloseStart - 1) .. [==[							local trigger = Nes
 								popupTween.Completed:Once(function(playbackState)
 									if transitionToken ~= token or not dropdownOpen or not popup.Parent then return end
 									if playbackState == Enum.PlaybackState.Completed then
-										list.ScrollBarImageTransparency = 0
-										list.ScrollingEnabled = true
+										local needsScrolling = contentHeight > height
+										list.ScrollBarImageTransparency = needsScrolling and 0 or 1
+										list.ScrollingEnabled = needsScrolling
 									end
 								end)
 								popupTween:Play()
