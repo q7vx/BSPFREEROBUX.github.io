@@ -61,7 +61,8 @@ local function AcrylicPaintFlat()
 	shadow.Position = UDim2.fromScale(0.5, 0.5)
 	shadow.BackgroundTransparency = 1
 	shadow.ImageColor3 = Color3.new(0, 0, 0)
-	shadow.ImageTransparency = 0.7
+	shadow.ImageTransparency = 1
+	shadow.Visible = false
 	shadow.Parent = frame
 	for _, name in ipairs({ "tint", "Noise" }) do
 		local layer = Instance.new("ImageLabel")
@@ -727,6 +728,35 @@ replaceExact([==[
 		Tab.Instances.Button.Interact["MouseButton1Click"]:Connect(Activate)]==], [==[
 		Tab.Instances.Button.Interact["MouseButton1Click"]:Connect(Activate)
 		Tab.Select = Activate]==], 1)
+replaceExact([==[--// ENDSUBSECTION
+
+if UserInputService.TouchEnabled then]==], [==[--// ENDSUBSECTION
+
+do
+	local sidebar = mainWindow.Sidebar
+	local topbar = mainWindow.Content.Topbar
+	for _, pane in ipairs({ sidebar, topbar }) do
+		pane.BorderSizePixel = 0
+		local holder = pane:FindFirstChild("DropShadowHolder")
+		if holder then
+			if holder:IsA("GuiObject") then
+				holder.Visible = false
+			end
+			for _, descendant in ipairs(holder:GetDescendants()) do
+				if descendant:IsA("GuiObject") then
+					descendant.Visible = false
+				end
+			end
+		end
+	end
+	local border = topbar:FindFirstChildOfClass("UIStroke")
+	if border then
+		border.Enabled = false
+	end
+end
+
+if UserInputService.TouchEnabled then]==], 1)
+replaceExact([==[				AcrylicObject.Frame.shadow.Visible = true]==], [==[				AcrylicObject.Frame.shadow.Visible = false]==], 1)
 replaceExact([==[		mainWindow.Content.Topbar.Search["MouseLeave"]:Connect(function()
 			Tween(mainWindow.Content.Topbar.Search, { ImageColor3 = Starlight.CurrentTheme.Foregrounds.Dark })
 		end)]==], [==[		mainWindow.Content.Topbar.Search["MouseLeave"]:Connect(function()
