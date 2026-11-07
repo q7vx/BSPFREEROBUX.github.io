@@ -1192,9 +1192,16 @@ if not dropdownCloseStart or not dropdownHoverStart then
     error("[Starlight] Dropdown popup section not found")
 end
 source = source:sub(1, dropdownCloseStart - 1) .. [==[							local trigger = NestedElement.Instances[1]
+							trigger.Header.TextScaled = false
 							local popup = NestedElement.Instances[2]
+							local list = popup.List
 							local dropdownOpen = false
 							local dropdownInputConnection
+							local transitionToken = 0
+							local popupTween
+							popup.ClipsDescendants = true
+							list.ClipsDescendants = true
+							list.ScrollingEnabled = false
 							local function contains(target, point)
 								if not target or not target.Parent or not target.Visible then
 									return false
@@ -1206,17 +1213,11 @@ source = source:sub(1, dropdownCloseStart - 1) .. [==[							local trigger = Nes
 									and point.X <= position.X + size.X
 									and point.Y <= position.Y + size.Y
 							end
-							local popupScale = Instance.new("UIScale")
-							popupScale.Scale = 0.97
-							popupScale.Parent = popup
-							local popupTween
-							local listTween
-							local scaleTween
-							local transitionToken = 0
 							local function stopTransition()
-								if popupTween then popupTween:Cancel(); popupTween = nil end
-								if listTween then listTween:Cancel(); listTween = nil end
-								if scaleTween then scaleTween:Cancel(); scaleTween = nil end
+								if popupTween then
+									popupTween:Cancel()
+									popupTween = nil
+								end
 							end
 							local function close(immediate)
 								transitionToken += 1
@@ -1225,22 +1226,22 @@ source = source:sub(1, dropdownCloseStart - 1) .. [==[							local trigger = Nes
 								if Starlight.ActiveDropdownClose == close then
 									Starlight.ActiveDropdownClose = nil
 								end
-							stopTransition()
+								stopTransition()
 								if not popup.Parent then return end
 								local width = math.max(1, math.ceil(trigger.AbsoluteSize.X))
-								popup.List.ScrollBarImageTransparency = 1
+								list.ScrollBarImageTransparency = 1
+								list.ScrollingEnabled = false
 								AcrylicObject.Model.Transparency = 1
 								if immediate == true or not popup.Visible then
 									popup.Size = UDim2.fromOffset(width, 0)
-									popup.List.Size = UDim2.new(1, 0, 0, 0)
-									popupScale.Scale = 0.97
 									popup.Visible = false
 									return
 								end
-								local info = TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.In)
-								popupTween = TweenService:Create(popup, info, { Size = UDim2.fromOffset(width, 0) })
-								listTween = TweenService:Create(popup.List, info, { Size = UDim2.new(1, 0, 0, 0) })
-								scaleTween = TweenService:Create(popupScale, info, { Scale = 0.97 })
+								popupTween = TweenService:Create(
+									popup,
+									TweenInfo.new(0.14, Enum.EasingStyle.Quad, Enum.EasingDirection.In),
+									{ Size = UDim2.fromOffset(width, 0) }
+								)
 								popupTween.Completed:Once(function(playbackState)
 									if transitionToken ~= token or dropdownOpen or not popup.Parent then return end
 									if playbackState == Enum.PlaybackState.Completed then
@@ -1248,8 +1249,6 @@ source = source:sub(1, dropdownCloseStart - 1) .. [==[							local trigger = Nes
 									end
 								end)
 								popupTween:Play()
-								listTween:Play()
-								scaleTween:Play()
 							end
 							local function open()
 								if not trigger.Parent or not popup.Parent or not mainWindow.Visible or not StarlightUI.Enabled then return end
@@ -1257,13 +1256,14 @@ source = source:sub(1, dropdownCloseStart - 1) .. [==[							local trigger = Nes
 									pcall(Starlight.ActiveDropdownClose)
 								end
 								transitionToken += 1
+								local token = transitionToken
 								dropdownOpen = true
 								Starlight.ActiveDropdownClose = close
 								stopTransition()
-								local contentHeight = tonumber(popup.List.AbsoluteCanvasSize.Y) or 0
+								local contentHeight = tonumber(list.AbsoluteCanvasSize.Y) or 0
 								if contentHeight < 32 then
 									local itemCount = 0
-									for _, item in ipairs(popup.List:GetChildren()) do
+									for _, item in ipairs(list:GetChildren()) do
 										if item:IsA("Frame") and item.Visible then itemCount += 1 end
 									end
 									contentHeight = math.max(contentHeight, itemCount * 30 + 10)
@@ -1271,20 +1271,27 @@ source = source:sub(1, dropdownCloseStart - 1) .. [==[							local trigger = Nes
 								height = math.clamp(contentHeight, 40, 175)
 								local width = math.max(1, math.ceil(trigger.AbsoluteSize.X))
 								updPos()
+								list.Size = UDim2.new(1, 0, 0, height)
+								list.ScrollBarImageTransparency = 1
+								list.ScrollingEnabled = false
 								if not popup.Visible then
 									popup.Size = UDim2.fromOffset(width, 0)
-									popup.List.Size = UDim2.new(1, 0, 0, 0)
-									popupScale.Scale = 0.97
 								end
 								popup.Visible = true
 								AcrylicObject.Model.Transparency = 0.98
-								local info = TweenInfo.new(0.2, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
-								popupTween = TweenService:Create(popup, info, { Size = UDim2.fromOffset(width, height) })
-								listTween = TweenService:Create(popup.List, info, { Size = UDim2.new(1, 0, 0, height) })
-								scaleTween = TweenService:Create(popupScale, info, { Scale = 1 })
+								popupTween = TweenService:Create(
+									popup,
+									TweenInfo.new(0.19, Enum.EasingStyle.Quart, Enum.EasingDirection.Out),
+									{ Size = UDim2.fromOffset(width, height) }
+								)
+								popupTween.Completed:Once(function(playbackState)
+									if transitionToken ~= token or not dropdownOpen or not popup.Parent then return end
+									if playbackState == Enum.PlaybackState.Completed then
+										list.ScrollBarImageTransparency = 0
+										list.ScrollingEnabled = true
+									end
+								end)
 								popupTween:Play()
-								listTween:Play()
-								scaleTween:Play()
 							end
 							local function toggle()
 								if dropdownOpen then close() else open() end
@@ -1298,7 +1305,7 @@ source = source:sub(1, dropdownCloseStart - 1) .. [==[							local trigger = Nes
 								if not popup.Parent then
 									return
 								end
-								popup.Size = UDim2.fromOffset(math.max(1, math.ceil(trigger.AbsoluteSize.X)), dropdownOpen and height or 0)
+								popup.Size = UDim2.fromOffset(math.max(1, math.ceil(trigger.AbsoluteSize.X)), popup.Size.Y.Offset)
 								if dropdownOpen then
 									updPos()
 								end
@@ -1352,6 +1359,8 @@ source = source:sub(1, dropdownCloseStart - 1) .. [==[							local trigger = Nes
 							trigger.Destroying:Once(cleanupDropdownInput)
 
 ]==] .. source:sub(dropdownHoverStart)
+replaceExact([==[									optioninstance.header.Text = option]==], [==[									optioninstance.header.Text = option
+									optioninstance.header.TextScaled = false]==], 1)
 local startPos = source:find([==[				function Groupbox:Set(NewGroupboxSettings)]==], 1, true)
 local endPos = startPos and source:find([==[				function Groupbox:Destroy()]==], startPos, true)
 if not startPos or not endPos then error("Groupbox patch mismatch") end
