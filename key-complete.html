@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0c0e14">
+    <meta name="referrer" content="no-referrer">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src https://zyphor.cc; script-src 'sha256-xbS/c7IFj5YyE6vbo3di/v7IU2gLFGDtBMfA3MbGkNw='; style-src 'sha256-mULa6vIZRuaTOsC5szS5ehlytfOgp5QMUPsM10igrf8='; connect-src 'self'; base-uri 'none'; form-action 'none'">
+    <title>Your Key | Zyphor</title>
+    <link rel="icon" href="https://zyphor.cc/Logo1.png">
+    <style>
+        :root { color-scheme: dark; font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+        * { box-sizing: border-box; }
+        body { margin: 0; min-height: 100vh; background: #0c0e14; color: #f4f5fa; display: flex; flex-direction: column; }
+        main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 32px 18px; }
+        .card { width: 100%; max-width: 440px; padding: 36px 30px; text-align: center; background: #151821; border: 1px solid #292d3b; border-radius: 18px; box-shadow: 0 18px 60px #0006; }
+        .logo { display: block; width: 64px; height: 64px; object-fit: contain; margin: 0 auto 22px; border-radius: 14px; }
+        h1 { font-size: 25px; letter-spacing: -.6px; margin: 0 0 10px; }
+        .subtitle { font-size: 14px; line-height: 1.7; color: #999eae; margin: 0 0 25px; }
+        .label { display: block; font-size: 12px; color: #a4a9ba; text-align: left; margin-bottom: 9px; font-weight: 650; }
+        .key-box { padding: 16px; border: 1px solid #34394d; border-radius: 10px; background: #0e1119; color: #c7bcff; font: 14px/1.6 Consolas, monospace; overflow-wrap: anywhere; user-select: all; text-align: left; min-height: 56px; }
+        button { display: block; margin-top: 15px; width: 100%; padding: 14px; border: 0; border-radius: 10px; background: linear-gradient(120deg, #676bff, #895cff); color: white; font-size: 14px; font-weight: 650; cursor: pointer; transition: filter .2s, transform .2s; }
+        button:hover:not(:disabled) { filter: brightness(1.12); transform: translateY(-1px); }
+        button:disabled { opacity: .5; cursor: not-allowed; }
+        .notice { margin: 20px 0 0; font-size: 12px; line-height: 1.6; color: #858a9b; }
+        footer { padding: 22px 18px; text-align: center; border-top: 1px solid #20232e; color: #777d8e; font-size: 12px; }
+        .footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 18px; margin-bottom: 12px; }
+        a { color: #a8aafc; text-decoration: none; }
+        a:hover { color: #fff; }
+        .copyright { line-height: 1.8; }
+        [hidden] { display: none !important; }
+        @media (max-width: 480px) { .card { padding: 30px 21px; } h1 { font-size: 23px; } }
+    </style>
+</head>
+<body>
+    <main>
+        <section class="card">
+            <img class="logo" src="https://zyphor.cc/Logo1.png" alt="Zyphor logo">
+            <h1 id="title">Checking your key...</h1>
+            <p class="subtitle" id="subtitle">Verifying your key with Jnkie.</p>
+            <div id="keySection" hidden>
+                <div class="label">YOUR ACCESS KEY</div>
+                <div class="key-box" id="key"></div>
+                <button id="copy" type="button">Copy Key</button>
+                <p class="notice">Keep your key private and don't share it with anyone.</p>
+            </div>
+            <noscript>JavaScript needs to be enabled to view your key.</noscript>
+        </section>
+    </main>
+    <footer>
+        <nav class="footer-links">
+            <a href="https://zyphor.cc/tos.html">Terms of Service</a>
+            <a href="https://zyphor.cc/pp.html">Privacy Policy</a>
+            <a href="https://zyphor.cc/">Zyphor</a>
+        </nav>
+        <div class="copyright">
+            &copy; <span id="year">2026</span> Zyphor.cc. All rights reserved.<br>
+            Made by <a href="https://zyphor.cc/">Team Vaprix</a>
+        </div>
+    </footer>
+    <script>
+        const title = document.getElementById("title");
+        const subtitle = document.getElementById("subtitle");
+        const section = document.getElementById("keySection");
+        const keyElement = document.getElementById("key");
+        const copyButton = document.getElementById("copy");
+        const url = new URL(location.href);
+        const providedKeys = url.searchParams.getAll("key");
+        const key = providedKeys.length === 1 ? providedKeys[0] : "";
+        let resetCopyText;
+
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        function showError(heading, message) {
+            title.textContent = heading;
+            subtitle.textContent = message;
+            section.hidden = true;
+        }
+
+        function selectKey() {
+            const range = document.createRange();
+            range.selectNodeContents(keyElement);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+        }
+
+        copyButton.addEventListener("click", async () => {
+            if (section.hidden) return;
+            try {
+                await navigator.clipboard.writeText(key);
+                copyButton.textContent = "✓ Copied!";
+            } catch {
+                selectKey();
+                copyButton.textContent = "Selected — copy it manually";
+            }
+            clearTimeout(resetCopyText);
+            resetCopyText = setTimeout(() => copyButton.textContent = "Copy Key", 2500);
+        });
+
+        async function verifyKey() {
+            if (!key || key.length > 256 || key.trim() !== key || providedKeys.length !== 1) {
+                showError("No key? 💀", "bro you ain't getting a key by just opening this page 😭 go do the key system (editing the url ofc won't give you shit) 🧠");
+                return;
+            }
+
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 12000);
+
+            try {
+                const response = await fetch("/api/jnkie/key-check", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ key }),
+                    credentials: "same-origin",
+                    cache: "no-store",
+                    referrerPolicy: "no-referrer",
+                    signal: controller.signal
+                });
+                const result = await response.json();
+
+                if (!response.ok || result.valid !== true) {
+                    showError(response.status === 429 ? "Too many attempts" : response.status >= 500 ? "Couldn't check your key" : "That key isn't valid 💀", response.status === 429 ? "Try again in a minute." : response.status >= 500 ? "Jnkie verification isn't available right now. Try again later." : "go do the key system 😭 editing the url won't give you a real key 🧠");
+                    return;
+                }
+
+                title.textContent = "Your key is ready!";
+                subtitle.textContent = "Key verified. Copy it below and use it to continue.";
+                keyElement.textContent = key;
+                section.hidden = false;
+            } catch {
+                showError("Couldn't check your key", "Jnkie verification isn't available right now. Try again later.");
+            } finally {
+                clearTimeout(timeout);
+            }
+        }
+
+        verifyKey();
+    </script>
+</body>
+</html>
