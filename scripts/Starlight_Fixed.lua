@@ -1619,22 +1619,29 @@ if not dropdownPositionStart or not dropdownCloseStart or not dropdownHoverStart
     error("[Starlight] Dropdown popup section not found")
 end
 source = source:sub(1, dropdownPositionStart - 1) .. [==[
+							local desiredHeight = 175
 							local function updPos()
 								local trigger = NestedElement.Instances[1]
 								local popup = NestedElement.Instances[2]
 								local layer = Starlight.DropdownLayer
 								if not layer or not layer.Parent or not trigger.Parent or not popup.Parent then return end
 								local position = trigger.AbsolutePosition - layer.AbsolutePosition
-								local below = position.Y + trigger.AbsoluteSize.Y + 4
+								local width = math.min(math.max(1, math.ceil(trigger.AbsoluteSize.X)), math.max(1, layer.AbsoluteSize.X - 12))
+								local x = math.clamp(position.X, 6, math.max(6, layer.AbsoluteSize.X - width - 6))
+								local below = position.Y + trigger.AbsoluteSize.Y + 5
 								local above = position.Y - 5
-								if below + height > layer.AbsoluteSize.Y and above >= height then
+								local spaceBelow = math.max(0, layer.AbsoluteSize.Y - below - 6)
+								local spaceAbove = math.max(0, above - 6)
+								if spaceBelow < desiredHeight and spaceAbove > spaceBelow then
+									height = math.min(desiredHeight, spaceAbove)
 									popup.AnchorPoint = Vector2.new(0, 1)
-									popup.Position = UDim2.fromOffset(math.floor(position.X + 0.5), math.floor(above + 0.5))
+									popup.Position = UDim2.fromOffset(math.floor(x + 0.5), math.floor(above + 0.5))
 								else
+									height = math.min(desiredHeight, spaceBelow)
 									popup.AnchorPoint = Vector2.new(0, 0)
-									popup.Position = UDim2.fromOffset(math.floor(position.X + 0.5), math.floor(below + 0.5))
+									popup.Position = UDim2.fromOffset(math.floor(x + 0.5), math.floor(below + 0.5))
+								end
 							end
-						end
 							local trigger = NestedElement.Instances[1]
 							trigger.Header.TextScaled = false
 							local popup = NestedElement.Instances[2]
@@ -1660,10 +1667,43 @@ source = source:sub(1, dropdownPositionStart - 1) .. [==[
 								dismiss.Size = UDim2.fromScale(1, 1)
 								dismiss.ZIndex = 10
 								dismiss.Parent = dropdownLayer
-								dismiss.Activated:Connect(function()
-									local dismissActive = Starlight.ActiveDropdownClose
-									if type(dismissActive) == "function" then
-										dismissActive()
+								Starlight.DropdownRegistry = Starlight.DropdownRegistry or {}
+								dismiss.Activated:Connect(function(input)
+									local position = input and input.Position or UserInputService:GetMouseLocation()
+									local point = Vector2.new(position.X, position.Y)
+									local activeClose = Starlight.ActiveDropdownClose
+									local chosen
+									for item, handlers in pairs(Starlight.DropdownRegistry) do
+										if item.Parent and item.Visible then
+											local ancestor = item.Parent
+											local visible = true
+											while ancestor and ancestor ~= StarlightUI do
+												if ancestor:IsA("GuiObject") and not ancestor.Visible then
+													visible = false
+													break
+												end
+												ancestor = ancestor.Parent
+											end
+											if visible and ancestor == StarlightUI then
+												local pos = item.AbsolutePosition
+												local size = item.AbsoluteSize
+												if point.X >= pos.X and point.X <= pos.X + size.X
+													and point.Y >= pos.Y and point.Y <= pos.Y + size.Y then
+													chosen = handlers
+													break
+												end
+											end
+										end
+									end
+									if chosen and chosen.close == activeClose then
+										activeClose()
+										return
+									end
+									if type(activeClose) == "function" then
+										activeClose(true)
+									end
+									if chosen and type(chosen.open) == "function" then
+										chosen.open()
 									end
 								end)
 								Starlight.DropdownLayer = dropdownLayer
@@ -1794,14 +1834,15 @@ source = source:sub(1, dropdownPositionStart - 1) .. [==[
 								dropdownLayer.Visible = true
 								stopTransition()
 								local contentHeight = measureDropdownHeight()
-								height = math.min(contentHeight, 175)
+								desiredHeight = math.min(contentHeight, 175)
+								height = desiredHeight
 								list.AutomaticCanvasSize = Enum.AutomaticSize.None
 								list.CanvasSize = UDim2.fromOffset(0, contentHeight)
 								if contentHeight <= height then
 									list.CanvasPosition = Vector2.zero
 								end
-								local width = math.max(1, math.ceil(trigger.AbsoluteSize.X))
 								updPos()
+								local width = math.min(math.max(1, math.ceil(trigger.AbsoluteSize.X)), math.max(1, dropdownLayer.AbsoluteSize.X - 12))
 								list.Size = UDim2.new(1, 0, 0, height)
 								list.ScrollBarImageTransparency = 1
 								list.ScrollingEnabled = false
@@ -1831,15 +1872,24 @@ source = source:sub(1, dropdownPositionStart - 1) .. [==[
 							trigger:GetPropertyChangedSignal("AbsolutePosition"):Connect(function()
 								if dropdownOpen and popup.Parent then
 									updPos()
+									list.Size = UDim2.new(1, 0, 0, height)
+									popup.Size = UDim2.fromOffset(popup.Size.X.Offset, height)
+									list.ScrollingEnabled = list.CanvasSize.Y.Offset > height
 								end
 							end)
 							trigger:GetPropertyChangedSignal("AbsoluteSize"):Connect(function()
 								if not popup.Parent then
 									return
 								end
-								popup.Size = UDim2.fromOffset(math.max(1, math.ceil(trigger.AbsoluteSize.X)), popup.Size.Y.Offset)
+								popup.Size = UDim2.fromOffset(
+									math.min(math.max(1, math.ceil(trigger.AbsoluteSize.X)), math.max(1, dropdownLayer.AbsoluteSize.X - 12)),
+									popup.Size.Y.Offset
+								)
 								if dropdownOpen then
 									updPos()
+									list.Size = UDim2.new(1, 0, 0, height)
+									popup.Size = UDim2.fromOffset(popup.Size.X.Offset, height)
+									list.ScrollingEnabled = list.CanvasSize.Y.Offset > height
 								end
 								if NestedElement and NestedElement.truncate then
 									NestedElement:truncate()
@@ -1847,19 +1897,23 @@ source = source:sub(1, dropdownPositionStart - 1) .. [==[
 							end)
 							updPos()
 							close(true)
+							Starlight.DropdownRegistry[trigger] = { open = open, close = close }
 							dropdownInputConnection = UserInputService.InputBegan:Connect(function(input)
 								if dropdownOpen and input.KeyCode == Enum.KeyCode.Escape then
 									close()
 								end
 							end)
 							trigger.Interact.Activated:Connect(toggle)
-							mainWindow:GetPropertyChangedSignal("Visible"):Connect(function()
+							local mainVisibilityConnection = mainWindow:GetPropertyChangedSignal("Visible"):Connect(function()
 								if dropdownOpen and not mainWindow.Visible then close(true) end
 							end)
-							StarlightUI:GetPropertyChangedSignal("Enabled"):Connect(function()
+							local uiVisibilityConnection = StarlightUI:GetPropertyChangedSignal("Enabled"):Connect(function()
 								if dropdownOpen and not StarlightUI.Enabled then close(true) end
-						end)
+							end)
 							local function cleanupDropdownInput()
+								Starlight.DropdownRegistry[trigger] = nil
+								mainVisibilityConnection:Disconnect()
+								uiVisibilityConnection:Disconnect()
 								if dropdownInputConnection then
 									dropdownInputConnection:Disconnect()
 									dropdownInputConnection = nil
@@ -1874,14 +1928,26 @@ source = source:sub(1, dropdownPositionStart - 1) .. [==[
 							trigger.Destroying:Once(cleanupDropdownInput)
 
 ]==] .. source:sub(dropdownHoverStart)
-replaceExact([==[									optioninstance.Interact.MouseButton1Click:Connect(function()
-										ToggleOption(optioninstance)
-									end)]==], [==[									optioninstance.Interact.MouseButton1Click:Connect(function()
-										ToggleOption(optioninstance)
+replaceExact([==[									local function ToggleOption(option)
 										if not NestedElement.Values.MultipleOptions then
-											close()
-										end
-									end)]==], 1)
+											for i, v in pairs(NestedElement.Instances[2].List:GetChildren()) do
+												if v.ClassName == "Frame" and v ~= option then
+													Deactivate(v)
+													NestedElement.Values.CurrentOption = {}
+												end
+											end
+										end]==], [==[									local function ToggleOption(option)
+										if not NestedElement.Values.MultipleOptions then
+											if option:GetAttribute("Active") == true then
+												return
+											end
+											NestedElement.Values.CurrentOption = {}
+											for _, other in ipairs(NestedElement.Instances[2].List:GetChildren()) do
+												if other:IsA("Frame") and other ~= option and other:GetAttribute("Active") then
+													Deactivate(other)
+												end
+											end
+										end]==], 1)
 replaceExact([==[									optioninstance.header.Text = option]==], [==[									optioninstance.header.Text = option
 									optioninstance.header.TextScaled = false]==], 1)
 local startPos = source:find([==[				function Groupbox:Set(NewGroupboxSettings)]==], 1, true)
