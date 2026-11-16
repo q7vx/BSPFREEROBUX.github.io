@@ -1620,6 +1620,42 @@ end
 source = source:sub(1, dropdownCloseStart - 1) .. [==[							local trigger = NestedElement.Instances[1]
 							trigger.Header.TextScaled = false
 							local popup = NestedElement.Instances[2]
+							local dropdownLayer = Starlight.DropdownLayer
+							if not dropdownLayer or not dropdownLayer.Parent then
+								dropdownLayer = Instance.new("ScreenGui")
+								dropdownLayer.Name = "StarlightDropdownLayer"
+								dropdownLayer.ResetOnSpawn = false
+								dropdownLayer.IgnoreGuiInset = true
+								dropdownLayer.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+								dropdownLayer.DisplayOrder = math.max(1000, StarlightUI.DisplayOrder + 100)
+								dropdownLayer.Enabled = false
+								dropdownLayer.Parent = StarlightUI.Parent
+								local dismiss = Instance.new("TextButton")
+								dismiss.Name = "DismissDropdown"
+								dismiss.Text = ""
+								dismiss.AutoButtonColor = false
+								dismiss.BackgroundTransparency = 1
+								dismiss.BorderSizePixel = 0
+								dismiss.Active = true
+								dismiss.Size = UDim2.fromScale(1, 1)
+								dismiss.ZIndex = 10
+								dismiss.Parent = dropdownLayer
+								dismiss.Activated:Connect(function()
+									local dismissActive = Starlight.ActiveDropdownClose
+									if type(dismissActive) == "function" then
+										dismissActive()
+									end
+								end)
+								Starlight.DropdownLayer = dropdownLayer
+								StarlightUI.Destroying:Once(function()
+									if dropdownLayer.Parent then
+										dropdownLayer:Destroy()
+									end
+								end)
+							end
+							popup.Parent = dropdownLayer
+							popup.ZIndex = 20
+							popup.Active = true
 							local list = popup.List
 							local dropdownOpen = false
 							local dropdownInputConnection
@@ -1653,7 +1689,12 @@ source = source:sub(1, dropdownCloseStart - 1) .. [==[							local trigger = Nes
 									Starlight.ActiveDropdownClose = nil
 								end
 								stopTransition()
-								if not popup.Parent then return end
+								if not popup.Parent then
+									if not Starlight.ActiveDropdownClose and dropdownLayer.Parent then
+										dropdownLayer.Enabled = false
+									end
+									return
+								end
 								local width = math.max(1, math.ceil(trigger.AbsoluteSize.X))
 								list.ScrollBarImageTransparency = 1
 								list.ScrollingEnabled = false
@@ -1661,6 +1702,9 @@ source = source:sub(1, dropdownCloseStart - 1) .. [==[							local trigger = Nes
 								if immediate == true or not popup.Visible then
 									popup.Size = UDim2.fromOffset(width, 0)
 									popup.Visible = false
+									if not Starlight.ActiveDropdownClose then
+										dropdownLayer.Enabled = false
+									end
 									return
 								end
 								popupTween = TweenService:Create(
@@ -1672,7 +1716,10 @@ source = source:sub(1, dropdownCloseStart - 1) .. [==[							local trigger = Nes
 									if transitionToken ~= token or dropdownOpen or not popup.Parent then return end
 									if playbackState == Enum.PlaybackState.Completed then
 										popup.Visible = false
-									end
+										if not Starlight.ActiveDropdownClose then
+											dropdownLayer.Enabled = false
+										end
+								end
 								end)
 								popupTween:Play()
 							end
@@ -1705,12 +1752,13 @@ source = source:sub(1, dropdownCloseStart - 1) .. [==[							local trigger = Nes
 							local function open()
 								if not trigger.Parent or not popup.Parent or not mainWindow.Visible or not StarlightUI.Enabled then return end
 								if type(Starlight.ActiveDropdownClose) == "function" and Starlight.ActiveDropdownClose ~= close then
-									pcall(Starlight.ActiveDropdownClose)
+									pcall(Starlight.ActiveDropdownClose, true)
 								end
 								transitionToken += 1
 								local token = transitionToken
 								dropdownOpen = true
 								Starlight.ActiveDropdownClose = close
+								dropdownLayer.Enabled = true
 								stopTransition()
 								local contentHeight = measureDropdownHeight()
 								height = math.min(contentHeight, 175)
@@ -1767,34 +1815,17 @@ source = source:sub(1, dropdownCloseStart - 1) .. [==[							local trigger = Nes
 							updPos()
 							close(true)
 							dropdownInputConnection = UserInputService.InputBegan:Connect(function(input)
-								if input.UserInputType ~= Enum.UserInputType.MouseButton1
-									and input.UserInputType ~= Enum.UserInputType.Touch then
-									return
-								end
-								if not popup.Parent or not trigger.Parent then
-									close()
-									return
-								end
-								if not mainWindow.Visible or not StarlightUI.Enabled then
-									if dropdownOpen then
-										close()
-									end
-									return
-								end
-								local point = Vector2.new(input.Position.X, input.Position.Y)
-								if contains(trigger.Interact, point) or contains(trigger, point) then
-									toggle()
-								elseif dropdownOpen and not contains(popup, point) then
+								if dropdownOpen and input.KeyCode == Enum.KeyCode.Escape then
 									close()
 								end
 							end)
-							trigger.Interact.Activated:Connect(function(input)
-								if input and (input.UserInputType == Enum.UserInputType.MouseButton1
-									or input.UserInputType == Enum.UserInputType.Touch) then
-									return
-								end
-								toggle()
+							trigger.Interact.Activated:Connect(toggle)
+							mainWindow:GetPropertyChangedSignal("Visible"):Connect(function()
+								if dropdownOpen and not mainWindow.Visible then close(true) end
 							end)
+							StarlightUI:GetPropertyChangedSignal("Enabled"):Connect(function()
+								if dropdownOpen and not StarlightUI.Enabled then close(true) end
+						end)
 							local function cleanupDropdownInput()
 								if dropdownInputConnection then
 									dropdownInputConnection:Disconnect()
@@ -1810,6 +1841,14 @@ source = source:sub(1, dropdownCloseStart - 1) .. [==[							local trigger = Nes
 							trigger.Destroying:Once(cleanupDropdownInput)
 
 ]==] .. source:sub(dropdownHoverStart)
+replaceExact([==[									optioninstance.Interact.MouseButton1Click:Connect(function()
+										ToggleOption(optioninstance)
+									end)]==], [==[									optioninstance.Interact.MouseButton1Click:Connect(function()
+										ToggleOption(optioninstance)
+										if not NestedElement.Values.MultipleOptions then
+											close()
+										end
+									end)]==], 1)
 replaceExact([==[									optioninstance.header.Text = option]==], [==[									optioninstance.header.Text = option
 									optioninstance.header.TextScaled = false]==], 1)
 local startPos = source:find([==[				function Groupbox:Set(NewGroupboxSettings)]==], 1, true)
