@@ -1612,24 +1612,44 @@ local dropdownMethod = source:find([==[function Element:AddDropdown(NestedSettin
 if not dropdownMethod then
     error("[Starlight] Dropdown method not found")
 end
-local dropdownCloseStart = source:find([==[							local function close()]==], dropdownMethod, true)
+local dropdownPositionStart = source:find([==[							local function updPos()]==], dropdownMethod, true)
+local dropdownCloseStart = dropdownPositionStart and source:find([==[							local function close()]==], dropdownPositionStart, true)
 local dropdownHoverStart = dropdownCloseStart and source:find([==[							local function hover()]==], dropdownCloseStart, true)
-if not dropdownCloseStart or not dropdownHoverStart then
+if not dropdownPositionStart or not dropdownCloseStart or not dropdownHoverStart then
     error("[Starlight] Dropdown popup section not found")
 end
-source = source:sub(1, dropdownCloseStart - 1) .. [==[							local trigger = NestedElement.Instances[1]
+source = source:sub(1, dropdownPositionStart - 1) .. [==[
+							local function updPos()
+								local trigger = NestedElement.Instances[1]
+								local popup = NestedElement.Instances[2]
+								local layer = Starlight.DropdownLayer
+								if not layer or not layer.Parent or not trigger.Parent or not popup.Parent then return end
+								local position = trigger.AbsolutePosition - layer.AbsolutePosition
+								local below = position.Y + trigger.AbsoluteSize.Y + 4
+								local above = position.Y - 5
+								if below + height > layer.AbsoluteSize.Y and above >= height then
+									popup.AnchorPoint = Vector2.new(0, 1)
+									popup.Position = UDim2.fromOffset(math.floor(position.X + 0.5), math.floor(above + 0.5))
+								else
+									popup.AnchorPoint = Vector2.new(0, 0)
+									popup.Position = UDim2.fromOffset(math.floor(position.X + 0.5), math.floor(below + 0.5))
+							end
+						end
+							local trigger = NestedElement.Instances[1]
 							trigger.Header.TextScaled = false
 							local popup = NestedElement.Instances[2]
 							local dropdownLayer = Starlight.DropdownLayer
 							if not dropdownLayer or not dropdownLayer.Parent then
-								dropdownLayer = Instance.new("ScreenGui")
+								dropdownLayer = Instance.new("Frame")
 								dropdownLayer.Name = "StarlightDropdownLayer"
-								dropdownLayer.ResetOnSpawn = false
-								dropdownLayer.IgnoreGuiInset = true
-								dropdownLayer.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-								dropdownLayer.DisplayOrder = math.max(1000, StarlightUI.DisplayOrder + 100)
-								dropdownLayer.Enabled = false
-								dropdownLayer.Parent = StarlightUI.Parent
+								dropdownLayer.BackgroundTransparency = 1
+								dropdownLayer.BorderSizePixel = 0
+								dropdownLayer.Position = UDim2.fromScale(0, 0)
+								dropdownLayer.Size = UDim2.fromScale(1, 1)
+								dropdownLayer.ClipsDescendants = false
+								dropdownLayer.Visible = false
+								dropdownLayer.ZIndex = 10000
+								dropdownLayer.Parent = StarlightUI
 								local dismiss = Instance.new("TextButton")
 								dismiss.Name = "DismissDropdown"
 								dismiss.Text = ""
@@ -1647,15 +1667,28 @@ source = source:sub(1, dropdownCloseStart - 1) .. [==[							local trigger = Nes
 									end
 								end)
 								Starlight.DropdownLayer = dropdownLayer
-								StarlightUI.Destroying:Once(function()
-									if dropdownLayer.Parent then
-										dropdownLayer:Destroy()
-									end
-								end)
 							end
 							popup.Parent = dropdownLayer
 							popup.ZIndex = 20
 							popup.Active = true
+							if StarlightUI.ZIndexBehavior == Enum.ZIndexBehavior.Global then
+								dropdownLayer.DismissDropdown.ZIndex = 10010
+								popup.ZIndex = 10020
+								local function promote(descendant)
+									if descendant:IsA("GuiObject") then
+										local base = descendant:GetAttribute("ZyDropdownBaseZ")
+										if base == nil then
+											base = descendant.ZIndex
+											descendant:SetAttribute("ZyDropdownBaseZ", base)
+										end
+										descendant.ZIndex = 10020 + base
+									end
+								end
+								for _, descendant in ipairs(popup:GetDescendants()) do
+									promote(descendant)
+								end
+								popup.DescendantAdded:Connect(promote)
+							end
 							local list = popup.List
 							local dropdownOpen = false
 							local dropdownInputConnection
@@ -1691,7 +1724,7 @@ source = source:sub(1, dropdownCloseStart - 1) .. [==[							local trigger = Nes
 								stopTransition()
 								if not popup.Parent then
 									if not Starlight.ActiveDropdownClose and dropdownLayer.Parent then
-										dropdownLayer.Enabled = false
+										dropdownLayer.Visible = false
 									end
 									return
 								end
@@ -1703,7 +1736,7 @@ source = source:sub(1, dropdownCloseStart - 1) .. [==[							local trigger = Nes
 									popup.Size = UDim2.fromOffset(width, 0)
 									popup.Visible = false
 									if not Starlight.ActiveDropdownClose then
-										dropdownLayer.Enabled = false
+										dropdownLayer.Visible = false
 									end
 									return
 								end
@@ -1717,7 +1750,7 @@ source = source:sub(1, dropdownCloseStart - 1) .. [==[							local trigger = Nes
 									if playbackState == Enum.PlaybackState.Completed then
 										popup.Visible = false
 										if not Starlight.ActiveDropdownClose then
-											dropdownLayer.Enabled = false
+											dropdownLayer.Visible = false
 										end
 								end
 								end)
@@ -1758,7 +1791,7 @@ source = source:sub(1, dropdownCloseStart - 1) .. [==[							local trigger = Nes
 								local token = transitionToken
 								dropdownOpen = true
 								Starlight.ActiveDropdownClose = close
-								dropdownLayer.Enabled = true
+								dropdownLayer.Visible = true
 								stopTransition()
 								local contentHeight = measureDropdownHeight()
 								height = math.min(contentHeight, 175)
