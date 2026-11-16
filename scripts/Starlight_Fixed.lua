@@ -629,13 +629,18 @@ replaceExact([==[	local success, decoded = pcall(HttpService.JSONDecode, HttpSer
 		return false, "Unable to decode configuration data."
 	end
 
-	for _, object in ipairs(decoded.objects) do
-		if type(object) ~= "table" or type(object.idx) ~= "string" or type(object.data) ~= "table" then
-			return false, "Invalid configuration entry."
-		end
-		local success, err = pcall(ConfigMethods.Load, object.idx, object.data)
-		if not success then
-			return false, tostring(err)
+	local applied = 0
+	local skipped = 0
+	for _, object in pairs(decoded.objects) do
+		if type(object) == "table" and type(object.idx) == "string" and type(object.data) == "table" then
+			local ok, result = pcall(ConfigMethods.Load, object.idx, object.data)
+			if ok and result == true then
+				applied += 1
+			else
+				skipped += 1
+			end
+		else
+			skipped += 1
 		end
 	end
 
@@ -648,30 +653,29 @@ replaceExact([==[		if GetNestedValue(Starlight.Window.TabSections, Idx) then
 					end
 				end
 			end
-		end]==], [==[		local target = GetNestedValue(Starlight.Window.TabSections, Idx)
-		if not target or not target.Class then
-			return false, "Configuration target missing: " .. Idx
+		end]==], [==[		if type(Idx) ~= "string" or type(Data) ~= "table" then
+			return false
+		end
+		local found, target = pcall(GetNestedValue, Starlight.Window.TabSections, Idx)
+		if not found or type(target) ~= "table" or type(target.Class) ~= "string" or type(target.Set) ~= "function" then
+			return false
 		end
 		local allowed = ClassInterfacer[target.Class]
-		if not allowed then
-			return false, "Unsupported configuration element: " .. tostring(target.Class)
+		if type(allowed) ~= "table" then
+			return false
 		end
-		for key, value in pairs(Data) do
+		for key, originalValue in pairs(Data) do
 			if table.find(allowed, key) then
-				if target.Class == "ColorPicker" and key == "CurrentValue" and type(value) == "table" then
-					value = Color.Pack(value)
-				end
-				target:Set({ [key] = value })
+				pcall(function()
+					local value = originalValue
+					if target.Class == "ColorPicker" and key == "CurrentValue" and type(value) == "table" then
+						value = Color.Pack(value)
+					end
+					target:Set({ [key] = value })
+				end)
 			end
 		end
 		return true]==], 1)
-replaceExact([==[		local success, err = pcall(ConfigMethods.Load, object.idx, object.data)
-		if not success then
-			return false, tostring(err)
-		end]==], [==[		local success, result, err = pcall(ConfigMethods.Load, object.idx, object.data)
-		if not success or result == false then
-			return false, tostring(err or result)
-		end]==], 1)
 replaceExact([==[	writefile(fullPath, encoded)
 	return true]==], [==[	local wrote, err = pcall(writefile, fullPath, encoded)
 	if not wrote then
@@ -1090,7 +1094,7 @@ replaceExact([==[
 replaceExact([==[
 		Tab.Instances.Button.Interact["MouseButton1Click"]:Connect(Activate)]==], [==[
 		Tab.Instances.Button.Interact["MouseButton1Click"]:Connect(Activate)
-		Tab.Select = Activate]==], 1)
+		Tab.Select = Activate]==], -1)
 replaceExact([==[--// ENDSUBSECTION
 
 if UserInputService.TouchEnabled then]==], [==[--// ENDSUBSECTION
