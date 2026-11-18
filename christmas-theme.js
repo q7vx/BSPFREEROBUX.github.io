@@ -11,5 +11,115 @@
   d.addEventListener("pointerup",e=>{if(e.target.closest("button,.zy-xmas-float")&&!e.target.closest("[data-muted]"))clickSound()},{passive:true});
   d.addEventListener("visibilitychange",()=>d.body&&d.body.classList.toggle("zy-xmas-hidden-snow",d.hidden));
   async function decorate(){const avatar=d.querySelector("#profilePfp,#avatarImage,#avatar img,.profileTop .avatar img");if(!avatar)return;let username=new URLSearchParams(location.search).get("username")||localStorage.getItem("username");if(!username)return;try{const api=(await (await fetch("/server.txt",{cache:"no-store"})).text()).trim();if(!api)return;const r=await fetch(api+"/profile?username="+encodeURIComponent(username));if(!r.ok)return;const x=await r.json();const chosen=x.christmas?.selected;if(!chosen)return;const av=avatar.closest(".avatar")||avatar.parentElement;if(!av||!av.parentElement)return;const parent=av.parentElement;const pstyle=getComputedStyle(parent);if(pstyle.position==="static")parent.style.position="relative";let layer=parent.querySelector(".zy-cosmetic-anchor");if(!layer){layer=d.createElement("div");layer.className="zy-cosmetic-anchor";parent.append(layer)}function update(){const a=av.getBoundingClientRect(),p=parent.getBoundingClientRect();layer.style.left=(a.left-p.left)+"px";layer.style.top=(a.top-p.top)+"px";layer.style.width=a.width+"px";layer.style.height=a.height+"px"}update();window.addEventListener("resize",update,{passive:true});layer.replaceChildren();if(chosen.border){const img=d.createElement("img");img.src=base+encodeURIComponent(chosen.border)+".svg";img.className="zy-cosmetic-border";img.alt="";layer.append(img)}if(chosen.pfp){const img=d.createElement("img");img.src=base+encodeURIComponent(chosen.pfp)+".svg";img.className="zy-cosmetic-avatar";img.dataset.deco=chosen.pfp;img.alt="";layer.append(img)}if(chosen.background){const bg=av.closest(".profileHero,.hero,.profileCard,.profile-card")||av.parentElement.closest(".profileHero,.hero,.profileCard");if(bg){bg.classList.add("zy-cosmetic-background");bg.style.backgroundImage="linear-gradient(90deg,#031221cc,#03122144),url('"+base+encodeURIComponent(chosen.background)+".svg')"}}}catch{}}
-  if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",()=>{enable();setTimeout(decorate,1200)},{once:true});else{enable();setTimeout(decorate,1200)}
+
+  const EVENT_START=Date.parse("2026-12-01T00:00:00+01:00");
+  const EVENT_END=Date.parse("2026-12-25T00:00:00+01:00");
+  let backend=null;
+  let status=null;
+  let loading=null;
+  let timer=null;
+  const token=()=>localStorage.getItem("Token")||localStorage.getItem("SessionID")||"";
+  function scheduleActive(){
+    const now=Date.now();
+    return now>=EVENT_START&&now<EVENT_END;
+  }
+  function disable(){
+    d.body.classList.remove("zy-xmas-2026","zy-xmas-hidden-snow");
+    for(const el of d.querySelectorAll(".zy-xmas-snow,.zy-xmas-garland,.zy-xmas-float"))el.remove();
+  }
+  function apply(active){
+    if(active)enable();
+    else disable();
+  }
+  function clearAdmin(){
+    for(const el of d.querySelectorAll(".zy-xmas-admin-control,.zy-xmas-admin-dialog"))el.remove();
+  }
+  function adminPanel(){
+    if(!status?.admin){clearAdmin();return}
+    let trigger=d.querySelector(".zy-xmas-admin-control");
+    if(!trigger){
+      trigger=d.createElement("button");
+      trigger.type="button";
+      trigger.className="zy-xmas-admin-control";
+      trigger.textContent="Christmas theme controls";
+      trigger.addEventListener("click",openAdminPanel);
+      d.body.append(trigger);
+    }
+    trigger.textContent="✦ Christmas theme settings";
+  }
+  function openAdminPanel(){
+    if(!status?.admin)return;
+    const existing=d.querySelector(".zy-xmas-admin-dialog");
+    if(existing){existing.remove();return}
+    const modal=d.createElement("div");
+    modal.className="zy-xmas-admin-dialog";
+    modal.setAttribute("role","dialog");
+    modal.setAttribute("aria-modal","true");
+    modal.setAttribute("aria-label","Christmas theme administration");
+    const scheduled=status.scheduled;
+    modal.innerHTML='<section class="zy-xmas-admin-card"><div class="zy-xmas-admin-heading"><span>DECEMBER 2026</span><button type="button" data-close aria-label="Close">×</button></div><h2>Christmas theme</h2><p>Automatically applies to every member December 1–24, Copenhagen time. Members have no theme switch.</p><div class="zy-xmas-admin-info"><span>Season</span><strong>'+ (scheduled?"Event dates":"Outside season")+'</strong><span>Member theme</span><strong>'+(status.publicActive?"Active":"Inactive")+'</strong></div><div class="zy-xmas-admin-option"><div><b>Theme for all members</b><small>Only applies during December 1–24</small></div><button type="button" data-action="global">'+(status.enabled?"Disable":"Enable")+'</button></div><div class="zy-xmas-admin-option"><div><b>My administrator preview</b><small>Visible only to you; works outside December</small></div><button type="button" data-action="preview">'+(status.preview?"Disable":"Enable")+'</button></div><p class="zy-xmas-admin-error" role="status"></p><button type="button" class="zy-xmas-admin-done" data-close>Done</button></section>';
+    d.body.append(modal);
+    modal.addEventListener("click",e=>{if(e.target===modal||e.target.closest("[data-close]"))modal.remove()});
+    modal.querySelectorAll("[data-action]").forEach(button=>button.addEventListener("click",async()=>{
+      const action=button.dataset.action;
+      const next=action==="global"?!status.enabled:!status.preview;
+      button.disabled=true;
+      try{
+        const response=await fetch(backend+"/api/theme/christmas/admin",{
+          method:"POST",
+          headers:{"Content-Type":"application/json",Authorization:token()},
+          body:JSON.stringify({action,enabled:next}),
+          cache:"no-store"
+        });
+        const result=await response.json();
+        if(!response.ok)throw Error(result.error||"Unable to update Christmas theme");
+        status=result;
+        apply(result.active);
+        modal.remove();
+        adminPanel();
+        openAdminPanel();
+      }catch(e){
+        button.disabled=false;
+        const msg=modal.querySelector(".zy-xmas-admin-error");
+        if(msg)msg.textContent=e.message||"Unable to save setting";
+      }
+    }));
+  }
+  async function refresh(){
+    if(loading)return loading;
+    loading=(async()=>{
+      let next=null;
+      try{
+        if(!backend){
+          const r=await fetch("/server.txt",{cache:"no-store"});
+          if(!r.ok)throw Error("Backend address unavailable");
+          backend=(await r.text()).trim().replace(/\/+$/,"");
+          if(!/^https?:\/\//i.test(backend))throw Error("Invalid backend address");
+        }
+        const r=await fetch(backend+"/api/theme/christmas",{headers:token()?{Authorization:token()}:{},cache:"no-store"});
+        if(!r.ok)throw Error("Theme status unavailable");
+        next=await r.json();
+      }catch{
+        next={active:scheduleActive(),scheduled:scheduleActive(),publicActive:scheduleActive(),admin:false};
+      }
+      status=next;
+      apply(next.active===true);
+      adminPanel();
+      if(timer)clearTimeout(timer);
+      const now=Date.now();
+      const boundary=now<EVENT_START?EVENT_START:now<EVENT_END?EVENT_END:null;
+      const interval=boundary?Math.min(60000,Math.max(1000,boundary-now+200)):60000;
+      timer=setTimeout(refresh,interval);
+      return next;
+    })();
+    try{return await loading}finally{loading=null}
+  }
+  function start(){
+    refresh();
+    setTimeout(decorate,1100);
+    d.addEventListener("visibilitychange",()=>{if(d.hidden){d.body.classList.add("zy-xmas-hidden-snow")}else{d.body.classList.remove("zy-xmas-hidden-snow");refresh()}});
+  }
+  window.ZyphorChristmasTheme={refresh};
+  if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",start,{once:true});
+  else start();
 })();
