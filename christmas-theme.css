@@ -19,3 +19,13 @@ body.zy-xmas-2026{background-color:#07101b!important;background-image:linear-gra
 @media(max-width:650px){.zy-xmas-float{font-size:11px!important;padding:10px 12px!important}.zy-xmas-snow i:nth-child(n+20){display:none!important}}
 @media(prefers-reduced-motion:reduce){.zy-xmas-snow i{animation:none;display:none}.zy-xmas-float,.zy-xmas-2026 button{transition:none!important}}
 body.zy-xmas-hidden-snow .zy-xmas-snow{display:none!important}
+
+.zy-xmas-garland{position:fixed;left:0;right:0;top:0;height:28px;z-index:2147480750;pointer-events:none;background:linear-gradient(180deg,#11342ec9,transparent 60%);opacity:.85}
+.zy-xmas-garland::before{content:"";display:block;height:10px;background:repeating-radial-gradient(ellipse 28px 17px at 16px -6px,#2e7761 0 7px,transparent 9px 27px);background-size:35px 15px}
+.zy-xmas-garland::after{content:"";position:absolute;inset:7px 0 0;background:radial-gradient(circle,#fff3bb 0 3px,#ffd07f88 4px,transparent 9px) 0 0 / 75px 25px,radial-gradient(circle,#ff7187 0 3px,transparent 9px) 35px 0 / 90px 25px,radial-gradient(circle,#9af5d1 0 3px,transparent 9px) 14px 0 / 110px 25px;opacity:.85}
+body.zy-xmas-2026 :is(header,nav,.topbar,.sideBar,.sidebar){border-color:#b7d5b333}
+body.zy-xmas-2026 :is(.card,.panel,.profileHero,.profileCard,.modal,.tile,.card-section){border-color:#abdcbb28}
+body.zy-xmas-2026 :is(.btn-primary,.primary-btn,.submit-btn):not([disabled]){background:linear-gradient(130deg,#1e6f53,#237165)!important;border-color:#aae6bd77!important;color:#f8fff7!important}
+body.zy-xmas-2026 :is(h1,h2,h3){text-shadow:0 2px 18px #133c3622}
+body.zy-xmas-2026 :is(a,button)[aria-current=page]{border-color:#ffdb9e88}
+@media(prefers-reduced-motion:reduce){.zy-xmas-garland{opacity:.52}}
