@@ -104,6 +104,24 @@
       }
       status=next;
       apply(next.active===true);
+      const seasonalLinkAllowed=next.scheduled===true||next.admin===true;
+      for(const a of d.querySelectorAll('a[href$="Christmas.html"],a[href$="/Christmas.html"]')){
+        if(!seasonalLinkAllowed){
+          a.dataset.zyHolidayHidden="1";
+          a.style.setProperty("display","none","important");
+          a.setAttribute("aria-hidden","true");
+          a.tabIndex=-1;
+        }else if(a.dataset.zyHolidayHidden==="1"){
+          a.style.removeProperty("display");
+          a.removeAttribute("aria-hidden");
+          a.removeAttribute("tabindex");
+          delete a.dataset.zyHolidayHidden;
+        }
+      }
+      if(!seasonalLinkAllowed&&/\/christmas\.html$/i.test(location.pathname)){
+        location.replace("/dashboard.html");
+        return next;
+      }
       adminPanel();
       if(timer)clearTimeout(timer);
       const now=Date.now();
