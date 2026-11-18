@@ -29,3 +29,29 @@ body.zy-xmas-2026 :is(.btn-primary,.primary-btn,.submit-btn):not([disabled]){bac
 body.zy-xmas-2026 :is(h1,h2,h3){text-shadow:0 2px 18px #133c3622}
 body.zy-xmas-2026 :is(a,button)[aria-current=page]{border-color:#ffdb9e88}
 @media(prefers-reduced-motion:reduce){.zy-xmas-garland{opacity:.52}}
+
+
+.zy-xmas-admin-control{all:unset!important;box-sizing:border-box!important;position:fixed!important;left:max(14px,env(safe-area-inset-left))!important;bottom:max(14px,env(safe-area-inset-bottom))!important;z-index:2147481100!important;display:inline-flex!important;align-items:center!important;gap:9px!important;padding:11px 15px!important;border-radius:14px!important;border:1px solid #e3d0a17a!important;background:linear-gradient(130deg,#123c39,#21364c)!important;box-shadow:0 8px 28px #0008!important;color:#f4ead9!important;font:800 12px/1.2 system-ui,sans-serif!important;cursor:pointer!important}
+.zy-xmas-admin-control:hover{filter:brightness(1.15)}
+.zy-xmas-admin-dialog{position:fixed!important;inset:0!important;z-index:2147483500!important;background:#01080ed9!important;backdrop-filter:blur(12px)!important;display:flex!important;align-items:center!important;justify-content:center!important;overflow-y:auto!important;padding:18px!important;font-family:Inter,system-ui,sans-serif!important;color:#effcf9!important}
+.zy-xmas-admin-card{display:grid;gap:17px;max-height:95vh;overflow:auto;width:min(480px,100%);border:1px solid #f9d6a477;background:linear-gradient(145deg,#143d3b,#101d2c 65%,#222337);border-radius:24px;padding:clamp(20px,4vw,30px);box-shadow:0 24px 100px #000b}
+.zy-xmas-admin-card h2{font:800 clamp(29px,6vw,40px)/1.1 system-ui!important;margin:0!important;color:#ffeacb!important}
+.zy-xmas-admin-card p{font-size:13px;color:#bdd4d5;line-height:1.6;margin:0}
+.zy-xmas-admin-heading{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.zy-xmas-admin-heading span{font-size:10px;letter-spacing:.2em;font-weight:900;color:#dfc18c}
+.zy-xmas-admin-heading button{all:unset;cursor:pointer;font:400 27px/1 system-ui;padding:3px 9px;color:#fff}
+.zy-xmas-admin-info{display:grid;grid-template-columns:1fr auto;gap:10px;padding:13px 16px;background:#071c2599;border:1px solid #e7ffff20;border-radius:14px;font-size:12px}
+.zy-xmas-admin-info span{color:#aacbcc}.zy-xmas-admin-info strong{color:#f9dab0}
+.zy-xmas-admin-option{display:flex;align-items:center;justify-content:space-between;gap:13px;padding:17px;border:1px solid #e1eede2c;background:#ffffff09;border-radius:15px}
+.zy-xmas-admin-option b{display:block;font-size:13px}.zy-xmas-admin-option small{display:block;font-size:11px;color:#a9c6c6;margin-top:5px;line-height:1.45}
+.zy-xmas-admin-option button,.zy-xmas-admin-done{border:1px solid #f0dfb1a2;border-radius:10px;padding:10px 14px;background:#f1d5a2;color:#16231f;font-weight:900;font-size:12px;cursor:pointer;flex:0 0 auto}
+.zy-xmas-admin-option button:disabled{opacity:.6;cursor:wait}.zy-xmas-admin-done{width:100%;background:#21463e;color:#ecfff4;border-color:#a3dec46e}
+.zy-xmas-admin-error{min-height:12px;color:#ffb3ba!important;font-size:12px!important}
+body.zy-xmas-2026 :is(.layout,.mobileApp,.dashboard-container,.main-content,.main,.page,.container){color-scheme:dark}
+body.zy-xmas-2026 :is(.card,.panel,.stat,.stats-card,.profileHero,.hero,.section,.sidebar,.topbar){border-color:#c9dbc043}
+body.zy-xmas-2026 :is(.profileHero,.card,.panel,.stat,.stats-card):not(.zy-xmas-admin-card){box-shadow:0 8px 32px #0003,inset 0 1px #d8fff015}
+body.zy-xmas-2026 :is(input,textarea,select):focus-visible{outline-color:#ffd995!important;border-color:#e4d49d!important}
+body.zy-xmas-2026 :is(.badge,.pill,.stat .value){text-shadow:0 0 15px #ffcb8940}
+body.zy-xmas-2026 :is(.nav,.sidebar,.mobileTop,.navbar,.header){background-image:linear-gradient(110deg,#0a382822,#50221e1a)}
+@media(max-width:640px){.zy-xmas-admin-control{padding:10px 12px!important;font-size:11px!important}.zy-xmas-admin-option{padding:12px}.zy-xmas-admin-option button{padding:9px 11px}}
+@media(prefers-reduced-motion:reduce){.zy-xmas-admin-control,.zy-xmas-admin-dialog{transition:none!important}}
