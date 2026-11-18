@@ -1,0 +1,25 @@
+name: Christmas 2026 validation
+on:
+  push:
+    branches: [development]
+  pull_request:
+    branches: [main]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate Christmas JavaScript
+        run: |
+          node --check christmas-theme.js
+          node --check christmas-event.js
+      - name: Verify Christmas page and assets
+        run: |
+          test -s Christmas.html
+          test -s christmas-theme.css
+          test -s christmas-assets/winter-scene.svg
+          for f in santa_hat winter_horizon rudolph_nose snowy_antlers reindeer_ears aurora_cabin frozen_crown gingerbread_crown candy_border aurora_border snowfall_border gold_star_border holly_hat snowman_hat elf_hat frost_glasses snowy_forest starlit_village candy_land north_pole ice_royal_border present_border comet_border peppermint_hat polar_bear_ears winter_wings polar_night northern_lights starfall; do test -s "christmas-assets/$f.svg"; done
+          node -e "const f=require('fs');const p=f.readFileSync('Christmas.html','utf8');if(!p.includes('christmas-event.js'))process.exit(1)"
