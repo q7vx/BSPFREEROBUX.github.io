@@ -1,0 +1,22 @@
+
+#games .game{position:relative;overflow:hidden;min-height:126px;transition:transform .18s,border-color .18s,box-shadow .18s;background:linear-gradient(155deg,#24586a5f,#132d42 70%);border-color:#99dae331}
+#games .game:hover{transform:translateY(-3px);border-color:#b2f5e1;box-shadow:0 10px 30px #0005}
+#games .game.selected{border-color:#ffdcb1;box-shadow:inset 0 0 0 1px #f5ce939c,0 10px 25px #0004}
+#games .game .symbol{font-size:32px;color:#f8dda9;text-shadow:0 0 20px #ffcf91a3}
+#games .game .arcade-game-sub{display:block;margin-top:5px;color:#a9cbd2;font-size:10px;line-height:1.45}
+#challenge{background:linear-gradient(160deg,#12343f,#0a1d2b);padding:0 0 15px;border-color:#abeddd60;overflow:hidden}
+.arcade-stage-head{display:flex;justify-content:space-between;align-items:center;padding:17px 18px 10px;gap:10px}
+.arcade-stage-head h3{color:#f8e8ce;font-size:24px;margin:3px 0 0}
+.arcade-stop{background:#6c2f3b;border:1px solid #ffbdbd4f;color:#ffe7e7;border-radius:10px;padding:10px 12px;font-size:12px;font-weight:800;cursor:pointer}
+.arcade-stop:hover{background:#914554}
+.arcade-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:8px 14px 13px}
+.arcade-stats>div{background:#ffffff0b;border:1px solid #e8ffff1d;border-radius:10px;padding:10px;text-align:center}
+.arcade-stats small{display:block;color:#a9c4cd;font-size:9px;font-weight:800;letter-spacing:.07em}
+.arcade-stats strong{display:block;color:#ffdeaa;font:900 24px Outfit,system-ui,sans-serif;margin-top:2px}
+.arcade-canvas-wrap{position:relative;overflow:hidden;margin:0 12px;border:1px solid #c1f9ed44;border-radius:15px;background:#071c2c;box-shadow:inset 0 0 25px #0005;user-select:none;-webkit-user-select:none}
+#arcadeCanvas{display:block;width:100%;height:auto;aspect-ratio:16/9;touch-action:none;cursor:crosshair}
+.arcade-demo{position:absolute;left:50%;top:11px;transform:translateX(-50%);background:#502b34e8;color:#ffe5d8;border:1px solid #e4ad9477;border-radius:99px;padding:7px 12px;font-size:10px;font-weight:900;letter-spacing:.05em;white-space:nowrap;pointer-events:none}
+.arcade-instruction{padding:0 16px;font-size:12px;text-align:center;margin:13px 0 0;color:#a9d6d4}
+.arcade-rank-label{font-size:11px;color:#a9e7d7;letter-spacing:.07em;border-bottom:1px solid #ffffff1b;padding:12px 0}
+#gameMessage[data-state=error]{color:#ffb9c5}
+@media(max-width:640px){#games .game{min-height:116px}#games .game .symbol{font-size:29px}.arcade-stage-head h3{font-size:20px}.arcade-stats strong{font-size:21px}.arcade-canvas-wrap{margin:0 7px}}
