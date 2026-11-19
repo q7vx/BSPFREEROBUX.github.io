@@ -20,3 +20,14 @@
 .arcade-rank-label{font-size:11px;color:#a9e7d7;letter-spacing:.07em;border-bottom:1px solid #ffffff1b;padding:12px 0}
 #gameMessage[data-state=error]{color:#ffb9c5}
 @media(max-width:640px){#games .game{min-height:116px}#games .game .symbol{font-size:29px}.arcade-stage-head h3{font-size:20px}.arcade-stats strong{font-size:21px}.arcade-canvas-wrap{margin:0 7px}}
+
+.zy-badge-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px;margin-top:22px}
+.zy-event-badge{position:relative;min-height:178px;padding:23px 19px;border-radius:20px;border:1px solid #bfd7cf2e;background:radial-gradient(circle at 90% 0,#317c6e21,transparent 55%),linear-gradient(145deg,#12303d,#0c202c);display:flex;flex-direction:column;gap:8px;box-shadow:0 8px 25px #0004}
+.zy-event-badge.earned{border-color:#f0d19793;background:radial-gradient(circle at 80% 0,#e4b76437,transparent 55%),linear-gradient(145deg,#1a4b43,#1b3034)}
+.zy-event-badge-icon{width:48px;height:48px;display:grid;place-items:center;border:1px solid #d5f3ea33;border-radius:14px;background:#98f2df18;color:#e5d4a7;font:900 29px Outfit,system-ui}
+.zy-event-badge.earned .zy-event-badge-icon{color:#ffe3a6;background:#e6d19731}
+.zy-event-badge strong{font:800 17px Outfit,system-ui;letter-spacing:-.02em}
+.zy-event-badge>span{font-size:12px;color:#b4c9c9}
+.zy-event-badge-status{margin-top:auto;font-weight:900!important;font-size:10px!important;letter-spacing:.12em;color:#aac0c1!important}
+.zy-event-badge.earned .zy-event-badge-status{color:#f9dcac!important}
+@media(max-width:740px){.zy-badge-row{grid-template-columns:1fr;gap:10px}.zy-event-badge{min-height:123px;display:grid;grid-template-columns:49px 1fr;align-content:center;column-gap:14px;padding:16px}.zy-event-badge-icon{grid-row:span 3}.zy-event-badge strong{font-size:15px}.zy-event-badge-status{margin-top:2px}}
