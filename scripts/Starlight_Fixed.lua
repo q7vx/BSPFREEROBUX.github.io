@@ -2299,6 +2299,8 @@ do
         local previous = mainWindow:FindFirstChild(name)
         if previous then previous:Destroy() end
     end
+    local previousSnowLayer = StarlightUI.Parent and StarlightUI.Parent:FindFirstChild("ZyphorChristmasSnowLayer")
+    if previousSnowLayer then previousSnowLayer:Destroy() end
     local decorations = Instance.new("Folder")
     decorations.Name = "ZyphorChristmasDecorations"
     decorations.Parent = mainWindow
@@ -2380,70 +2382,109 @@ do
     border.Thickness = 1
     border.Transparency = 0.72
     border.Parent = mainWindow
-    local snow = Instance.new("Frame")
-    snow.Name = "ChristmasSnowfall"
-    snow.BackgroundTransparency = 1
-    snow.BorderSizePixel = 0
-    snow.Size = UDim2.fromScale(1, 1)
-    snow.ClipsDescendants = true
-    snow.Active = false
-    snow.Selectable = false
-    snow.ZIndex = math.max(1, mainWindow.ZIndex)
-    snow.Parent = mainWindow
+    local snowLayer = Instance.new("ScreenGui")
+    snowLayer.Name = "ZyphorChristmasSnowLayer"
+    snowLayer.IgnoreGuiInset = true
+    snowLayer.ResetOnSpawn = false
+    snowLayer.DisplayOrder = (tonumber(StarlightUI.DisplayOrder) or 0) + 1
+    snowLayer.ZIndexBehavior = Enum.ZIndexBehavior.Global
+    snowLayer.Parent = StarlightUI.Parent
+    local snowCanvas = Instance.new("Frame")
+    snowCanvas.Name = "SnowCanvas"
+    snowCanvas.BackgroundTransparency = 1
+    snowCanvas.BorderSizePixel = 0
+    snowCanvas.Size = UDim2.fromScale(1, 1)
+    snowCanvas.Position = UDim2.fromScale(0, 0)
+    snowCanvas.ClipsDescendants = true
+    snowCanvas.Active = false
+    snowCanvas.Selectable = false
+    snowCanvas.ZIndex = 1
+    snowCanvas.Parent = snowLayer
     local flakes = {}
+    local function getSnowViewport()
+        local viewport = snowCanvas.AbsoluteSize
+        if viewport.X < 2 or viewport.Y < 2 then
+            local camera = workspace.CurrentCamera
+            if camera then
+                viewport = camera.ViewportSize
+            end
+        end
+        return Vector2.new(math.max(1, viewport.X), math.max(1, viewport.Y))
+    end
     local function createSnowParticle(index)
         local dot = Instance.new("Frame")
         dot.Name = "SnowParticle" .. tostring(index)
-        dot.Size = UDim2.fromOffset(index % 2 == 0 and 3 or 2, index % 2 == 0 and 3 or 2)
-        dot.BackgroundColor3 = Color3.fromRGB(223, 237, 227)
-        dot.BackgroundTransparency = 0.62 + (index % 3) * 0.08
+        local diameter = index % 9 == 0 and 5 or math.random(2, 4)
+        dot.AnchorPoint = Vector2.new(0.5, 0.5)
+        dot.Size = UDim2.fromOffset(diameter, diameter)
+        dot.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        dot.BackgroundTransparency = math.random(14, 38) / 100
         dot.BorderSizePixel = 0
         dot.Active = false
         dot.Selectable = false
-        dot.ZIndex = snow.ZIndex
-        dot.Parent = snow
-        addCorner(dot, 3)
-        local side = index % 2 == 0 and "Left" or "Right"
-        local width = math.max(1, mainWindow.AbsoluteSize.X)
-        dot.Position = UDim2.fromOffset(side == "Left" and math.random(3, 8) or math.max(1, width - math.random(4, 9)), math.random(0, math.max(1, mainWindow.AbsoluteSize.Y)))
+        dot.ZIndex = 2
+        dot.Parent = snowCanvas
+        addCorner(dot, math.ceil(diameter / 2))
+        local viewport = getSnowViewport()
+        dot.Position = UDim2.fromOffset(math.random(0, math.floor(viewport.X)), math.random(-30, math.floor(viewport.Y)))
         return {
             Object = dot,
-            Side = side,
-            Speed = math.random(8, 15),
+            Speed = math.random(28, 62),
+            Drift = math.random(-7, 7),
+            Sway = math.random(5, 12),
+            Frequency = math.random(45, 125) / 100,
             Phase = math.random() * math.pi * 2,
         }
     end
-    for index = 1, 6 do
+    for index = 1, 28 do
         flakes[index] = createSnowParticle(index)
     end
     local snowConnection
+    local function removeSnowLayer()
+        if snowConnection then
+            snowConnection:Disconnect()
+            snowConnection = nil
+        end
+        if snowLayer.Parent then
+            snowLayer:Destroy()
+        end
+    end
     snowConnection = RunService.RenderStepped:Connect(function(deltaTime)
-        if not snow.Parent or not mainWindow.Parent then
-            if snowConnection then snowConnection:Disconnect() end
+        if not snowLayer.Parent or not StarlightUI.Parent or not mainWindow.Parent then
+            removeSnowLayer()
             return
         end
-        if not mainWindow.Visible or not StarlightUI.Enabled then
-            snow.Visible = false
-            return
-        end
-        snow.Visible = true
-        local size = mainWindow.AbsoluteSize
+        local active = StarlightUI.Enabled and mainWindow.Visible
+        snowCanvas.Visible = active
+        if not active then return end
+        local viewport = getSnowViewport()
+        local now = os.clock()
         for _, flake in ipairs(flakes) do
             local object = flake.Object
             if object.Parent then
-                local y = object.Position.Y.Offset + flake.Speed * deltaTime
-                local edgeX = flake.Side == "Left" and 5 or math.max(2, size.X - 7)
-                local x = edgeX + math.sin(os.clock() * 0.7 + flake.Phase) * 1.5
-                if y > size.Y + 4 then
-                    y = -4
+                local position = object.Position
+                local x = position.X.Offset + (flake.Drift + math.sin(now * flake.Frequency + flake.Phase) * flake.Sway) * deltaTime
+                local y = position.Y.Offset + flake.Speed * deltaTime
+                if y > viewport.Y + 12 then
+                    y = -math.random(8, 45)
+                    x = math.random(0, math.floor(viewport.X))
+                end
+                if x < -8 then
+                    x = viewport.X + 8
+                elseif x > viewport.X + 8 then
+                    x = -8
                 end
                 object.Position = UDim2.fromOffset(x, y)
             end
         end
     end)
-    StarlightUI.Destroying:Once(function()
-        if snowConnection then snowConnection:Disconnect() end
+    snowLayer.Destroying:Once(function()
+        if snowConnection then
+            snowConnection:Disconnect()
+            snowConnection = nil
+        end
     end)
+    StarlightUI.Destroying:Once(removeSnowLayer)
 end
 ]==]
 source = source:sub(1, christmasDecorPosition - 1)
