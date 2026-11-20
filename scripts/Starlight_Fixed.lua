@@ -2603,7 +2603,278 @@ if not compiled then
 end
 task.wait()
 updateBootScreen("Creating interface", 0.95)
+
 local library = compiled()
+task.spawn(function()
+    local Players = game:GetService("Players")
+    local CoreGui = game:GetService("CoreGui")
+    local UserInputService = game:GetService("UserInputService")
+    local TweenService = game:GetService("TweenService")
+    local playerGui = Players.LocalPlayer and Players.LocalPlayer:FindFirstChildOfClass("PlayerGui")
+    local executorName = "Unknown"
+    local executorDetected = false
+    for _, detector in ipairs({
+        identifyexecutor,
+        getexecutorname,
+        getexecutor
+    }) do
+        if type(detector) == "function" then
+            local ok, name = pcall(detector)
+            if ok and type(name) == "string" and name ~= "" then
+                executorName = name
+                executorDetected = true
+                break
+            end
+        end
+    end
+    local knownExecutors = {
+        "Potassium",
+        "Solara",
+        "Xeno",
+        "Wave",
+        "Fluxus",
+        "Hydrogen",
+        "Delta",
+        "Arceus X",
+        "Codex",
+        "KRNL",
+        "Electron",
+        "Celery",
+        "Synapse X",
+        "Script-Ware",
+        "JJSploit",
+        "Velocity",
+        "Swift",
+        "MacSploit",
+        "Evon",
+        "Trigon"
+    }
+    local function normalize(value)
+        return tostring(value or ""):lower():gsub("[%s%p_]", "")
+    end
+    local function findSupportCard()
+        local roots = { CoreGui, playerGui }
+        if type(gethui) == "function" then
+            local ok, hui = pcall(gethui)
+            if ok and typeof(hui) == "Instance" then
+                table.insert(roots, hui)
+            end
+        end
+        for _, root in ipairs(roots) do
+            if root then
+                for _, item in ipairs(root:GetDescendants()) do
+                    if item:IsA("TextLabel") or item:IsA("TextButton") then
+                        local value = tostring(item.Text or ""):lower()
+                        if value:find("your executor seems to be supported", 1, true) then
+                            local card = item
+                            while card.Parent and card.Parent ~= root and not card:IsA("Frame") do
+                                card = card.Parent
+                            end
+                            if card:IsA("GuiObject") then
+                                return card, root
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+    local card, root = nil, nil
+    for _ = 1, 30 do
+        card, root = findSupportCard()
+        if card then break end
+        task.wait(0.25)
+    end
+    if not card or not root then return end
+    local cardText = ""
+    for _, item in ipairs(card:GetDescendants()) do
+        if item:IsA("TextLabel") or item:IsA("TextButton") then
+            cardText ..= " " .. tostring(item.Text or "")
+        end
+    end
+    local cardClaimsSupported = cardText:lower():find("supported", 1, true) ~= nil
+        and not cardText:lower():find("unsupported", 1, true)
+    local currentStatus = "Unknown"
+    if executorDetected then
+        currentStatus = cardClaimsSupported and "Supported" or "Unknown"
+    end
+    local function createCorner(parent, radius)
+        local corner = Instance.new("UICorner")
+        corner.CornerRadius = UDim.new(0, radius)
+        corner.Parent = parent
+    end
+    local trigger = Instance.new("TextButton")
+    trigger.Name = "ExecutorSupportDetailsTrigger"
+    trigger.BackgroundTransparency = 1
+    trigger.BorderSizePixel = 0
+    trigger.Text = ""
+    trigger.AutoButtonColor = false
+    trigger.Size = UDim2.fromScale(1, 1)
+    trigger.Position = UDim2.fromScale(0, 0)
+    trigger.ZIndex = 100
+    trigger.Parent = card
+    local popup
+    local function openPopup()
+        if popup and popup.Parent then
+            popup:Destroy()
+            popup = nil
+            return
+        end
+        local screen = card:FindFirstAncestorOfClass("ScreenGui")
+        if not screen then
+            screen = root:IsA("ScreenGui") and root or root:FindFirstAncestorOfClass("ScreenGui")
+        end
+        if not screen then return end
+        popup = Instance.new("Frame")
+        popup.Name = "ExecutorSupportDetails"
+        popup.AnchorPoint = Vector2.new(0.5, 0.5)
+        popup.Position = UDim2.fromScale(0.5, 0.5)
+        popup.Size = UDim2.new(0.82, 0, 0.78, 0)
+        popup.BackgroundColor3 = Color3.fromRGB(19, 40, 31)
+        popup.BorderSizePixel = 0
+        popup.ZIndex = 900
+        popup.Parent = screen
+        createCorner(popup, 10)
+        local constraint = Instance.new("UISizeConstraint")
+        constraint.MinSize = Vector2.new(280, 260)
+        constraint.MaxSize = Vector2.new(540, 560)
+        constraint.Parent = popup
+        local stroke = Instance.new("UIStroke")
+        stroke.Color = Color3.fromRGB(76, 125, 91)
+        stroke.Transparency = 0.25
+        stroke.Parent = popup
+        local title = Instance.new("TextLabel")
+        title.BackgroundTransparency = 1
+        title.Position = UDim2.fromOffset(17, 12)
+        title.Size = UDim2.new(1, -65, 0, 28)
+        title.Font = Enum.Font.GothamBold
+        title.Text = "Executor compatibility"
+        title.TextSize = 17
+        title.TextColor3 = Color3.fromRGB(239, 245, 240)
+        title.TextXAlignment = Enum.TextXAlignment.Left
+        title.ZIndex = 901
+        title.Parent = popup
+        local close = Instance.new("TextButton")
+        close.BackgroundTransparency = 1
+        close.Position = UDim2.new(1, -43, 0, 5)
+        close.Size = UDim2.fromOffset(36, 36)
+        close.Font = Enum.Font.GothamBold
+        close.Text = "×"
+        close.TextSize = 25
+        close.TextColor3 = Color3.fromRGB(230, 235, 230)
+        close.ZIndex = 902
+        close.Parent = popup
+        close.Activated:Connect(function()
+            if popup then popup:Destroy() popup = nil end
+        end)
+        local detected = Instance.new("TextLabel")
+        detected.BackgroundColor3 = Color3.fromRGB(29, 61, 45)
+        detected.BackgroundTransparency = 0.08
+        detected.BorderSizePixel = 0
+        detected.Position = UDim2.fromOffset(15, 49)
+        detected.Size = UDim2.new(1, -30, 0, 57)
+        detected.Font = Enum.Font.GothamMedium
+        detected.Text = "Your executor: " .. (executorDetected and executorName or "Unknown")
+            .. "\nStatus: " .. currentStatus
+        detected.TextSize = 12
+        detected.TextColor3 = Color3.fromRGB(226, 237, 228)
+        detected.TextXAlignment = Enum.TextXAlignment.Left
+        detected.ZIndex = 901
+        detected.Parent = popup
+        detected.TextWrapped = true
+        createCorner(detected, 7)
+        local scroll = Instance.new("ScrollingFrame")
+        scroll.Position = UDim2.fromOffset(15, 116)
+        scroll.Size = UDim2.new(1, -30, 1, -130)
+        scroll.BackgroundTransparency = 1
+        scroll.BorderSizePixel = 0
+        scroll.ScrollBarThickness = 4
+        scroll.CanvasSize = UDim2.fromOffset(0, 0)
+        scroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
+        scroll.ScrollingDirection = Enum.ScrollingDirection.Y
+        scroll.ZIndex = 901
+        scroll.Parent = popup
+        local layout = Instance.new("UIListLayout")
+        layout.Padding = UDim.new(0, 5)
+        layout.SortOrder = Enum.SortOrder.LayoutOrder
+        layout.Parent = scroll
+        local padding = Instance.new("UIPadding")
+        padding.PaddingBottom = UDim.new(0, 6)
+        padding.Parent = scroll
+        local function addRow(name, status, order)
+            local row = Instance.new("Frame")
+            row.Name = "Executor_" .. tostring(order)
+            row.LayoutOrder = order
+            row.Size = UDim2.new(1, -5, 0, 34)
+            row.BackgroundColor3 = Color3.fromRGB(29, 55, 42)
+            row.BackgroundTransparency = 0.12
+            row.BorderSizePixel = 0
+            row.ZIndex = 902
+            row.Parent = scroll
+            createCorner(row, 6)
+            local nameLabel = Instance.new("TextLabel")
+            nameLabel.BackgroundTransparency = 1
+            nameLabel.Position = UDim2.fromOffset(10, 0)
+            nameLabel.Size = UDim2.new(1, -112, 1, 0)
+            nameLabel.Font = Enum.Font.GothamMedium
+            nameLabel.Text = name
+            nameLabel.TextSize = 12
+            nameLabel.TextColor3 = Color3.fromRGB(230, 237, 231)
+            nameLabel.TextXAlignment = Enum.TextXAlignment.Left
+            nameLabel.ZIndex = 903
+            nameLabel.Parent = row
+            local statusLabel = Instance.new("TextLabel")
+            statusLabel.BackgroundTransparency = 1
+            statusLabel.AnchorPoint = Vector2.new(1, 0)
+            statusLabel.Position = UDim2.new(1, -9, 0, 0)
+            statusLabel.Size = UDim2.fromOffset(92, 34)
+            statusLabel.Font = Enum.Font.GothamBold
+            statusLabel.Text = status
+            statusLabel.TextSize = 11
+            statusLabel.TextColor3 = status == "Supported"
+                and Color3.fromRGB(119, 220, 150)
+                or status == "Unsupported"
+                    and Color3.fromRGB(240, 125, 125)
+                    or Color3.fromRGB(202, 190, 132)
+            statusLabel.TextXAlignment = Enum.TextXAlignment.Right
+            statusLabel.ZIndex = 903
+            statusLabel.Parent = row
+        end
+        local currentKey = normalize(executorName)
+        local addedCurrent = false
+        local order = 0
+        for _, name in ipairs(knownExecutors) do
+            local status = "Unknown"
+            if executorDetected and normalize(name) == currentKey then
+                status = currentStatus
+                addedCurrent = true
+            end
+            order += 1
+            addRow(name, status, order)
+        end
+        if executorDetected and not addedCurrent then
+            order += 1
+            addRow(executorName, currentStatus, order)
+        end
+        local note = Instance.new("TextLabel")
+        note.BackgroundTransparency = 1
+        note.Size = UDim2.new(1, -5, 0, 40)
+        note.LayoutOrder = order + 1
+        note.Font = Enum.Font.Gotham
+        note.Text = "Unknown means this script has no verified compatibility result for that executor."
+        note.TextWrapped = true
+        note.TextSize = 10
+        note.TextColor3 = Color3.fromRGB(160, 179, 165)
+        note.ZIndex = 903
+        note.Parent = scroll
+        popup.BackgroundTransparency = 1
+        TweenService:Create(popup, TweenInfo.new(0.16, Enum.EasingStyle.Quad), {
+            BackgroundTransparency = 0
+        }):Play()
+    end
+    trigger.Activated:Connect(openPopup)
+    card.Active = true
+end)
 pcall(function()
     if type(library) == "table" and type(library.SetTheme) == "function" and library.Themes and library.Themes.Christmas then
         library:SetTheme("Christmas")
