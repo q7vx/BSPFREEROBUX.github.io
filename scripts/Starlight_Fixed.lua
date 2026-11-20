@@ -280,55 +280,107 @@ local function createBootScreen()
     bootSnow.Name = "HolidaySnowfall"
     bootSnow.BackgroundTransparency = 1
     bootSnow.BorderSizePixel = 0
+    bootSnow.Position = UDim2.fromScale(0, 0)
     bootSnow.Size = UDim2.fromScale(1, 1)
+    bootSnow.ClipsDescendants = true
     bootSnow.Active = false
-    bootSnow.ZIndex = 101
-    bootSnow.Parent = screen
+    bootSnow.Selectable = false
+    bootSnow.ZIndex = 106
+    bootSnow.Parent = panel
     local bootFlakes = {}
+    local bootRandom = Random.new()
+    local function bootSnowSize()
+        local size = bootSnow.AbsoluteSize
+        if size.X < 2 or size.Y < 2 then
+            return nil
+        end
+        return size
+    end
     for index = 1, 8 do
         local flake = Instance.new("Frame")
         flake.Name = "SnowParticle" .. tostring(index)
-        flake.BackgroundColor3 = Color3.fromRGB(229, 239, 231)
-        flake.BackgroundTransparency = math.random(62, 76) / 100
+        flake.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        flake.BackgroundTransparency = bootRandom:NextNumber(0.04, 0.16)
         flake.BorderSizePixel = 0
-        local diameter = math.random(2, 4)
+        flake.AnchorPoint = Vector2.new(0.5, 0.5)
+        local diameter = bootRandom:NextInteger(2, 4)
         flake.Size = UDim2.fromOffset(diameter, diameter)
-        flake.Position = UDim2.fromOffset(math.random(0, 1200), math.random(-700, 900))
+        flake.Position = UDim2.fromOffset(0, 0)
         flake.Active = false
-        flake.ZIndex = 101
+        flake.Selectable = false
+        flake.Visible = false
+        flake.ZIndex = 107
         flake.Parent = bootSnow
         makeBootRounded(flake, diameter)
         bootFlakes[index] = {
             Object = flake,
-            Speed = math.random(12, 25),
-            Drift = math.random(-3, 3),
-            Phase = math.random() * math.pi * 2,
-            Sway = math.random(1, 3),
+            Diameter = diameter,
+            X = nil,
+            Y = nil,
+            Speed = bootRandom:NextNumber(18, 30),
+            Drift = bootRandom:NextNumber(-0.8, 0.8),
+            Phase = bootRandom:NextNumber(0, math.pi * 2),
+            Sway = bootRandom:NextNumber(0.8, 1.8),
+            Frequency = bootRandom:NextNumber(0.45, 0.9),
         }
     end
+    local function resetBootFlake(item, viewport, startInside)
+        local radius = item.Diameter * 0.5
+        local left = radius + 1
+        local right = math.max(left, viewport.X - radius - 1)
+        item.X = bootRandom:NextNumber(left, right)
+        if startInside then
+            item.Y = bootRandom:NextNumber(-radius, math.max(-radius, viewport.Y - radius))
+        else
+            item.Y = -radius - bootRandom:NextNumber(8, math.max(10, math.min(45, viewport.Y * 0.15)))
+        end
+        item.Object.Position = UDim2.fromOffset(item.X, item.Y)
+        item.Object.Visible = true
+    end
     local bootSnowConnection = bootRunService.RenderStepped:Connect(function(deltaTime)
-        if not screen.Parent then
+        if not bootSnow.Parent or not screen.Parent then
             return
         end
-        local viewport = bootSnow.AbsoluteSize
+        local viewport = bootSnowSize()
+        if not viewport then
+            return
+        end
+        local dt = math.min(deltaTime, 0.05)
+        local now = os.clock()
         for _, item in ipairs(bootFlakes) do
             local object = item.Object
             if object.Parent then
-                local position = object.Position
-                local x = position.X.Offset + (item.Drift + math.sin(os.clock() * 1.6 + item.Phase) * item.Sway) * deltaTime
-                local y = position.Y.Offset + item.Speed * deltaTime
-                if y > viewport.Y + 20 then
-                    y = -24
-                    x = math.random(0, math.max(1, viewport.X))
+                if item.X == nil or item.Y == nil then
+                    resetBootFlake(item, viewport, true)
+                else
+                    local radius = item.Diameter * 0.5
+                    local left = radius + 1
+                    local right = math.max(left, viewport.X - radius - 1)
+                    local x = item.X + (item.Drift + math.sin(now * item.Frequency + item.Phase) * item.Sway) * dt
+                    if x <= left then
+                        x = left
+                        item.Drift = math.abs(item.Drift)
+                    elseif x >= right then
+                        x = right
+                        item.Drift = -math.abs(item.Drift)
+                    end
+                    local y = item.Y + item.Speed * dt
+                    if y + radius >= viewport.Y then
+                        resetBootFlake(item, viewport, false)
+                    else
+                        item.X = x
+                        item.Y = y
+                        object.Position = UDim2.fromOffset(x, y)
+                    end
                 end
-                if x < -20 then x = viewport.X + 10 end
-                if x > viewport.X + 20 then x = -10 end
-                object.Position = UDim2.fromOffset(x, y)
             end
         end
     end)
     screen.Destroying:Once(function()
-        bootSnowConnection:Disconnect()
+        if bootSnowConnection then
+            bootSnowConnection:Disconnect()
+            bootSnowConnection = nil
+        end
     end)
     bootTweenService:Create(overlay, TweenInfo.new(0.22, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { BackgroundTransparency = 0.34 }):Play()
 end
@@ -2299,7 +2351,8 @@ do
         local previous = mainWindow:FindFirstChild(name)
         if previous then previous:Destroy() end
     end
-    local previousSnowLayer = StarlightUI:FindFirstChild("ZyphorChristmasSnowLayer")
+    local previousSnowLayer = mainWindow:FindFirstChild("ZyphorChristmasSnowLayer")
+        or StarlightUI:FindFirstChild("ZyphorChristmasSnowLayer")
     if not previousSnowLayer and StarlightUI.Parent then
         previousSnowLayer = StarlightUI.Parent:FindFirstChild("ZyphorChristmasSnowLayer")
     end
@@ -2397,52 +2450,59 @@ do
     snowCanvas.Active = false
     snowCanvas.Selectable = false
     snowCanvas.ZIndex = 9900
-    snowCanvas.Parent = StarlightUI
+    snowCanvas.Parent = mainWindow
     local flakes = {}
     local randomGenerator = Random.new()
     local function getSnowViewport()
         local viewport = snowCanvas.AbsoluteSize
         if viewport.X < 2 or viewport.Y < 2 then
-            local camera = workspace.CurrentCamera
-            if camera then
-                viewport = camera.ViewportSize
-            end
+            return nil
         end
-        return Vector2.new(math.max(1, viewport.X), math.max(1, viewport.Y))
+        return viewport
     end
     local function createSnowParticle(index)
         local dot = Instance.new("Frame")
         dot.Name = "SnowParticle" .. tostring(index)
-        local diameter = index % 11 == 0 and randomGenerator:NextInteger(6, 8)
-            or randomGenerator:NextInteger(3, 6)
+        local diameter = randomGenerator:NextInteger(2, 5)
         dot.AnchorPoint = Vector2.new(0.5, 0.5)
         dot.Size = UDim2.fromOffset(diameter, diameter)
         dot.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-        dot.BackgroundTransparency = randomGenerator:NextNumber(0, 0.16)
+        dot.BackgroundTransparency = randomGenerator:NextNumber(0.02, 0.14)
         dot.BorderSizePixel = 0
         dot.Active = false
         dot.Selectable = false
-        dot.Visible = true
+        dot.Visible = false
         dot.ZIndex = 9901
         dot.Parent = snowCanvas
         local round = Instance.new("UICorner")
         round.CornerRadius = UDim.new(1, 0)
         round.Parent = dot
-        local viewport = getSnowViewport()
-        dot.Position = UDim2.fromOffset(
-            randomGenerator:NextNumber(0, viewport.X),
-            randomGenerator:NextNumber(-viewport.Y, viewport.Y)
-        )
         return {
             Object = dot,
-            Speed = randomGenerator:NextNumber(32, 76),
-            Drift = randomGenerator:NextNumber(-8, 8),
-            Sway = randomGenerator:NextNumber(5, 15),
-            Frequency = randomGenerator:NextNumber(0.65, 1.45),
+            Diameter = diameter,
+            X = nil,
+            Y = nil,
+            Speed = randomGenerator:NextNumber(26, 52),
+            Drift = randomGenerator:NextNumber(-1.15, 1.15),
+            Sway = randomGenerator:NextNumber(1.1, 2.8),
+            Frequency = randomGenerator:NextNumber(0.42, 0.92),
             Phase = randomGenerator:NextNumber(0, math.pi * 2),
         }
     end
-    for index = 1, 42 do
+    local function positionSnowflake(flake, viewport, startInside)
+        local radius = flake.Diameter * 0.5
+        local left = radius + 1
+        local right = math.max(left, viewport.X - radius - 1)
+        flake.X = randomGenerator:NextNumber(left, right)
+        if startInside then
+            flake.Y = randomGenerator:NextNumber(-radius, math.max(-radius, viewport.Y - radius))
+        else
+            flake.Y = -radius - randomGenerator:NextNumber(10, math.max(12, math.min(65, viewport.Y * 0.18)))
+        end
+        flake.Object.Position = UDim2.fromOffset(flake.X, flake.Y)
+        flake.Object.Visible = true
+    end
+    for index = 1, 30 do
         flakes[index] = createSnowParticle(index)
     end
     local snowConnection
@@ -2467,24 +2527,35 @@ do
         snowCanvas.Visible = active
         if not active then return end
         local viewport = getSnowViewport()
+        if not viewport then return end
+        local dt = math.min(deltaTime, 0.05)
         local now = os.clock()
         for _, flake in ipairs(flakes) do
             local object = flake.Object
             if object.Parent then
-                local position = object.Position
-                local x = position.X.Offset
-                    + (flake.Drift + math.sin(now * flake.Frequency + flake.Phase) * flake.Sway) * deltaTime
-                local y = position.Y.Offset + flake.Speed * deltaTime
-                if y > viewport.Y + 12 then
-                    y = -randomGenerator:NextNumber(8, 55)
-                    x = randomGenerator:NextNumber(0, viewport.X)
+                if flake.X == nil or flake.Y == nil then
+                    positionSnowflake(flake, viewport, true)
+                else
+                    local radius = flake.Diameter * 0.5
+                    local left = radius + 1
+                    local right = math.max(left, viewport.X - radius - 1)
+                    local x = flake.X + (flake.Drift + math.sin(now * flake.Frequency + flake.Phase) * flake.Sway) * dt
+                    if x <= left then
+                        x = left
+                        flake.Drift = math.abs(flake.Drift)
+                    elseif x >= right then
+                        x = right
+                        flake.Drift = -math.abs(flake.Drift)
+                    end
+                    local y = flake.Y + flake.Speed * dt
+                    if y + radius >= viewport.Y then
+                        positionSnowflake(flake, viewport, false)
+                    else
+                        flake.X = x
+                        flake.Y = y
+                        object.Position = UDim2.fromOffset(x, y)
+                    end
                 end
-                if x < -10 then
-                    x = viewport.X + 10
-                elseif x > viewport.X + 10 then
-                    x = -10
-                end
-                object.Position = UDim2.fromOffset(x, y)
             end
         end
     end)
@@ -2495,6 +2566,7 @@ do
         end
     end)
     StarlightUI.Destroying:Once(removeSnowLayer)
+    mainWindow.Destroying:Once(removeSnowLayer)
 end
 ]==]
 source = source:sub(1, christmasDecorPosition - 1)
