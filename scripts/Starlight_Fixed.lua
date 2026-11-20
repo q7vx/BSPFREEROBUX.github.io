@@ -169,49 +169,56 @@ local function createBootScreen()
     bootTree.Size = UDim2.fromOffset(45, 65)
     bootTree.ZIndex = 106
     bootTree.Parent = headerBg
-    local function bootTreeText(name, text, position, size, textSize, color)
-        local label = Instance.new("TextLabel")
-        label.Name = name
-        label.BackgroundTransparency = 1
-        label.Text = text
-        label.Font = Enum.Font.GothamBlack
-        label.TextSize = textSize
-        label.TextColor3 = color
-        label.TextXAlignment = Enum.TextXAlignment.Center
-        label.TextYAlignment = Enum.TextYAlignment.Center
-        label.Position = position
-        label.Size = size
-        label.ZIndex = 107
-        label.Parent = bootTree
-        return label
+    local function makeBootTreeLayer(name, width, y, color)
+        local layer = Instance.new("Frame")
+        layer.Name = name
+        layer.AnchorPoint = Vector2.new(0.5, 0)
+        layer.Position = UDim2.fromOffset(22, y)
+        layer.Size = UDim2.fromOffset(width, 8)
+        layer.BackgroundColor3 = color
+        layer.BorderSizePixel = 0
+        layer.ZIndex = 107
+        layer.Parent = bootTree
+        local corner = Instance.new("UICorner")
+        corner.CornerRadius = UDim.new(0, 3)
+        corner.Parent = layer
+        return layer
     end
-    bootTreeText("Star", "✦", UDim2.fromOffset(15, -1), UDim2.fromOffset(16, 16), 14, Color3.fromRGB(255, 215, 126))
-    bootTreeText("Top", "▲", UDim2.fromOffset(5, 7), UDim2.fromOffset(36, 28), 28, Color3.fromRGB(48, 143, 85))
-    bootTreeText("Middle", "▲", UDim2.fromOffset(8, 18), UDim2.fromOffset(30, 25), 24, Color3.fromRGB(35, 119, 70))
-    bootTreeText("Bottom", "▲", UDim2.fromOffset(11, 29), UDim2.fromOffset(24, 21), 20, Color3.fromRGB(27, 98, 59))
+    local bootTreeStar = Instance.new("Frame")
+    bootTreeStar.Name = "Star"
+    bootTreeStar.AnchorPoint = Vector2.new(0.5, 0.5)
+    bootTreeStar.Position = UDim2.fromOffset(22, 5)
+    bootTreeStar.Size = UDim2.fromOffset(6, 6)
+    bootTreeStar.Rotation = 45
+    bootTreeStar.BackgroundColor3 = Color3.fromRGB(238, 197, 111)
+    bootTreeStar.BorderSizePixel = 0
+    bootTreeStar.ZIndex = 108
+    bootTreeStar.Parent = bootTree
+    makeBootTreeLayer("TopBranch", 17, 12, Color3.fromRGB(53, 133, 82))
+    makeBootTreeLayer("MiddleBranch", 27, 22, Color3.fromRGB(39, 112, 69))
+    makeBootTreeLayer("LowerBranch", 37, 32, Color3.fromRGB(27, 88, 55))
     local bootTrunk = Instance.new("Frame")
     bootTrunk.Name = "Trunk"
-    bootTrunk.Position = UDim2.fromOffset(20, 48)
-    bootTrunk.Size = UDim2.fromOffset(7, 9)
-    bootTrunk.BackgroundColor3 = Color3.fromRGB(112, 70, 43)
+    bootTrunk.AnchorPoint = Vector2.new(0.5, 0)
+    bootTrunk.Position = UDim2.fromOffset(22, 40)
+    bootTrunk.Size = UDim2.fromOffset(6, 9)
+    bootTrunk.BackgroundColor3 = Color3.fromRGB(111, 75, 49)
     bootTrunk.BorderSizePixel = 0
     bootTrunk.ZIndex = 107
     bootTrunk.Parent = bootTree
-    local bootTreeBulb = Instance.new("Frame")
-    bootTreeBulb.Name = "RedOrnament"
-    bootTreeBulb.Position = UDim2.fromOffset(11, 29)
-    bootTreeBulb.Size = UDim2.fromOffset(5, 5)
-    bootTreeBulb.BackgroundColor3 = Color3.fromRGB(225, 76, 78)
-    bootTreeBulb.BorderSizePixel = 0
-    bootTreeBulb.ZIndex = 108
-    bootTreeBulb.Parent = bootTree
-    makeBootRounded(bootTreeBulb, 5)
-    local bootTreeBulb2 = bootTreeBulb:Clone()
-    bootTreeBulb2.Name = "GoldOrnament"
-    bootTreeBulb2.Position = UDim2.fromOffset(27, 37)
-    bootTreeBulb2.BackgroundColor3 = Color3.fromRGB(255, 215, 126)
-    bootTreeBulb2.Parent = bootTree
-
+    local function makeBootOrnament(name, x, y, color)
+        local ornament = Instance.new("Frame")
+        ornament.Name = name
+        ornament.Position = UDim2.fromOffset(x, y)
+        ornament.Size = UDim2.fromOffset(4, 4)
+        ornament.BackgroundColor3 = color
+        ornament.BorderSizePixel = 0
+        ornament.ZIndex = 109
+        ornament.Parent = bootTree
+        makeBootRounded(ornament, 4)
+    end
+    makeBootOrnament("RubyOrnament", 12, 26, Color3.fromRGB(184, 63, 66))
+    makeBootOrnament("GoldOrnament", 29, 35, Color3.fromRGB(235, 190, 103))
 
     makeBootLabel(panel, "CreditTitle", "Reworked by", 15, Color3.fromRGB(239, 241, 253), UDim2.fromOffset(20, 94), UDim2.new(1, -40, 0, 24), Enum.Font.GothamBold)
 
@@ -275,30 +282,28 @@ local function createBootScreen()
     bootSnow.BorderSizePixel = 0
     bootSnow.Size = UDim2.fromScale(1, 1)
     bootSnow.Active = false
-    bootSnow.ZIndex = 130
+    bootSnow.ZIndex = 101
     bootSnow.Parent = screen
     local bootFlakes = {}
-    for index = 1, 30 do
-        local flake = Instance.new("TextLabel")
-        flake.Name = "Snowflake" .. tostring(index)
-        flake.BackgroundTransparency = 1
+    for index = 1, 8 do
+        local flake = Instance.new("Frame")
+        flake.Name = "SnowParticle" .. tostring(index)
+        flake.BackgroundColor3 = Color3.fromRGB(229, 239, 231)
+        flake.BackgroundTransparency = math.random(62, 76) / 100
         flake.BorderSizePixel = 0
-        flake.Text = index % 4 == 0 and "✧" or "❄"
-        flake.Font = Enum.Font.Gotham
-        flake.TextSize = math.random(9, 16)
-        flake.TextColor3 = Color3.fromRGB(235, 246, 242)
-        flake.TextTransparency = math.random(25, 48) / 100
-        flake.Size = UDim2.fromOffset(18, 18)
+        local diameter = math.random(2, 4)
+        flake.Size = UDim2.fromOffset(diameter, diameter)
         flake.Position = UDim2.fromOffset(math.random(0, 1200), math.random(-700, 900))
         flake.Active = false
-        flake.ZIndex = 131
+        flake.ZIndex = 101
         flake.Parent = bootSnow
+        makeBootRounded(flake, diameter)
         bootFlakes[index] = {
             Object = flake,
-            Speed = math.random(22, 58),
-            Drift = math.random(-16, 16),
+            Speed = math.random(12, 25),
+            Drift = math.random(-3, 3),
             Phase = math.random() * math.pi * 2,
-            Sway = math.random(3, 13),
+            Sway = math.random(1, 3),
         }
     end
     local bootSnowConnection = bootRunService.RenderStepped:Connect(function(deltaTime)
@@ -873,7 +878,7 @@ replaceExact([==[		if TabSettings.Changelog[1] then
 		local latestEntry = TabSettings.Changelog[1]
 		if latestEntry then
 			changelogPanel.latest.Visible = true
-			changelogPanel.latest.Header.Text = tostring(latestEntry.Version or "Update 1") .. " - " .. tostring(latestEntry.Title or "Latest Update")
+			changelogPanel.latest.Header.Text = tostring(latestEntry.Title or latestEntry.Version or "Latest Update")
 			changelogPanel.latest.date.Text = tostring(latestEntry.Date or "")
 			changelogPanel.latest.desc.Text = tostring(latestEntry.Description or "")
 		else
@@ -2048,58 +2053,58 @@ source = source:sub(1, dropdownPositionStart - 1) .. [==[
 							trigger.Destroying:Once(cleanupDropdownInput)
 
 ]==] .. source:sub(dropdownHoverStart)
-replaceExact([==[									local function ToggleOption(option)
-										if not NestedElement.Values.MultipleOptions then
-											for i, v in pairs(NestedElement.Instances[2].List:GetChildren()) do
-												if v.ClassName == "Frame" and v ~= option then
-													Deactivate(v)
-													NestedElement.Values.CurrentOption = {}
-												end
-											end
-										end]==], [==[									local function ToggleOption(option)
-										if not NestedElement.Values.MultipleOptions then
-											if option:GetAttribute("Active") == true then
-												return
-											end
+replaceExact([==[							local function ToggleOption(option)
+								if not NestedElement.Values.MultipleOptions then
+									for i, v in pairs(NestedElement.Instances[2].List:GetChildren()) do
+										if v.ClassName == "Frame" and v ~= option then
+											Deactivate(v)
 											NestedElement.Values.CurrentOption = {}
-											for _, other in ipairs(NestedElement.Instances[2].List:GetChildren()) do
-												if other:IsA("Frame") and other ~= option and other:GetAttribute("Active") then
-													Deactivate(other)
-												end
-											end
-										end]==], 0)
+										end
+									end
+								end]==], [==[							local function ToggleOption(option)
+								if not NestedElement.Values.MultipleOptions then
+									if option:GetAttribute("Active") == true then
+										return
+									end
+									NestedElement.Values.CurrentOption = {}
+									for _, other in ipairs(NestedElement.Instances[2].List:GetChildren()) do
+										if other:IsA("Frame") and other ~= option and other:GetAttribute("Active") then
+											Deactivate(other)
+										end
+									end
+								end]==], 0)
 local toggleOptionStart = source:find([==[local function ToggleOption(option)]==], 1, true)
 if toggleOptionStart then
     local singleSelectStart = source:find([==[if not NestedElement.Values.MultipleOptions then]==], toggleOptionStart, true)
-    local selectedOptionStart = singleSelectStart and source:find([==[if option:GetAttribute("Active") == false then]==], singleSelectStart, true)
-    if singleSelectStart and selectedOptionStart then
-        local currentBlock = source:sub(singleSelectStart, selectedOptionStart - 1)
-        if not currentBlock:find([==[option:GetAttribute("Active") == true]==], 1, true) then
-            local lineStart = (source:sub(1, singleSelectStart):match(".*()\n") or 0) + 1
-            local indent = source:sub(lineStart, singleSelectStart - 1)
-            local inner = indent .. "\t"
-            local deeper = inner .. "\t"
-            local deepest = deeper .. "\t"
-            local replacement = table.concat({
-                "if not NestedElement.Values.MultipleOptions then",
-                inner .. 'if option:GetAttribute("Active") == true then',
-                deeper .. "return",
-                inner .. "end",
-                inner .. "NestedElement.Values.CurrentOption = {}",
-                inner .. "for _, other in ipairs(NestedElement.Instances[2].List:GetChildren()) do",
-                deeper .. 'if other:IsA("Frame") and other ~= option and other:GetAttribute("Active") then',
-                deepest .. "Deactivate(other)",
-                deeper .. "end",
-                inner .. "end",
-                indent .. "end",
-                "",
-            }, "\n")
-            source = source:sub(1, singleSelectStart - 1) .. replacement .. source:sub(selectedOptionStart)
+    if singleSelectStart then
+        local selectedOptionStart = source:find([==[if option:GetAttribute("Active") == false then]==], singleSelectStart, true)
+            or source:find([==[if not option:GetAttribute("Active") then]==], singleSelectStart, true)
+        if selectedOptionStart then
+            local currentBlock = source:sub(singleSelectStart, selectedOptionStart - 1)
+            if not currentBlock:find([==[option:GetAttribute("Active") == true]==], 1, true) then
+                local lineStart = (source:sub(1, singleSelectStart):match(".*()\n") or 0) + 1
+                local indent = source:sub(lineStart, singleSelectStart - 1)
+                local inner = indent .. "\t"
+                local deeper = inner .. "\t"
+                local deepest = deeper .. "\t"
+                local replacement = table.concat({
+                    "if not NestedElement.Values.MultipleOptions then",
+                    inner .. 'if option:GetAttribute("Active") == true then',
+                    deeper .. "return",
+                    inner .. "end",
+                    inner .. "NestedElement.Values.CurrentOption = {}",
+                    inner .. "for _, other in ipairs(NestedElement.Instances[2].List:GetChildren()) do",
+                    deeper .. 'if other:IsA("Frame") and other ~= option and other:GetAttribute("Active") then',
+                    deepest .. "Deactivate(other)",
+                    deeper .. "end",
+                    inner .. "end",
+                    indent .. "end",
+                    "",
+                }, "\n")
+                source = source:sub(1, singleSelectStart - 1) .. replacement .. source:sub(selectedOptionStart)
+            end
         end
     end
-end
-if not toggleOptionStart or not source:sub(toggleOptionStart):find([==[option:GetAttribute("Active") == true]==], 1, true) then
-    error("Starlight Patch 72 fallback could not locate the dropdown single-select block")
 end
 replaceExact([==[									optioninstance.header.Text = option]==], [==[									optioninstance.header.Text = option
 									optioninstance.header.TextScaled = false]==], 1)
@@ -2224,11 +2229,11 @@ end
 local christmasThemeDefinition = [==[
 Themes.Christmas = {
     Backgrounds = {
-        Dark = Color3.fromRGB(11, 25, 20),
-        Medium = Color3.fromRGB(17, 38, 30),
-        Light = Color3.fromRGB(24, 49, 39),
-        Groupbox = Color3.fromRGB(20, 43, 34),
-        Highlight = Color3.fromRGB(31, 62, 48),
+        Dark = Color3.fromRGB(13, 27, 22),
+        Medium = Color3.fromRGB(19, 40, 31),
+        Light = Color3.fromRGB(27, 53, 41),
+        Groupbox = Color3.fromRGB(23, 46, 35),
+        Highlight = Color3.fromRGB(34, 65, 49),
     },
     Foregrounds = {
         Active = Color3.fromRGB(255, 244, 220),
@@ -2239,7 +2244,7 @@ Themes.Christmas = {
         DarkHover = Color3.fromRGB(104, 132, 108),
     },
     Miscellaneous = {
-        Divider = Color3.fromRGB(117, 137, 108),
+        Divider = Color3.fromRGB(105, 127, 99),
         Shadow = Color3.fromRGB(7, 17, 13),
         LighterShadow = Color3.fromRGB(24, 42, 32),
     },
@@ -2276,19 +2281,20 @@ do
     if oldDecorations then
         oldDecorations:Destroy()
     end
-    local previousSidebar = mainWindow:FindFirstChild("Sidebar")
-    if previousSidebar then
+    local sidebar = mainWindow:FindFirstChild("Sidebar")
+    if sidebar then
         for _, name in ipairs({ "SidebarChristmasTree", "ChristmasSidebarAccent" }) do
-            local previous = previousSidebar:FindFirstChild(name)
+            local previous = sidebar:FindFirstChild(name)
             if previous then previous:Destroy() end
         end
     end
-    local previousContent = mainWindow:FindFirstChild("Content")
-    local previousTopbar = previousContent and previousContent:FindFirstChild("Topbar")
-    local previousGarland = previousTopbar and previousTopbar:FindFirstChild("ChristmasGarland")
-    local previousHolly = previousTopbar and previousTopbar:FindFirstChild("ChristmasHolly")
-    if previousGarland then previousGarland:Destroy() end
-    if previousHolly then previousHolly:Destroy() end
+    local content = mainWindow:FindFirstChild("Content")
+    local topbar = content and content:FindFirstChild("Topbar")
+    local previousTopbar = topbar
+    for _, name in ipairs({ "ChristmasGarland", "ChristmasHolly" }) do
+        local previous = previousTopbar and previousTopbar:FindFirstChild(name)
+        if previous then previous:Destroy() end
+    end
     for _, name in ipairs({ "ChristmasSnowfall", "ChristmasGoldOutline" }) do
         local previous = mainWindow:FindFirstChild(name)
         if previous then previous:Destroy() end
@@ -2296,160 +2302,83 @@ do
     local decorations = Instance.new("Folder")
     decorations.Name = "ZyphorChristmasDecorations"
     decorations.Parent = mainWindow
-    local function makeTree(parent, name, position, width, height, zIndex)
+    local function addCorner(object, radius)
+        local corner = Instance.new("UICorner")
+        corner.CornerRadius = UDim.new(0, radius)
+        corner.Parent = object
+        return corner
+    end
+    local function addTree(parent)
+        local z = math.max(1, parent.ZIndex + 8)
         local holder = Instance.new("Frame")
-        holder.Name = name
+        holder.Name = "SidebarChristmasTree"
         holder.BackgroundTransparency = 1
         holder.BorderSizePixel = 0
-        holder.Position = position
-        holder.Size = UDim2.fromOffset(width, height)
+        holder.Position = UDim2.new(1, -48, 0, 5)
+        holder.Size = UDim2.fromOffset(38, 48)
         holder.Active = false
-        holder.ZIndex = zIndex
+        holder.Selectable = false
+        holder.ZIndex = z
         holder.Parent = parent
-        local function treeText(objectName, text, pos, size, textSize, color)
-            local label = Instance.new("TextLabel")
-            label.Name = objectName
-            label.BackgroundTransparency = 1
-            label.BorderSizePixel = 0
-            label.Text = text
-            label.Font = Enum.Font.GothamBlack
-            label.TextSize = textSize
-            label.TextColor3 = color
-            label.TextXAlignment = Enum.TextXAlignment.Center
-            label.TextYAlignment = Enum.TextYAlignment.Center
-            label.Position = pos
-            label.Size = size
-            label.Active = false
-            label.ZIndex = zIndex + 1
-            label.Parent = holder
-            return label
+        local star = Instance.new("Frame")
+        star.Name = "TreeStar"
+        star.AnchorPoint = Vector2.new(0.5, 0.5)
+        star.Position = UDim2.fromOffset(19, 5)
+        star.Size = UDim2.fromOffset(5, 5)
+        star.Rotation = 45
+        star.BackgroundColor3 = Color3.fromRGB(229, 188, 104)
+        star.BorderSizePixel = 0
+        star.ZIndex = z + 1
+        star.Parent = holder
+        local branches = {
+            { Name = "UpperBranch", Width = 16, Y = 11, Color = Color3.fromRGB(57, 133, 83) },
+            { Name = "MiddleBranch", Width = 25, Y = 20, Color = Color3.fromRGB(42, 112, 70) },
+            { Name = "LowerBranch", Width = 34, Y = 29, Color = Color3.fromRGB(29, 89, 56) },
+        }
+        for _, data in ipairs(branches) do
+            local branch = Instance.new("Frame")
+            branch.Name = data.Name
+            branch.AnchorPoint = Vector2.new(0.5, 0)
+            branch.Position = UDim2.fromOffset(19, data.Y)
+            branch.Size = UDim2.fromOffset(data.Width, 8)
+            branch.BackgroundColor3 = data.Color
+            branch.BorderSizePixel = 0
+            branch.ZIndex = z + 1
+            branch.Parent = holder
+            addCorner(branch, 3)
         end
-        treeText("Star", "✦", UDim2.fromOffset(width * 0.31, 0), UDim2.fromOffset(width * 0.38, 14), 13, Color3.fromRGB(255, 214, 124))
-        treeText("CanopyTop", "▲", UDim2.fromOffset(width * 0.05, 7), UDim2.new(0.9, 0, 0, height * 0.48), 25, Color3.fromRGB(49, 145, 84))
-        treeText("CanopyMiddle", "▲", UDim2.fromOffset(width * 0.15, height * 0.23), UDim2.new(0.7, 0, 0, height * 0.40), 21, Color3.fromRGB(34, 121, 70))
-        treeText("CanopyBottom", "▲", UDim2.fromOffset(width * 0.25, height * 0.42), UDim2.new(0.5, 0, 0, height * 0.31), 17, Color3.fromRGB(25, 99, 58))
         local trunk = Instance.new("Frame")
-        trunk.Name = "Trunk"
+        trunk.Name = "TreeTrunk"
         trunk.AnchorPoint = Vector2.new(0.5, 0)
-        trunk.Position = UDim2.new(0.5, 0, 0.79, 0)
-        trunk.Size = UDim2.fromOffset(6, 8)
-        trunk.BackgroundColor3 = Color3.fromRGB(119, 77, 47)
+        trunk.Position = UDim2.fromOffset(19, 37)
+        trunk.Size = UDim2.fromOffset(5, 7)
+        trunk.BackgroundColor3 = Color3.fromRGB(109, 74, 48)
         trunk.BorderSizePixel = 0
-        trunk.ZIndex = zIndex + 2
+        trunk.ZIndex = z + 1
         trunk.Parent = holder
-        local function ornament(objectName, x, y, color)
+        local function ornament(name, x, y, color)
             local bead = Instance.new("Frame")
-            bead.Name = objectName
+            bead.Name = name
             bead.Position = UDim2.fromOffset(x, y)
-            bead.Size = UDim2.fromOffset(5, 5)
+            bead.Size = UDim2.fromOffset(4, 4)
             bead.BackgroundColor3 = color
             bead.BorderSizePixel = 0
-            bead.ZIndex = zIndex + 3
+            bead.ZIndex = z + 2
             bead.Parent = holder
-            local corner = Instance.new("UICorner")
-            corner.CornerRadius = UDim.new(1, 0)
-            corner.Parent = bead
+            addCorner(bead, 4)
         end
-        ornament("Ruby", width * 0.28, height * 0.48, Color3.fromRGB(231, 77, 80))
-        ornament("Gold", width * 0.64, height * 0.59, Color3.fromRGB(255, 210, 112))
-        ornament("Snow", width * 0.42, height * 0.69, Color3.fromRGB(225, 241, 235))
-        return holder
+        ornament("RubyOrnament", 10, 23, Color3.fromRGB(182, 61, 66))
+        ornament("GoldOrnament", 25, 32, Color3.fromRGB(230, 190, 107))
     end
-    local sidebar = mainWindow:FindFirstChild("Sidebar")
-    local content = mainWindow:FindFirstChild("Content")
-    local topbar = content and content:FindFirstChild("Topbar")
     if sidebar then
-        makeTree(sidebar, "SidebarChristmasTree", UDim2.new(1, -43, 0, 4), 38, 56, math.max(1, sidebar.ZIndex + 40))
-        local accent = Instance.new("Frame")
-        accent.Name = "ChristmasSidebarAccent"
-        accent.Position = UDim2.new(0, 14, 0, 74)
-        accent.Size = UDim2.new(1, -28, 0, 2)
-        accent.BackgroundColor3 = Color3.fromRGB(184, 52, 61)
-        accent.BorderSizePixel = 0
-        accent.ZIndex = math.max(1, sidebar.ZIndex + 8)
-        accent.Active = false
-        accent.Parent = sidebar
-        local accentGradient = Instance.new("UIGradient")
-        accentGradient.Color = ColorSequence.new({
-            ColorSequenceKeypoint.new(0, Color3.fromRGB(184, 52, 61)),
-            ColorSequenceKeypoint.new(0.5, Color3.fromRGB(237, 191, 101)),
-            ColorSequenceKeypoint.new(1, Color3.fromRGB(49, 148, 91)),
-        })
-        accentGradient.Parent = accent
-    end
-    local holidayBulbs = {}
-    if topbar then
-        local garland = Instance.new("Frame")
-        garland.Name = "ChristmasGarland"
-        garland.BackgroundTransparency = 1
-        garland.BorderSizePixel = 0
-        garland.Position = UDim2.new(0, 10, 1, -8)
-        garland.Size = UDim2.new(1, -20, 0, 8)
-        garland.Active = false
-        garland.ZIndex = math.max(1, topbar.ZIndex + 35)
-        garland.Parent = topbar
-        local wire = Instance.new("Frame")
-        wire.Name = "LightString"
-        wire.Position = UDim2.new(0, 0, 0, 1)
-        wire.Size = UDim2.new(1, 0, 0, 1)
-        wire.BackgroundColor3 = Color3.fromRGB(125, 148, 94)
-        wire.BackgroundTransparency = 0.2
-        wire.BorderSizePixel = 0
-        wire.ZIndex = garland.ZIndex
-        wire.Parent = garland
-        local bulbColors = {
-            Color3.fromRGB(220, 73, 76),
-            Color3.fromRGB(255, 211, 117),
-            Color3.fromRGB(73, 187, 118),
-            Color3.fromRGB(227, 239, 237),
-        }
-        for index = 1, 14 do
-            local bulb = Instance.new("Frame")
-            bulb.Name = "HolidayLight" .. tostring(index)
-            bulb.AnchorPoint = Vector2.new(0.5, 0.5)
-            bulb.Position = UDim2.new((index - 1) / 13, 0, 0.65, 0)
-            bulb.Size = UDim2.fromOffset(5, 5)
-            bulb.BackgroundColor3 = bulbColors[(index - 1) % #bulbColors + 1]
-            bulb.BorderSizePixel = 0
-            bulb.ZIndex = garland.ZIndex + 1
-            bulb.Parent = garland
-            local bulbCorner = Instance.new("UICorner")
-            bulbCorner.CornerRadius = UDim.new(1, 0)
-            bulbCorner.Parent = bulb
-            local bulbStroke = Instance.new("UIStroke")
-            bulbStroke.Color = Color3.fromRGB(255, 224, 164)
-            bulbStroke.Transparency = 0.42
-            bulbStroke.Thickness = 0.7
-            bulbStroke.Parent = bulb
-            holidayBulbs[#holidayBulbs + 1] = {
-                Object = bulb,
-                Stroke = bulbStroke,
-                Phase = index * 0.72,
-            }
-        end
-        local holly = Instance.new("TextLabel")
-        holly.Name = "ChristmasHolly"
-        holly.BackgroundTransparency = 1
-        holly.BorderSizePixel = 0
-        holly.Text = "✦"
-        holly.Font = Enum.Font.GothamBlack
-        holly.TextSize = 15
-        holly.TextColor3 = Color3.fromRGB(255, 219, 143)
-        holly.TextXAlignment = Enum.TextXAlignment.Center
-        holly.TextYAlignment = Enum.TextYAlignment.Center
-        holly.AnchorPoint = Vector2.new(1, 0)
-        holly.Position = UDim2.new(1, -82, 0, 2)
-        holly.Size = UDim2.fromOffset(18, 18)
-        holly.Active = false
-        holly.ZIndex = garland.ZIndex + 2
-        holly.Parent = topbar
+        addTree(sidebar)
     end
     local border = Instance.new("UIStroke")
     border.Name = "ChristmasGoldOutline"
     border.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-    border.Color = Color3.fromRGB(172, 133, 70)
+    border.Color = Color3.fromRGB(126, 151, 112)
     border.Thickness = 1
-    border.Transparency = 0.48
+    border.Transparency = 0.72
     border.Parent = mainWindow
     local snow = Instance.new("Frame")
     snow.Name = "ChristmasSnowfall"
@@ -2459,37 +2388,33 @@ do
     snow.ClipsDescendants = true
     snow.Active = false
     snow.Selectable = false
-    snow.ZIndex = 8500
+    snow.ZIndex = math.max(1, mainWindow.ZIndex)
     snow.Parent = mainWindow
     local flakes = {}
-    local function createFlake(index)
-        local label = Instance.new("TextLabel")
-        label.Name = "Snowflake" .. tostring(index)
-        label.BackgroundTransparency = 1
-        label.BorderSizePixel = 0
-        label.Text = index % 5 == 0 and "✧" or (index % 3 == 0 and "❅" or "❄")
-        label.Font = Enum.Font.Gotham
-        label.TextSize = math.random(9, 16)
-        label.TextColor3 = Color3.fromRGB(231, 245, 240)
-        label.TextTransparency = math.random(32, 58) / 100
-        label.TextStrokeColor3 = Color3.fromRGB(97, 137, 116)
-        label.TextStrokeTransparency = 0.82
-        label.Size = UDim2.fromOffset(18, 18)
-        label.Position = UDim2.fromOffset(math.random(0, math.max(1, mainWindow.AbsoluteSize.X)), math.random(0, math.max(1, mainWindow.AbsoluteSize.Y)))
-        label.Active = false
-        label.Selectable = false
-        label.ZIndex = snow.ZIndex + 1
-        label.Parent = snow
+    local function createSnowParticle(index)
+        local dot = Instance.new("Frame")
+        dot.Name = "SnowParticle" .. tostring(index)
+        dot.Size = UDim2.fromOffset(index % 2 == 0 and 3 or 2, index % 2 == 0 and 3 or 2)
+        dot.BackgroundColor3 = Color3.fromRGB(223, 237, 227)
+        dot.BackgroundTransparency = 0.62 + (index % 3) * 0.08
+        dot.BorderSizePixel = 0
+        dot.Active = false
+        dot.Selectable = false
+        dot.ZIndex = snow.ZIndex
+        dot.Parent = snow
+        addCorner(dot, 3)
+        local side = index % 2 == 0 and "Left" or "Right"
+        local width = math.max(1, mainWindow.AbsoluteSize.X)
+        dot.Position = UDim2.fromOffset(side == "Left" and math.random(3, 8) or math.max(1, width - math.random(4, 9)), math.random(0, math.max(1, mainWindow.AbsoluteSize.Y)))
         return {
-            Object = label,
-            Speed = math.random(18, 47),
-            Drift = math.random(-12, 12),
-            Sway = math.random(3, 12),
+            Object = dot,
+            Side = side,
+            Speed = math.random(8, 15),
             Phase = math.random() * math.pi * 2,
         }
     end
-    for index = 1, 22 do
-        flakes[index] = createFlake(index)
+    for index = 1, 6 do
+        flakes[index] = createSnowParticle(index)
     end
     local snowConnection
     snowConnection = RunService.RenderStepped:Connect(function(deltaTime)
@@ -2506,23 +2431,13 @@ do
         for _, flake in ipairs(flakes) do
             local object = flake.Object
             if object.Parent then
-                local x = object.Position.X.Offset + (flake.Drift + math.sin(os.clock() * 1.5 + flake.Phase) * flake.Sway) * deltaTime
                 local y = object.Position.Y.Offset + flake.Speed * deltaTime
-                if y > size.Y + 22 then
-                    y = -22
-                    x = math.random(0, math.max(1, size.X))
+                local edgeX = flake.Side == "Left" and 5 or math.max(2, size.X - 7)
+                local x = edgeX + math.sin(os.clock() * 0.7 + flake.Phase) * 1.5
+                if y > size.Y + 4 then
+                    y = -4
                 end
-                if x < -18 then x = size.X + 8 end
-                if x > size.X + 18 then x = -8 end
                 object.Position = UDim2.fromOffset(x, y)
-            end
-        end
-        local clock = os.clock()
-        for _, bulbData in ipairs(holidayBulbs) do
-            if bulbData.Object.Parent then
-                local pulse = (math.sin(clock * 2.1 + bulbData.Phase) + 1) * 0.5
-                bulbData.Object.BackgroundTransparency = 0.03 + pulse * 0.22
-                bulbData.Stroke.Transparency = 0.25 + pulse * 0.4
             end
         end
     end)
